@@ -38,9 +38,9 @@ cur_path = base_path + 'modules' + os.sep + 'OpenAI' + os.sep + 'libs' + os.sep
 cur_path_x64 = os.path.join(cur_path, 'Windows' + os.sep +  'x64' + os.sep)
 cur_path_x86 = os.path.join(cur_path, 'Windows' + os.sep +  'x86' + os.sep)
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2**32 and cur_path_x64 not in sys.path:
     sys.path.append(cur_path_x64)
-else:
+elif sys.maxsize <= 2**32 and cur_path_x86 not in sys.path:
     sys.path.append(cur_path_x86)
     
 import openai 
