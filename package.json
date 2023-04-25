@@ -302,16 +302,166 @@
         },
         {
             "es":{
+                "title": "Transcribir audio",
+                "description": "Este comando transcribe un audio a texto. Debe ejecutarse el comando de conexión previamente."
+            },
+            "en":{
+                "title": "Transcribe audio",
+                "description": "This command transcribes an audio to text. The connection command must be executed previously."
+            },
+            "pr": {
+                "title": "Transcrever áudio",
+                "description": "Este comando transcreve um áudio para texto. O comando de conexão deve ser executado previamente."
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "file_select",
+                        "placeholder": {
+                            "es": "C:/Users/User/Desktop/audio.mp3",
+                            "en": "C:/Users/User/Desktop/audio.mp3",
+                            "pr": "C:/Users/User/Desktop/audio.mp3"
+                        },
+                        "title": {
+                            "es": "Archivo de audio",
+                            "en": "Audio file",
+                            "pr": "Arquivo de áudio"
+                        },
+                        "description": {
+                            "es": "Ruta al archivo de audio que se desea transcribir",
+                            "en": "Path to the audio file to be transcribed",
+                            "pr": "Caminho para o arquivo de áudio que será transcrito"
+                        },
+                        "id": "audio_file",
+                        "css": "col-md-6"
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "Variable",
+                            "en": "Variable",
+                            "pr": "Variável"
+                        },
+                        "title": {
+                            "es": "Variable donde se almacenará el resultado",
+                            "en": "Variable where the result will be stored",
+                            "pr": "Variável onde o resultado será armazenado"
+                        },
+                        "description": {
+                            "es": "Variable donde se almacenará el resultado de la transcripción",
+                            "en": "Variable where the result of the transcription will be stored",
+                            "pr": "Variável onde o resultado da transcrição será armazenado"
+                        },
+                         "help": {
+                            "es": "Nombre de variable sin llaves {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result_var",
+                        "css": "col-md-6"
+                    }
+                ]
+            },
+            "video_youtube": "yWDUzNiWPJA",
+            "icon": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIGZpbGw9IiMwMDAwMDAiIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRpdGxlPk9wZW5BSSBpY29uPC90aXRsZT48cGF0aCBkPSJNMjIuMjgxOSA5LjgyMTFhNS45ODQ3IDUuOTg0NyAwIDAgMC0uNTE1Ny00LjkxMDggNi4wNDYyIDYuMDQ2MiAwIDAgMC02LjUwOTgtMi45QTYuMDY1MSA2LjA2NTEgMCAwIDAgNC45ODA3IDQuMTgxOGE1Ljk4NDcgNS45ODQ3IDAgMCAwLTMuOTk3NyAyLjkgNi4wNDYyIDYuMDQ2MiAwIDAgMCAuNzQyNyA3LjA5NjYgNS45OCA1Ljk4IDAgMCAwIC41MTEgNC45MTA3IDYuMDUxIDYuMDUxIDAgMCAwIDYuNTE0NiAyLjkwMDFBNS45ODQ3IDUuOTg0NyAwIDAgMCAxMy4yNTk5IDI0YTYuMDU1NyA2LjA1NTcgMCAwIDAgNS43NzE4LTQuMjA1OCA1Ljk4OTQgNS45ODk0IDAgMCAwIDMuOTk3Ny0yLjkwMDEgNi4wNTU3IDYuMDU1NyAwIDAgMC0uNzQ3NS03LjA3Mjl6bS05LjAyMiAxMi42MDgxYTQuNDc1NSA0LjQ3NTUgMCAwIDEtMi44NzY0LTEuMDQwOGwuMTQxOS0uMDgwNCA0Ljc3ODMtMi43NTgyYS43OTQ4Ljc5NDggMCAwIDAgLjM5MjctLjY4MTN2LTYuNzM2OWwyLjAyIDEuMTY4NmEuMDcxLjA3MSAwIDAgMSAuMDM4LjA1MnY1LjU4MjZhNC41MDQgNC41MDQgMCAwIDEtNC40OTQ1IDQuNDk0NHptLTkuNjYwNy00LjEyNTRhNC40NzA4IDQuNDcwOCAwIDAgMS0uNTM0Ni0zLjAxMzdsLjE0Mi4wODUyIDQuNzgzIDIuNzU4MmEuNzcxMi43NzEyIDAgMCAwIC43ODA2IDBsNS44NDI4LTMuMzY4NXYyLjMzMjRhLjA4MDQuMDgwNCAwIDAgMS0uMDMzMi4wNjE1TDkuNzQgMTkuOTUwMmE0LjQ5OTIgNC40OTkyIDAgMCAxLTYuMTQwOC0xLjY0NjR6TTIuMzQwOCA3Ljg5NTZhNC40ODUgNC40ODUgMCAwIDEgMi4zNjU1LTEuOTcyOFYxMS42YS43NjY0Ljc2NjQgMCAwIDAgLjM4NzkuNjc2NWw1LjgxNDQgMy4zNTQzLTIuMDIwMSAxLjE2ODVhLjA3NTcuMDc1NyAwIDAgMS0uMDcxIDBsLTQuODMwMy0yLjc4NjVBNC41MDQgNC41MDQgMCAwIDEgMi4zNDA4IDcuODcyem0xNi41OTYzIDMuODU1OEwxMy4xMDM4IDguMzY0IDE1LjExOTIgNy4yYS4wNzU3LjA3NTcgMCAwIDEgLjA3MSAwbDQuODMwMyAyLjc5MTNhNC40OTQ0IDQuNDk0NCAwIDAgMS0uNjc2NSA4LjEwNDJ2LTUuNjc3MmEuNzkuNzkgMCAwIDAtLjQwNy0uNjY3em0yLjAxMDctMy4wMjMxbC0uMTQyLS4wODUyLTQuNzczNS0yLjc4MThhLjc3NTkuNzc1OSAwIDAgMC0uNzg1NCAwTDkuNDA5IDkuMjI5N1Y2Ljg5NzRhLjA2NjIuMDY2MiAwIDAgMSAuMDI4NC0uMDYxNWw0LjgzMDMtMi43ODY2YTQuNDk5MiA0LjQ5OTIgMCAwIDEgNi42ODAyIDQuNjZ6TTguMzA2NSAxMi44NjNsLTIuMDItMS4xNjM4YS4wODA0LjA4MDQgMCAwIDEtLjAzOC0uMDU2N1Y2LjA3NDJhNC40OTkyIDQuNDk5MiAwIDAgMSA3LjM3NTctMy40NTM3bC0uMTQyLjA4MDVMOC43MDQgNS40NTlhLjc5NDguNzk0OCAwIDAgMC0uMzkyNy42ODEzem0xLjA5NzYtMi4zNjU0bDIuNjAyLTEuNDk5OCAyLjYwNjkgMS40OTk4djIuOTk5NGwtMi41OTc0IDEuNDk5Ny0yLjYwNjctMS40OTk3WiIvPjwvc3ZnPg==",
+            "module": "whisper",
+            "module_name": "OpenAI",
+            "visible": true,
+            "options": false,
+            "linux": true,
+            "windows":true,
+            "mac":true,
+            "docker":true,
+            "father": "module",
+            "group": "scripts"
+        },
+        {
+            "es":{
+                "title": "Traducir audio",
+                "description": "Este comando traduce un audio a texto en inglés. El comando de conexión debe ser ejecutado previamente."
+            },
+            "en":{
+                "title": "Translate audio",
+                "description": "This command translates an audio to text in English. The connection command must be executed previously."
+            },
+            "pr": {
+                "title": "Traduzir áudio",
+                "description": "Este comando traduz um áudio para texto em inglês. O comando de conexão deve ser executado previamente."
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "file_select",
+                        "placeholder": {
+                            "es": "C:/Users/User/Desktop/audio.mp3",
+                            "en": "C:/Users/User/Desktop/audio.mp3",
+                            "pr": "C:/Users/User/Desktop/audio.mp3"
+                        },
+                        "title": {
+                            "es": "Archivo de audio",
+                            "en": "Audio file",
+                            "pr": "Arquivo de áudio"
+                        },
+                        "description": {
+                            "es": "Ruta al archivo de audio que se desea traducir al inglés",
+                            "en": "Path to the audio file to be translated to English",
+                            "pr": "Caminho para o arquivo de áudio que deseja traduzir para o inglês"
+                        },
+                        "id": "audio_file",
+                        "css": "col-md-6"
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "Variable",
+                            "en": "Variable",
+                            "pr": "Variável"
+                        },
+                        "title": {
+                            "es": "Variable donde se almacenará el resultado",
+                            "en": "Variable where the result will be stored",
+                            "pr": "Variável onde o resultado será armazenado"
+                        },
+                        "description": {
+                            "es": "Variable donde se almacenará el resultado de la traducción",
+                            "en": "Variable where the result of the translation will be stored",
+                            "pr": "Variável onde o resultado da tradução será armazenado"
+                        },
+                         "help": {
+                            "es": "Nombre de variable sin llaves {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result_var",
+                        "css": "col-md-6"
+                    }
+                ]
+            },
+            "video_youtube": "yWDUzNiWPJA",
+            "icon": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIGZpbGw9IiMwMDAwMDAiIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRpdGxlPk9wZW5BSSBpY29uPC90aXRsZT48cGF0aCBkPSJNMjIuMjgxOSA5LjgyMTFhNS45ODQ3IDUuOTg0NyAwIDAgMC0uNTE1Ny00LjkxMDggNi4wNDYyIDYuMDQ2MiAwIDAgMC02LjUwOTgtMi45QTYuMDY1MSA2LjA2NTEgMCAwIDAgNC45ODA3IDQuMTgxOGE1Ljk4NDcgNS45ODQ3IDAgMCAwLTMuOTk3NyAyLjkgNi4wNDYyIDYuMDQ2MiAwIDAgMCAuNzQyNyA3LjA5NjYgNS45OCA1Ljk4IDAgMCAwIC41MTEgNC45MTA3IDYuMDUxIDYuMDUxIDAgMCAwIDYuNTE0NiAyLjkwMDFBNS45ODQ3IDUuOTg0NyAwIDAgMCAxMy4yNTk5IDI0YTYuMDU1NyA2LjA1NTcgMCAwIDAgNS43NzE4LTQuMjA1OCA1Ljk4OTQgNS45ODk0IDAgMCAwIDMuOTk3Ny0yLjkwMDEgNi4wNTU3IDYuMDU1NyAwIDAgMC0uNzQ3NS03LjA3Mjl6bS05LjAyMiAxMi42MDgxYTQuNDc1NSA0LjQ3NTUgMCAwIDEtMi44NzY0LTEuMDQwOGwuMTQxOS0uMDgwNCA0Ljc3ODMtMi43NTgyYS43OTQ4Ljc5NDggMCAwIDAgLjM5MjctLjY4MTN2LTYuNzM2OWwyLjAyIDEuMTY4NmEuMDcxLjA3MSAwIDAgMSAuMDM4LjA1MnY1LjU4MjZhNC41MDQgNC41MDQgMCAwIDEtNC40OTQ1IDQuNDk0NHptLTkuNjYwNy00LjEyNTRhNC40NzA4IDQuNDcwOCAwIDAgMS0uNTM0Ni0zLjAxMzdsLjE0Mi4wODUyIDQuNzgzIDIuNzU4MmEuNzcxMi43NzEyIDAgMCAwIC43ODA2IDBsNS44NDI4LTMuMzY4NXYyLjMzMjRhLjA4MDQuMDgwNCAwIDAgMS0uMDMzMi4wNjE1TDkuNzQgMTkuOTUwMmE0LjQ5OTIgNC40OTkyIDAgMCAxLTYuMTQwOC0xLjY0NjR6TTIuMzQwOCA3Ljg5NTZhNC40ODUgNC40ODUgMCAwIDEgMi4zNjU1LTEuOTcyOFYxMS42YS43NjY0Ljc2NjQgMCAwIDAgLjM4NzkuNjc2NWw1LjgxNDQgMy4zNTQzLTIuMDIwMSAxLjE2ODVhLjA3NTcuMDc1NyAwIDAgMS0uMDcxIDBsLTQuODMwMy0yLjc4NjVBNC41MDQgNC41MDQgMCAwIDEgMi4zNDA4IDcuODcyem0xNi41OTYzIDMuODU1OEwxMy4xMDM4IDguMzY0IDE1LjExOTIgNy4yYS4wNzU3LjA3NTcgMCAwIDEgLjA3MSAwbDQuODMwMyAyLjc5MTNhNC40OTQ0IDQuNDk0NCAwIDAgMS0uNjc2NSA4LjEwNDJ2LTUuNjc3MmEuNzkuNzkgMCAwIDAtLjQwNy0uNjY3em0yLjAxMDctMy4wMjMxbC0uMTQyLS4wODUyLTQuNzczNS0yLjc4MThhLjc3NTkuNzc1OSAwIDAgMC0uNzg1NCAwTDkuNDA5IDkuMjI5N1Y2Ljg5NzRhLjA2NjIuMDY2MiAwIDAgMSAuMDI4NC0uMDYxNWw0LjgzMDMtMi43ODY2YTQuNDk5MiA0LjQ5OTIgMCAwIDEgNi42ODAyIDQuNjZ6TTguMzA2NSAxMi44NjNsLTIuMDItMS4xNjM4YS4wODA0LjA4MDQgMCAwIDEtLjAzOC0uMDU2N1Y2LjA3NDJhNC40OTkyIDQuNDk5MiAwIDAgMSA3LjM3NTctMy40NTM3bC0uMTQyLjA4MDVMOC43MDQgNS40NTlhLjc5NDguNzk0OCAwIDAgMC0uMzkyNy42ODEzem0xLjA5NzYtMi4zNjU0bDIuNjAyLTEuNDk5OCAyLjYwNjkgMS40OTk4djIuOTk5NGwtMi41OTc0IDEuNDk5Ny0yLjYwNjctMS40OTk3WiIvPjwvc3ZnPg==",
+            "module": "translate",
+            "module_name": "OpenAI",
+            "visible": true,
+            "options": false,
+            "linux": true,
+            "windows":true,
+            "mac":true,
+            "docker":true,
+            "father": "module",
+            "group": "scripts"
+        },
+        {
+            "es":{
                 "title": "Preguntar",
-                "description": "Este comando Consulta a OpenAI para obtener una respuesta."
+                "description": "Este comando Consulta a OpenAI para obtener una respuesta. Necesitas tener una clave de OpenAI. Ve a https://platform.openai.com/account/api-keys para obtener una clave."
             },
             "en":{
                 "title": "Ask",
-                "description": "This command asks OpenAI for an answer."
-            },
-            "pr": {
-                "title": "Perguntar",
-                "description": "Esse comando consulta a OpenAI para obter uma resposta."
+                "description": "This command asks OpenAI for an answer. You need to have an OpenAI key. Go to https://platform.openai.com/account/api-keys to get a key."
             },
             "form": {
                 "css": "modal-lg",
@@ -320,22 +470,39 @@
                         "type": "textarea",
                         "placeholder": {
                             "es": "Consulta a OpenAI",
-                            "en": "Prompt to OpenAI",
-                            "pr": "Consulta a OpenAI"
+                            "en": "Prompt to OpenAI"
                         },
                         "title": {
                             "es": "Consulta",
-                            "en": "Prompt",
-                            "pr": "Consulta"
+                            "en": "Prompt"
                         },
                         
                         "description": {
                             "es": "Consulta a OpenAI. Mientras mas informacion y contexto se proporcione, mejor y más completa será la respuesta.",
-                            "en": "Prompt to OpenAI. The more information and context you provide, the better and more complete the answer will be.",
-                            "pr": "Consulta a OpenAI. Quanto mais informações e contexto você fornecer, melhor e mais completa será a resposta."
+                            "en": "Prompt to OpenAI. The more information and context you provide, the better and more complete the answer will be."
                         },
                         "id": "prompt",
                         "css": "col-md-12"
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "000-000",
+                            "en": "000-000",
+                            "pr": "000-000"
+                        },
+                        "title": {
+                            "es": "API key secreta",
+                            "en": "Secret API key",
+                            "pr": "Chave secreta da API"
+                        },
+                        "description": {
+                            "es": "API key secreta necesaria para conectarse. Se obtiene de la pagina https://platform.openai.com/account/api-keys",
+                            "en": "Secret API key needed to connect. It is obtained from the page https://platform.openai.com/account/api-keys",
+                            "pr": "Chave secreta da API necessária para conectar. É obtido na página https://platform.openai.com/account/api-keys"
+                        },
+                        "id": "api_key",
+                        "css": "col-md-6"
                     },
                     {
                         "type": "select",
@@ -480,83 +647,6 @@
             "docker":true,
             "father": "module",
             "group": "scripts"
-        },
-        {
-            "es":{
-                "title": "Transcribir audio",
-                "description": "Este comando transcribe un audio a texto. Debe ejecutarse el comando de conexión previamente."
-            },
-            "en":{
-                "title": "Transcribe audio",
-                "description": "This command transcribes an audio to text. The connection command must be executed previously."
-            },
-            "pr": {
-                "title": "Transcrever áudio",
-                "description": "Este comando transcreve um áudio para texto. O comando de conexão deve ser executado previamente."
-            },
-            "form": {
-                "css": "modal-lg",
-                "inputs": [
-                    {
-                        "type": "file_select",
-                        "placeholder": {
-                            "es": "C:/Users/User/Desktop/audio.mp3",
-                            "en": "C:/Users/User/Desktop/audio.mp3",
-                            "pr": "C:/Users/User/Desktop/audio.mp3"
-                        },
-                        "title": {
-                            "es": "Archivo de audio",
-                            "en": "Audio file",
-                            "pr": "Arquivo de áudio"
-                        },
-                        "description": {
-                            "es": "Ruta al archivo de audio que se desea transcribir",
-                            "en": "Path to the audio file to be transcribed",
-                            "pr": "Caminho para o arquivo de áudio que será transcrito"
-                        },
-                        "id": "audio_file",
-                        "css": "col-md-6"
-                    },
-                    {
-                        "type": "input",
-                        "placeholder": {
-                            "es": "Variable",
-                            "en": "Variable",
-                            "pr": "Variável"
-                        },
-                        "title": {
-                            "es": "Variable donde se almacenará el resultado",
-                            "en": "Variable where the result will be stored",
-                            "pr": "Variável onde o resultado será armazenado"
-                        },
-                        "description": {
-                            "es": "Variable donde se almacenará el resultado de la transcripción",
-                            "en": "Variable where the result of the transcription will be stored",
-                            "pr": "Variável onde o resultado da transcrição será armazenado"
-                        },
-                         "help": {
-                            "es": "Nombre de variable sin llaves {}",
-                            "en": "Variable name without {}",
-                            "pr": "Nome da variável sem {}"
-                        },
-                        "remove_vars": true,
-                        "id": "result_var",
-                        "css": "col-md-6"
-                    }
-                ]
-            },
-            "video_youtube": "yWDUzNiWPJA",
-            "icon": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIGZpbGw9IiMwMDAwMDAiIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRpdGxlPk9wZW5BSSBpY29uPC90aXRsZT48cGF0aCBkPSJNMjIuMjgxOSA5LjgyMTFhNS45ODQ3IDUuOTg0NyAwIDAgMC0uNTE1Ny00LjkxMDggNi4wNDYyIDYuMDQ2MiAwIDAgMC02LjUwOTgtMi45QTYuMDY1MSA2LjA2NTEgMCAwIDAgNC45ODA3IDQuMTgxOGE1Ljk4NDcgNS45ODQ3IDAgMCAwLTMuOTk3NyAyLjkgNi4wNDYyIDYuMDQ2MiAwIDAgMCAuNzQyNyA3LjA5NjYgNS45OCA1Ljk4IDAgMCAwIC41MTEgNC45MTA3IDYuMDUxIDYuMDUxIDAgMCAwIDYuNTE0NiAyLjkwMDFBNS45ODQ3IDUuOTg0NyAwIDAgMCAxMy4yNTk5IDI0YTYuMDU1NyA2LjA1NTcgMCAwIDAgNS43NzE4LTQuMjA1OCA1Ljk4OTQgNS45ODk0IDAgMCAwIDMuOTk3Ny0yLjkwMDEgNi4wNTU3IDYuMDU1NyAwIDAgMC0uNzQ3NS03LjA3Mjl6bS05LjAyMiAxMi42MDgxYTQuNDc1NSA0LjQ3NTUgMCAwIDEtMi44NzY0LTEuMDQwOGwuMTQxOS0uMDgwNCA0Ljc3ODMtMi43NTgyYS43OTQ4Ljc5NDggMCAwIDAgLjM5MjctLjY4MTN2LTYuNzM2OWwyLjAyIDEuMTY4NmEuMDcxLjA3MSAwIDAgMSAuMDM4LjA1MnY1LjU4MjZhNC41MDQgNC41MDQgMCAwIDEtNC40OTQ1IDQuNDk0NHptLTkuNjYwNy00LjEyNTRhNC40NzA4IDQuNDcwOCAwIDAgMS0uNTM0Ni0zLjAxMzdsLjE0Mi4wODUyIDQuNzgzIDIuNzU4MmEuNzcxMi43NzEyIDAgMCAwIC43ODA2IDBsNS44NDI4LTMuMzY4NXYyLjMzMjRhLjA4MDQuMDgwNCAwIDAgMS0uMDMzMi4wNjE1TDkuNzQgMTkuOTUwMmE0LjQ5OTIgNC40OTkyIDAgMCAxLTYuMTQwOC0xLjY0NjR6TTIuMzQwOCA3Ljg5NTZhNC40ODUgNC40ODUgMCAwIDEgMi4zNjU1LTEuOTcyOFYxMS42YS43NjY0Ljc2NjQgMCAwIDAgLjM4NzkuNjc2NWw1LjgxNDQgMy4zNTQzLTIuMDIwMSAxLjE2ODVhLjA3NTcuMDc1NyAwIDAgMS0uMDcxIDBsLTQuODMwMy0yLjc4NjVBNC41MDQgNC41MDQgMCAwIDEgMi4zNDA4IDcuODcyem0xNi41OTYzIDMuODU1OEwxMy4xMDM4IDguMzY0IDE1LjExOTIgNy4yYS4wNzU3LjA3NTcgMCAwIDEgLjA3MSAwbDQuODMwMyAyLjc5MTNhNC40OTQ0IDQuNDk0NCAwIDAgMS0uNjc2NSA4LjEwNDJ2LTUuNjc3MmEuNzkuNzkgMCAwIDAtLjQwNy0uNjY3em0yLjAxMDctMy4wMjMxbC0uMTQyLS4wODUyLTQuNzczNS0yLjc4MThhLjc3NTkuNzc1OSAwIDAgMC0uNzg1NCAwTDkuNDA5IDkuMjI5N1Y2Ljg5NzRhLjA2NjIuMDY2MiAwIDAgMSAuMDI4NC0uMDYxNWw0LjgzMDMtMi43ODY2YTQuNDk5MiA0LjQ5OTIgMCAwIDEgNi42ODAyIDQuNjZ6TTguMzA2NSAxMi44NjNsLTIuMDItMS4xNjM4YS4wODA0LjA4MDQgMCAwIDEtLjAzOC0uMDU2N1Y2LjA3NDJhNC40OTkyIDQuNDk5MiAwIDAgMSA3LjM3NTctMy40NTM3bC0uMTQyLjA4MDVMOC43MDQgNS40NTlhLjc5NDguNzk0OCAwIDAgMC0uMzkyNy42ODEzem0xLjA5NzYtMi4zNjU0bDIuNjAyLTEuNDk5OCAyLjYwNjkgMS40OTk4djIuOTk5NGwtMi41OTc0IDEuNDk5Ny0yLjYwNjctMS40OTk3WiIvPjwvc3ZnPg==",
-            "module": "whisper",
-            "module_name": "OpenAI",
-            "visible": true,
-            "options": false,
-            "linux": true,
-            "windows":true,
-            "mac":true,
-            "docker":true,
-            "father": "module",
-            "group": "scripts"
-        }  
+        } 
     ]
 }

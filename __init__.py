@@ -97,6 +97,18 @@ class OpenAI_RB:
         result = transcript["text"].encode().decode('unicode_escape').encode('latin-1').decode('utf-8')
         
         return result
+    
+    def get_audio_translations(self, audio_file):
+        '''
+        Get audio translations from OpenAI API
+        '''
+        import r_openai as openai
+        audio_ = open(audio_file, "rb")
+        translation = openai.Audio.translate("whisper-1", audio_)
+
+        result = translation["text"]
+        
+        return result
 
 
 try:
@@ -133,6 +145,13 @@ try:
 
         response = mod_openai.get_transcript(audio_file)
 
+        SetVar(result, response)
+        
+    if module == "translate":
+        audio_file = GetParams("audio_file")
+        result = GetParams("result_var")
+        
+        response = mod_openai.get_audio_translations(audio_file)
         SetVar(result, response)
         
         
