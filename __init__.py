@@ -62,8 +62,6 @@ class OpenAI_RB:
         Authenticate with OpenAI API
         '''
         import r_openai as openai
-        print(sys.path)
-        print(os.path.abspath(openai.__file__))
         openai.api_key = self.api_key
         openai.Model.list()
         print("Authentication successful")
