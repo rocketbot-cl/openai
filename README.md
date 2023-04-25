@@ -21,7 +21,7 @@ This command connects to OpenAI with the specified secret API key.
 This command allows you to make a query to OpenAI. The connection command must be executed previously.
 
 3. Transcribe audio  
-This command transcribes an audio to text.  
+This command transcribes an audio to text. The connection command must be executed previously.
 
 
 

@@ -21,7 +21,7 @@ Este comando conecta a OpenAI con la API key secreta especificada.
 Este comando permite fazer uma consulta à OpenAI. O comando de conexão deve ser executado previamente.
 
 3. Transcrever áudio  
-Este comando transcreve um áudio para texto.  
+Este comando transcreve um áudio para texto. O comando de conexão deve ser executado previamente.
 
 
 

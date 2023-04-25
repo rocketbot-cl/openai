@@ -36,7 +36,7 @@ Este comando permite realizar una consulta a OpenAI. Debe ejecutarse el comando 
 
 ### Transcribir audio
   
-Este comando transcribe un audio a texto.
+Este comando transcribe un audio a texto. Debe ejecutarse el comando de conexión previamente.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
 |Archivo de audio|Ruta al archivo de audio que se desea transcribir|C:/Users/User/Desktop/audio.mp3|

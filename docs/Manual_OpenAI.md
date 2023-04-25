@@ -36,7 +36,7 @@ This command allows you to make a query to OpenAI. The connection command must b
 
 ### Transcribe audio
   
-This command transcribes an audio to text.
+This command transcribes an audio to text. The connection command must be executed previously.
 |Parameters|Description|example|
 | --- | --- | --- |
 |Audio file|Path to the audio file to be transcribed|C:/Users/User/Desktop/audio.mp3|

@@ -484,15 +484,15 @@
         {
             "es":{
                 "title": "Transcribir audio",
-                "description": "Este comando transcribe un audio a texto."
+                "description": "Este comando transcribe un audio a texto. Debe ejecutarse el comando de conexión previamente."
             },
             "en":{
                 "title": "Transcribe audio",
-                "description": "This command transcribes an audio to text."
+                "description": "This command transcribes an audio to text. The connection command must be executed previously."
             },
             "pr": {
                 "title": "Transcrever áudio",
-                "description": "Este comando transcreve um áudio para texto."
+                "description": "Este comando transcreve um áudio para texto. O comando de conexão deve ser executado previamente."
             },
             "form": {
                 "css": "modal-lg",

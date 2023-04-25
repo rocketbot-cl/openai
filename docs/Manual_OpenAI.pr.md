@@ -36,7 +36,7 @@ Este comando permite fazer uma consulta à OpenAI. O comando de conexão deve se
 
 ### Transcrever áudio
   
-Este comando transcreve um áudio para texto.
+Este comando transcreve um áudio para texto. O comando de conexão deve ser executado previamente.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Arquivo de áudio|Caminho para o arquivo de áudio que será transcrito|C:/Users/User/Desktop/audio.mp3|
