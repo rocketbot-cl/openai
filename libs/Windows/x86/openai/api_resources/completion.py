@@ -1,9 +1,9 @@
 import time
 
-from openai import util
-from openai.api_resources.abstract import DeletableAPIResource, ListableAPIResource
-from openai.api_resources.abstract.engine_api_resource import EngineAPIResource
-from openai.error import TryAgain
+from r_openai import util
+from r_openai.api_resources.abstract import DeletableAPIResource, ListableAPIResource
+from r_openai.api_resources.abstract.engine_api_resource import EngineAPIResource
+from r_openai.error import TryAgain
 
 
 class Completion(EngineAPIResource):

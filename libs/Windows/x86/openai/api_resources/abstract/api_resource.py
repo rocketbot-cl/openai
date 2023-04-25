@@ -1,9 +1,9 @@
 from urllib.parse import quote_plus
 
-import openai
-from openai import api_requestor, error, util
-from openai.openai_object import OpenAIObject
-from openai.util import ApiType
+import r_openai as openai
+from r_openai import api_requestor, error, util
+from r_openai.openai_object import OpenAIObject
+from r_openai.util import ApiType
 from typing import Optional
 
 

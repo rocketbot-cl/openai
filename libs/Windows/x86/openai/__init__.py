@@ -5,7 +5,7 @@
 import os
 from typing import Optional
 
-from openai.api_resources import (
+from r_openai.api_resources import (
     Answer,
     Classification,
     Completion,
@@ -22,7 +22,7 @@ from openai.api_resources import (
     Moderation,
     Search,
 )
-from openai.error import APIError, InvalidRequestError, OpenAIError
+from r_openai.error import APIError, InvalidRequestError, OpenAIError
 
 api_key = os.environ.get("OPENAI_API_KEY")
 # Path of a file with an API key, whose contents can change. Supercedes

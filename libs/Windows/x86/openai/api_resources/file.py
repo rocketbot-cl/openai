@@ -2,10 +2,10 @@ import json
 import os
 from typing import cast
 
-import openai
-from openai import api_requestor, util, error
-from openai.api_resources.abstract import DeletableAPIResource, ListableAPIResource
-from openai.util import ApiType
+import r_openai as openai
+from r_openai import api_requestor, util, error
+from r_openai.api_resources.abstract import DeletableAPIResource, ListableAPIResource
+from r_openai.util import ApiType
 
 
 class File(ListableAPIResource, DeletableAPIResource):

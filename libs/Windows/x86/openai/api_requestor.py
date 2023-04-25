@@ -9,10 +9,10 @@ from urllib.parse import urlencode, urlsplit, urlunsplit
 import requests
 from typing_extensions import Literal
 
-import openai
-from openai import error, util, version
-from openai.openai_response import OpenAIResponse
-from openai.util import ApiType
+import r_openai as openai
+from r_openai import error, util, version
+from r_openai.openai_response import OpenAIResponse
+from r_openai.util import ApiType
 
 TIMEOUT_SECS = 600
 MAX_CONNECTION_RETRIES = 2

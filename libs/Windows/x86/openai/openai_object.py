@@ -2,10 +2,10 @@ import json
 from copy import deepcopy
 from typing import Optional, Tuple, Union
 
-import openai
-from openai import api_requestor, util
-from openai.openai_response import OpenAIResponse
-from openai.util import ApiType
+import r_openai as openai
+from r_openai import api_requestor, util
+from r_openai.openai_response import OpenAIResponse
+from r_openai.util import ApiType
 
 
 class OpenAIObject(dict):

@@ -1,10 +1,10 @@
 import time
 import warnings
 
-from openai import util
-from openai.api_resources.abstract import ListableAPIResource, UpdateableAPIResource
-from openai.error import InvalidAPIType, TryAgain
-from openai.util import ApiType
+from r_openai import util
+from r_openai.api_resources.abstract import ListableAPIResource, UpdateableAPIResource
+from r_openai.error import InvalidAPIType, TryAgain
+from r_openai.util import ApiType
 
 
 class Engine(ListableAPIResource, UpdateableAPIResource):

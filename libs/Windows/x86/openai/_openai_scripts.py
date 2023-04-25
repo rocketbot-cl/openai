@@ -3,8 +3,8 @@ import argparse
 import logging
 import sys
 
-import openai
-from openai.cli import api_register, display_error, tools_register, wandb_register
+import r_openai as openai
+from r_openai.cli import api_register, display_error, tools_register, wandb_register
 
 logger = logging.getLogger()
 formatter = logging.Formatter("[%(asctime)s] %(message)s")

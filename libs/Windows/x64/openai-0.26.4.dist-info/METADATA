@@ -98,7 +98,7 @@ export OPENAI_API_KEY='sk-...'
 Or set `openai.api_key` to its value:
 
 ```python
-import openai
+import r_openai as openai
 openai.api_key = "sk-..."
 
 # list engines
@@ -124,7 +124,7 @@ In order to use the library with Microsoft Azure endpoints, you need to set the 
 In addition, the deployment name must be passed as the engine parameter.
 
 ```python
-import openai
+import r_openai as openai
 openai.api_type = "azure"
 openai.api_key = "..."
 openai.api_base = "https://example-endpoint.openai.azure.com"
@@ -150,7 +150,7 @@ In order to use Microsoft Active Directory to authenticate to your Azure endpoin
 
 ```python
 from azure.identity import DefaultAzureCredential
-import openai
+import r_openai as openai
 
 # Request credential
 default_credential = DefaultAzureCredential()
@@ -203,7 +203,7 @@ In the OpenAI Python library, an embedding represents a text string as a fixed-l
 To get an embedding for a text string, you can use the embeddings method as follows in Python:
 
 ```python
-import openai
+import r_openai as openai
 openai.api_key = "sk-..."  # supply your API key however you choose
 
 # choose text to embed
@@ -255,7 +255,7 @@ For more information on fine-tuning, read the [fine-tuning guide](https://beta.o
 OpenAI provides a Moderation endpoint that can be used to check whether content complies with the OpenAI [content policy](https://beta.openai.com/docs/usage-policies)
 
 ```python
-import openai
+import r_openai as openai
 openai.api_key = "sk-..."  # supply your API key however you choose
 
 moderation_resp = openai.Moderation.create(input="Here is some perfectly innocuous text that follows all OpenAI content policies.")
@@ -266,7 +266,7 @@ See the [moderation guide](https://beta.openai.com/docs/guides/moderation) for m
 ## Image generation (DALL·E)
 
 ```python
-import openai
+import r_openai as openai
 openai.api_key = "sk-..."  # supply your API key however you choose
 
 image_resp = openai.Image.create(prompt="two dogs playing chess, oil painting", n=4, size="512x512")
@@ -278,7 +278,7 @@ image_resp = openai.Image.create(prompt="two dogs playing chess, oil painting", 
 Async support is available in the API by prepending `a` to a network-bound method:
 
 ```python
-import openai
+import r_openai as openai
 openai.api_key = "sk-..."  # supply your API key however you choose
 
 async def create_completion():
@@ -291,7 +291,7 @@ To make async requests more efficient, you can pass in your own
 of your program/event loop:
 
 ```python
-import openai
+import r_openai as openai
 from aiohttp import ClientSession
 
 openai.aiosession.set(ClientSession())

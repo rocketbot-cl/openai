@@ -1,8 +1,8 @@
 import time
 
-from openai import util, error
-from openai.api_resources.abstract.engine_api_resource import EngineAPIResource
-from openai.error import TryAgain
+from r_openai import util, error
+from r_openai.api_resources.abstract.engine_api_resource import EngineAPIResource
+from r_openai.error import TryAgain
 
 
 class Edit(EngineAPIResource):

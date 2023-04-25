@@ -1,9 +1,9 @@
 # WARNING: This interface is considered experimental and may changed in the future without warning.
 from typing import Any, List
 
-import openai
-from openai import api_requestor, util
-from openai.api_resources.abstract import APIResource
+import r_openai as openai
+from r_openai import api_requestor, util
+from r_openai.api_resources.abstract import APIResource
 
 
 class Image(APIResource):

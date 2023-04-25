@@ -1,4 +1,4 @@
-import openai
+import r_openai as openai
 
 
 class OpenAIError(Exception):

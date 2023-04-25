@@ -1,10 +1,10 @@
-from openai import util
-from openai.api_resources.abstract import (
+from r_openai import util
+from r_openai.api_resources.abstract import (
     DeletableAPIResource,
     ListableAPIResource,
     CreateableAPIResource,
 )
-from openai.error import InvalidRequestError, APIError
+from r_openai.error import InvalidRequestError, APIError
 
 
 class Deployment(CreateableAPIResource, ListableAPIResource, DeletableAPIResource):

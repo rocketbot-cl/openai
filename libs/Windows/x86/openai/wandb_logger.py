@@ -16,7 +16,7 @@ if WANDB_AVAILABLE:
     import numpy as np
     import pandas as pd
 
-    from openai import File, FineTune
+    from r_openai import File, FineTune
 
 
 class WandbLogger:

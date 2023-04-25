@@ -31,6 +31,7 @@ import requests
 import os
 import sys
 import json
+import traceback
 
 base_path = tmp_global_obj["basepath"]
 cur_path = base_path + 'modules' + os.sep + 'OpenAI' + os.sep + 'libs' + os.sep
@@ -39,11 +40,11 @@ cur_path_x64 = os.path.join(cur_path, 'Windows' + os.sep +  'x64' + os.sep)
 cur_path_x86 = os.path.join(cur_path, 'Windows' + os.sep +  'x86' + os.sep)
 
 if sys.maxsize > 2**32 and cur_path_x64 not in sys.path:
-    sys.path.append(cur_path_x64)
+    sys.path.insert(0, cur_path_x64)
 elif sys.maxsize <= 2**32 and cur_path_x86 not in sys.path:
-    sys.path.append(cur_path_x86)
+    sys.path.insert(0, cur_path_x86)
     
-import openai 
+import r_openai as openai 
 global mod_openai
 
 """
@@ -60,6 +61,9 @@ class OpenAI_RB:
         '''
         Authenticate with OpenAI API
         '''
+        import r_openai as openai
+        print(sys.path)
+        print(os.path.abspath(openai.__file__))
         openai.api_key = self.api_key
         openai.Model.list()
         print("Authentication successful")
@@ -68,6 +72,7 @@ class OpenAI_RB:
         '''
         Get text completions from OpenAI API
         '''
+        import r_openai as openai
         response = openai.Completion.create(
             model=model,
             prompt=prompt,
@@ -87,6 +92,7 @@ class OpenAI_RB:
         '''
         Get text transcript from OpenAI API
         '''
+        import r_openai as openai
         audio_ = open(audio_file, "rb")
         transcript = openai.Audio.transcribe("whisper-1", audio_)
         
@@ -105,6 +111,7 @@ try:
             SetVar(result, True)
 
         except Exception as e:
+            traceback.print_exc()
             PrintException()
             SetVar(result, False)
             raise e

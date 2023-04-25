@@ -1,6 +1,6 @@
 from urllib.parse import quote_plus
 
-from openai.api_resources.abstract.api_resource import APIResource
+from r_openai.api_resources.abstract.api_resource import APIResource
 
 
 class UpdateableAPIResource(APIResource):

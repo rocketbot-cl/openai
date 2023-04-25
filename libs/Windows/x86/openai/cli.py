@@ -8,9 +8,9 @@ from typing import Optional
 
 import requests
 
-import openai
-from openai.upload_progress import BufferReader
-from openai.validators import (
+import r_openai as openai
+from r_openai.upload_progress import BufferReader
+from r_openai.validators import (
     apply_necessary_remediation,
     apply_validators,
     get_search_validators,
@@ -581,7 +581,7 @@ class FineTune:
 class WandbLogger:
     @classmethod
     def sync(cls, args):
-        import openai.wandb_logger
+        import r_openai as openai.wandb_logger
 
         resp = openai.wandb_logger.WandbLogger.sync(
             id=args.id,

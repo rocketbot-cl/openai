@@ -1,5 +1,5 @@
-from openai import api_resources
-from openai.api_resources.experimental.completion_config import CompletionConfig
+from r_openai import api_resources
+from r_openai.api_resources.experimental.completion_config import CompletionConfig
 
 OBJECT_CLASSES = {
     "engine": api_resources.Engine,

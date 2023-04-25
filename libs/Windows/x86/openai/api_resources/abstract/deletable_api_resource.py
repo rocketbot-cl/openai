@@ -1,8 +1,8 @@
 from urllib.parse import quote_plus
 
-from openai import error
-from openai.api_resources.abstract.api_resource import APIResource
-from openai.util import ApiType
+from r_openai import error
+from r_openai.api_resources.abstract.api_resource import APIResource
+from r_openai.util import ApiType
 
 
 class DeletableAPIResource(APIResource):

@@ -3,11 +3,11 @@ from pydoc import apropos
 from typing import Optional
 from urllib.parse import quote_plus
 
-import openai
-from openai import api_requestor, error, util
-from openai.api_resources.abstract.api_resource import APIResource
-from openai.openai_response import OpenAIResponse
-from openai.util import ApiType
+import r_openai as openai
+from r_openai import api_requestor, error, util
+from r_openai.api_resources.abstract.api_resource import APIResource
+from r_openai.openai_response import OpenAIResponse
+from r_openai.util import ApiType
 
 MAX_TIMEOUT = 20
 

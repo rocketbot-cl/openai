@@ -1,6 +1,6 @@
 from typing import List, Optional, Union
 
-from openai.openai_object import OpenAIObject
+from r_openai.openai_object import OpenAIObject
 
 
 class Moderation(OpenAIObject):
