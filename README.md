@@ -1,6 +1,6 @@
 # OpenAI
   
-This module connects to the OpenAI API. You can make queries to natural language models and get a response based on the context you give it.  
+This module connects to the OpenAI API. You can perform actions such as making a query to a natural language model, transcribing an audio or translating an audio to English.  
 
 *Read this in other languages: [English](README.md), [Português](README.pr.md), [Español](README.es.md)*
 
@@ -23,6 +23,8 @@ This command allows you to make a query to OpenAI. The connection command must b
 3. Transcribe audio  
 This command transcribes an audio to text. The connection command must be executed previously.
 
+4. Translate audio  
+This command translates an audio to text in English. The connection command must be executed previously.
 
 
 

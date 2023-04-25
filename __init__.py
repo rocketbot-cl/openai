@@ -156,7 +156,8 @@ try:
         
         
     if module == "OpenAI":
-        # This is an old version of the command, it is not visible anymore in the package.json, but it is still used by some users so it is kept here. Please do not delete it.
+        # This is an old version of the command, it is not visible anymore in the package.json in Rocketbot v2023, 
+        # but it is still used by some users so it is kept here. Please do not delete it.
         prompt = GetParams("prompt")
         model = GetParams("model")
         if not model:

@@ -1,6 +1,6 @@
 # OpenAI
   
-This module connects to the OpenAI API. You can make queries to natural language models and get a response based on the context you give it.  
+This module connects to the OpenAI API. You can perform actions such as making a query to a natural language model, transcribing an audio or translating an audio to English.  
 
 *Read this in other languages: [English](Manual_OpenAI.md), [Português](Manual_OpenAI.pr.md), [Español](Manual_OpenAI.es.md)*
   
@@ -41,3 +41,11 @@ This command transcribes an audio to text. The connection command must be execut
 | --- | --- | --- |
 |Audio file|Path to the audio file to be transcribed|C:/Users/User/Desktop/audio.mp3|
 |Variable where the result will be stored|Variable where the result of the transcription will be stored|Variable|
+
+### Translate audio
+  
+This command translates an audio to text in English. The connection command must be executed previously.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Audio file|Path to the audio file to be translated to English|C:/Users/User/Desktop/audio.mp3|
+|Variable where the result will be stored|Variable where the result of the translation will be stored|Variable|

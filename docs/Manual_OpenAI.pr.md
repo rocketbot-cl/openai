@@ -1,6 +1,6 @@
 # OpenAI
   
-Este módulo se conecta à API da OpenAI. Pode consultar modelos de linguagem natural e obter uma resposta com base no contexto que o usuário fornece.  
+Este módulo conecta-se à API da OpenAI. Pode executar ações como fazer uma consulta a um modelo de linguagem natural, transcrever um áudio ou traduzir um áudio para inglês.  
 
 *Read this in other languages: [English](Manual_OpenAI.md), [Português](Manual_OpenAI.pr.md), [Español](Manual_OpenAI.es.md)*
   
@@ -41,3 +41,11 @@ Este comando transcreve um áudio para texto. O comando de conexão deve ser exe
 | --- | --- | --- |
 |Arquivo de áudio|Caminho para o arquivo de áudio que será transcrito|C:/Users/User/Desktop/audio.mp3|
 |Variável onde o resultado será armazenado|Variável onde o resultado da transcrição será armazenado|Variável|
+
+### Traduzir áudio
+  
+Este comando traduz um áudio para texto em inglês. O comando de conexão deve ser executado previamente.
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Arquivo de áudio|Caminho para o arquivo de áudio que deseja traduzir para o inglês|C:/Users/User/Desktop/audio.mp3|
+|Variável onde o resultado será armazenado|Variável onde o resultado da tradução será armazenado|Variável|
