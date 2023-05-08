@@ -136,6 +136,8 @@ try:
 
         response = mod_openai.get_completions(prompt, model, max_tokens, temperature, 1, 0, 0, stop)
         
+        response = response.replace("\n", "")
+        
         SetVar(result, response)
 
 
