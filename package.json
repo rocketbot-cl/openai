@@ -1,8 +1,13 @@
 {
-    "author":"David Cuello - Rocketbot - <david@rocketbot.cl>",
-    "description": "Este módulo se conecta a la API de OpenAI. Puedes realizar consultas a modelos de lenguaje natural y obtener una respuesta basada en el contexto que le entregues.",
+    "author":"David Cuello - Rocketbot - <david@rocketbot.cl> | Nicolas Garcia",
+    "description": "Este módulo se conecta a la API de OpenAI. Puedes ejecutar acciones como realizar una consulta a un modelo de lenguaje natural, transcribir un audio o traducir un audio al inglés",
+    "description_lang": {
+        "es": "Este módulo se conecta a la API de OpenAI. Puedes ejecutar acciones como realizar una consulta a un modelo de lenguaje natural, transcribir un audio o traducir un audio al inglés.",
+        "en": "This module connects to the OpenAI API. You can perform actions such as making a query to a natural language model, transcribing an audio or translating an audio to English.",
+        "pr": "Este módulo conecta-se à API da OpenAI. Pode executar ações como fazer uma consulta a um modelo de linguagem natural, transcrever um áudio ou traduzir um áudio para inglês."
+    },
     "disclaimer":"THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.",
-    "version":"1.0.2",
+    "version":"2.0.0",
     "license": "MIT",
     "homepage":"http://rocketbot.com/",
     "linux": true,
@@ -11,27 +16,444 @@
     "docker":true,
     "name": "OpenAI",
     "dependencies": {
-        "openai": "0.25.0"
+        "openai": "0.27.4"
     },
     "title": {
         "en": "OpenAI",
-        "es": "OpenAI"
+        "es": "OpenAI",
+        "pr": "OpenAI"
     },
     "en":{
         "title": "OpenAI",
         "description": "This module connects to the OpenAI API. You can make queries to natural language models and get a response based on the context you give it.",
-        "keywords": "openai, api, connector",
+        "keywords": "openai, api, connector, IA",
         "category": "Connectors"
     },
     "es":{
         "title": "OpenAI",
         "description": "Este módulo se conecta a la API de OpenAI. Puedes realizar consultas a modelos de lenguaje natural y obtener una respuesta basada en el contexto que le entregues.",
-        "keywords": "openai, api, conector",
+        "keywords": "openai, api, conector, IA",
+        "category": "Conectores"
+    },
+    "pr": {
+        "title": "OpenAI",
+        "description": "Este módulo se conecta à API da OpenAI. Pode consultar modelos de linguagem natural e obter uma resposta com base no contexto que o usuário fornece.",
+        "keywords": "openai, api, conector, IA",
         "category": "Conectores"
     },
     "icon": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIGZpbGw9IiMwMDAwMDAiIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRpdGxlPk9wZW5BSSBpY29uPC90aXRsZT48cGF0aCBkPSJNMjIuMjgxOSA5LjgyMTFhNS45ODQ3IDUuOTg0NyAwIDAgMC0uNTE1Ny00LjkxMDggNi4wNDYyIDYuMDQ2MiAwIDAgMC02LjUwOTgtMi45QTYuMDY1MSA2LjA2NTEgMCAwIDAgNC45ODA3IDQuMTgxOGE1Ljk4NDcgNS45ODQ3IDAgMCAwLTMuOTk3NyAyLjkgNi4wNDYyIDYuMDQ2MiAwIDAgMCAuNzQyNyA3LjA5NjYgNS45OCA1Ljk4IDAgMCAwIC41MTEgNC45MTA3IDYuMDUxIDYuMDUxIDAgMCAwIDYuNTE0NiAyLjkwMDFBNS45ODQ3IDUuOTg0NyAwIDAgMCAxMy4yNTk5IDI0YTYuMDU1NyA2LjA1NTcgMCAwIDAgNS43NzE4LTQuMjA1OCA1Ljk4OTQgNS45ODk0IDAgMCAwIDMuOTk3Ny0yLjkwMDEgNi4wNTU3IDYuMDU1NyAwIDAgMC0uNzQ3NS03LjA3Mjl6bS05LjAyMiAxMi42MDgxYTQuNDc1NSA0LjQ3NTUgMCAwIDEtMi44NzY0LTEuMDQwOGwuMTQxOS0uMDgwNCA0Ljc3ODMtMi43NTgyYS43OTQ4Ljc5NDggMCAwIDAgLjM5MjctLjY4MTN2LTYuNzM2OWwyLjAyIDEuMTY4NmEuMDcxLjA3MSAwIDAgMSAuMDM4LjA1MnY1LjU4MjZhNC41MDQgNC41MDQgMCAwIDEtNC40OTQ1IDQuNDk0NHptLTkuNjYwNy00LjEyNTRhNC40NzA4IDQuNDcwOCAwIDAgMS0uNTM0Ni0zLjAxMzdsLjE0Mi4wODUyIDQuNzgzIDIuNzU4MmEuNzcxMi43NzEyIDAgMCAwIC43ODA2IDBsNS44NDI4LTMuMzY4NXYyLjMzMjRhLjA4MDQuMDgwNCAwIDAgMS0uMDMzMi4wNjE1TDkuNzQgMTkuOTUwMmE0LjQ5OTIgNC40OTkyIDAgMCAxLTYuMTQwOC0xLjY0NjR6TTIuMzQwOCA3Ljg5NTZhNC40ODUgNC40ODUgMCAwIDEgMi4zNjU1LTEuOTcyOFYxMS42YS43NjY0Ljc2NjQgMCAwIDAgLjM4NzkuNjc2NWw1LjgxNDQgMy4zNTQzLTIuMDIwMSAxLjE2ODVhLjA3NTcuMDc1NyAwIDAgMS0uMDcxIDBsLTQuODMwMy0yLjc4NjVBNC41MDQgNC41MDQgMCAwIDEgMi4zNDA4IDcuODcyem0xNi41OTYzIDMuODU1OEwxMy4xMDM4IDguMzY0IDE1LjExOTIgNy4yYS4wNzU3LjA3NTcgMCAwIDEgLjA3MSAwbDQuODMwMyAyLjc5MTNhNC40OTQ0IDQuNDk0NCAwIDAgMS0uNjc2NSA4LjEwNDJ2LTUuNjc3MmEuNzkuNzkgMCAwIDAtLjQwNy0uNjY3em0yLjAxMDctMy4wMjMxbC0uMTQyLS4wODUyLTQuNzczNS0yLjc4MThhLjc3NTkuNzc1OSAwIDAgMC0uNzg1NCAwTDkuNDA5IDkuMjI5N1Y2Ljg5NzRhLjA2NjIuMDY2MiAwIDAgMSAuMDI4NC0uMDYxNWw0LjgzMDMtMi43ODY2YTQuNDk5MiA0LjQ5OTIgMCAwIDEgNi42ODAyIDQuNjZ6TTguMzA2NSAxMi44NjNsLTIuMDItMS4xNjM4YS4wODA0LjA4MDQgMCAwIDEtLjAzOC0uMDU2N1Y2LjA3NDJhNC40OTkyIDQuNDk5MiAwIDAgMSA3LjM3NTctMy40NTM3bC0uMTQyLjA4MDVMOC43MDQgNS40NTlhLjc5NDguNzk0OCAwIDAgMC0uMzkyNy42ODEzem0xLjA5NzYtMi4zNjU0bDIuNjAyLTEuNDk5OCAyLjYwNjkgMS40OTk4djIuOTk5NGwtMi41OTc0IDEuNDk5Ny0yLjYwNjctMS40OTk3WiIvPjwvc3ZnPg==",
     "children": [
+        {
+            "es":{
+                "title": "Conectar a OpenAI",
+                "description": "Este comando conecta a OpenAI con la API key secreta especificada."
+            },
+            "en":{
+                "title": "Connect to OpenAI",
+                "description": "This command connects to OpenAI with the specified secret API key."
+            },
+            "pr": {
+                "title": "Conectar-se ao OpenAI",
+                "description": "Este comando conecta a OpenAI con la API key secreta especificada."
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [                    
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "000-000",
+                            "en": "000-000",
+                            "pr": "000-000"
+                        },
+                        "title": {
+                            "es": "API key secreta",
+                            "en": "Secret API key",
+                            "pr": "Secret API key"
+                        },
+                        "description": {
+                            "es": "API key secreta necesaria para conectarse. Se obtiene de la pagina https://platform.openai.com/account/api-keys",
+                            "en": "Secret API key needed to connect. It is obtained from the page https://platform.openai.com/account/api-keys",
+                            "pr": "Secret API key necessária para se conectar. Ela é obtida na página https://platform.openai.com/account/api-keys"
+                        },
+                        "id": "api_key",
+                        "css": "col-md-12"
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "Variable",
+                            "en": "Variable",
+                            "pr": "Variável"
+                        },
+                        "title": {
+                            "es": "Variable donde se almacenará el resultado de la conexión",
+                            "en": "Variable where the result of the connection will be stored",
+                            "pr": "Variável onde o resultado da conexão será armazenado"
+                        },
+                        "description": {
+                            "es": "Variable donde se almacenará el resultado de la conexión. Devolverá True si la conexión fue exitosa",
+                            "en": "Variable where the result of the connection will be stored. It will return True if the connection was successful",
+                            "pr": "Variável onde o resultado da conexão será armazenado. Ele retornará True se a conexão for bem-sucedida"
+                        },
+                         "help": {
+                            "es": "Nombre de variable sin llaves {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result_var",
+                        "css": "col-md-6"
+                    }
+                ]
+            },
+            "video_youtube": "yWDUzNiWPJA",
+            "icon": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIGZpbGw9IiMwMDAwMDAiIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRpdGxlPk9wZW5BSSBpY29uPC90aXRsZT48cGF0aCBkPSJNMjIuMjgxOSA5LjgyMTFhNS45ODQ3IDUuOTg0NyAwIDAgMC0uNTE1Ny00LjkxMDggNi4wNDYyIDYuMDQ2MiAwIDAgMC02LjUwOTgtMi45QTYuMDY1MSA2LjA2NTEgMCAwIDAgNC45ODA3IDQuMTgxOGE1Ljk4NDcgNS45ODQ3IDAgMCAwLTMuOTk3NyAyLjkgNi4wNDYyIDYuMDQ2MiAwIDAgMCAuNzQyNyA3LjA5NjYgNS45OCA1Ljk4IDAgMCAwIC41MTEgNC45MTA3IDYuMDUxIDYuMDUxIDAgMCAwIDYuNTE0NiAyLjkwMDFBNS45ODQ3IDUuOTg0NyAwIDAgMCAxMy4yNTk5IDI0YTYuMDU1NyA2LjA1NTcgMCAwIDAgNS43NzE4LTQuMjA1OCA1Ljk4OTQgNS45ODk0IDAgMCAwIDMuOTk3Ny0yLjkwMDEgNi4wNTU3IDYuMDU1NyAwIDAgMC0uNzQ3NS03LjA3Mjl6bS05LjAyMiAxMi42MDgxYTQuNDc1NSA0LjQ3NTUgMCAwIDEtMi44NzY0LTEuMDQwOGwuMTQxOS0uMDgwNCA0Ljc3ODMtMi43NTgyYS43OTQ4Ljc5NDggMCAwIDAgLjM5MjctLjY4MTN2LTYuNzM2OWwyLjAyIDEuMTY4NmEuMDcxLjA3MSAwIDAgMSAuMDM4LjA1MnY1LjU4MjZhNC41MDQgNC41MDQgMCAwIDEtNC40OTQ1IDQuNDk0NHptLTkuNjYwNy00LjEyNTRhNC40NzA4IDQuNDcwOCAwIDAgMS0uNTM0Ni0zLjAxMzdsLjE0Mi4wODUyIDQuNzgzIDIuNzU4MmEuNzcxMi43NzEyIDAgMCAwIC43ODA2IDBsNS44NDI4LTMuMzY4NXYyLjMzMjRhLjA4MDQuMDgwNCAwIDAgMS0uMDMzMi4wNjE1TDkuNzQgMTkuOTUwMmE0LjQ5OTIgNC40OTkyIDAgMCAxLTYuMTQwOC0xLjY0NjR6TTIuMzQwOCA3Ljg5NTZhNC40ODUgNC40ODUgMCAwIDEgMi4zNjU1LTEuOTcyOFYxMS42YS43NjY0Ljc2NjQgMCAwIDAgLjM4NzkuNjc2NWw1LjgxNDQgMy4zNTQzLTIuMDIwMSAxLjE2ODVhLjA3NTcuMDc1NyAwIDAgMS0uMDcxIDBsLTQuODMwMy0yLjc4NjVBNC41MDQgNC41MDQgMCAwIDEgMi4zNDA4IDcuODcyem0xNi41OTYzIDMuODU1OEwxMy4xMDM4IDguMzY0IDE1LjExOTIgNy4yYS4wNzU3LjA3NTcgMCAwIDEgLjA3MSAwbDQuODMwMyAyLjc5MTNhNC40OTQ0IDQuNDk0NCAwIDAgMS0uNjc2NSA4LjEwNDJ2LTUuNjc3MmEuNzkuNzkgMCAwIDAtLjQwNy0uNjY3em0yLjAxMDctMy4wMjMxbC0uMTQyLS4wODUyLTQuNzczNS0yLjc4MThhLjc3NTkuNzc1OSAwIDAgMC0uNzg1NCAwTDkuNDA5IDkuMjI5N1Y2Ljg5NzRhLjA2NjIuMDY2MiAwIDAgMSAuMDI4NC0uMDYxNWw0LjgzMDMtMi43ODY2YTQuNDk5MiA0LjQ5OTIgMCAwIDEgNi42ODAyIDQuNjZ6TTguMzA2NSAxMi44NjNsLTIuMDItMS4xNjM4YS4wODA0LjA4MDQgMCAwIDEtLjAzOC0uMDU2N1Y2LjA3NDJhNC40OTkyIDQuNDk5MiAwIDAgMSA3LjM3NTctMy40NTM3bC0uMTQyLjA4MDVMOC43MDQgNS40NTlhLjc5NDguNzk0OCAwIDAgMC0uMzkyNy42ODEzem0xLjA5NzYtMi4zNjU0bDIuNjAyLTEuNDk5OCAyLjYwNjkgMS40OTk4djIuOTk5NGwtMi41OTc0IDEuNDk5Ny0yLjYwNjctMS40OTk3WiIvPjwvc3ZnPg==",
+            "module": "Connect",
+            "module_name": "OpenAI",
+            "visible": true,
+            "options": false,
+            "linux": true,
+            "windows":true,
+            "mac":true,
+            "docker":true,
+            "father": "module",
+            "group": "scripts"
+        },
+        {
+            "es":{
+                "title": "Realizar consulta",
+                "description": "Este comando permite realizar una consulta a OpenAI. Debe ejecutarse el comando de conexión previamente."
+            },
+            "en":{
+                "title": "Make query",
+                "description": "This command allows you to make a query to OpenAI. The connection command must be executed previously."
+            },
+            "pr": {
+                "title": "Fazer uma consulta",
+                "description": "Este comando permite fazer uma consulta à OpenAI. O comando de conexão deve ser executado previamente."
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [                    
+                    {
+                        "type": "textarea",
+                        "placeholder": {
+                            "es": "Consulta a OpenAI",
+                            "en": "Prompt to OpenAI",
+                            "pr": "Prompt para OpenAI"
+                        },
+                        "title": {
+                            "es": "Consulta",
+                            "en": "Prompt",
+                            "pr": "Prompt"
+                        },
+                        "description": {
+                            "es": "Consulta a OpenAI. Mientras mas informacion y contexto se proporcione, mejor y más completa será la respuesta.",
+                            "en": "Prompt to OpenAI. The more information and context you provide, the better and more complete the answer will be.",
+                            "pr": "Prompt para OpenAI. Quanto mais informações e contexto você fornecer, melhor e mais completa será a resposta."
+                        },
+                        "id": "prompt",
+                        "css": "col-md-12"
+                    },
+                    {
+                        "type": "select",
+                        "placeholder": {
+                            "es": "Modelo",
+                            "en": "Model",
+                            "pr": "Modelo"
+                        },
+                        "title": {
+                            "es": "Modelo",
+                            "en": "Model",
+                            "pr": "Modelo"
+                        },
+                        "description": {
+                            "es": "Modelo de OpenAI a usar.",
+                            "en": "OpenAI model to use.",
+                            "pr": "Modelo OpenAI a usar."
+                        },
+                        "options": [
+                            {
+                              "title": "Davinci (default)",
+                              "value": "text-davinci-003"
+                            },
+                            {
+                                "title": "Codex",
+                                "value": "code-davinci-002"
+                            }
+                        ],
+                        "id": "model",
+                        "css": "col-md-4"
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "0",
+                            "en": "0",
+                            "pr": "0"
+                        },
+                        "title": {
+                            "es": "Temperatura",
+                            "en": "Temperature",
+                            "pr": "Temperatura"
+                        },
+                        "description": {
+                            "es": "Por defecto 0. Valor entre 0 y 1. Cuanto mayor sea el valor, las respuestas serán más creativas, pero también pueden llegar a ser más incoherentes.",
+                            "en": "Default 0. Value between 0 and 1. The higher the value, the more creative the answers will be, but they can also be more incoherent.",
+                            "pr": "Padrão 0. Valor entre 0 e 1. Quanto maior o valor, mais criativas serão as respostas, mas também podem ser mais incoerentes."
+                        },
+                        "help": {
+                            "es": "Valor entre 0 y 1",
+                            "en": "Value between 0 and 1",
+                            "pr": "Valor entre 0 e 1"
+                        },
+                        "default": "0",
+                        "id": "temperature",
+                        "css": "col-md-4"
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "256",
+                            "en": "256",
+                            "pr": "256"
+                        },
+                        "title": {
+                            "es": "Longitud de la respuesta",
+                            "en": "Length of the response",
+                            "pr": "Comprimento da resposta"
+                        },
+                        "description": {
+                            "es": "Longitud máxima de la respuesta. Por defecto 256.",
+                            "en": "Maximum length of the response. Default 256.",
+                            "pr": "Comprimento máximo da resposta. Padrão 256."
+                        },
+                        "help": {
+                            "es": "Valor entre 1 y 2048",
+                            "en": "Value between 1 and 2048",
+                            "pr": "Valor entre 1 e 2048"
+                        },
+                        "default": "256",
+                        "id": "max_tokens",
+                        "css": "col-md-4"
 
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": " ",
+                            "en": " ",
+                            "pr": " "
+                        },
+                        "title": {
+                            "es": "Secuencia de fin",
+                            "en": "Stop sequence",
+                            "pr": "Sequência de parada"
+                        },
+                        "description":{
+                            "es": "Secuencia de texto opcional en la cual si aparece, la respuesta se detiene.",
+                            "en": "Optional text sequence in which if it appears, the response stops.",
+                            "pr": "Sequência de texto opcional na qual, se aparecer, a resposta para."
+                        },
+                        "id": "stop_sequence",
+                        "css": "col-md-6"
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "Variable",
+                            "en": "Variable",
+                            "pr": "Variável"
+                        },
+                        "title": {
+                            "es": "Variable donde se almacena el resultado de OpenAI",
+                            "en": "Variable where to save the result of OpenAI",
+                            "pr": "Variável onde salvar o resultado do OpenAI"
+                        },
+                        "description": {
+                            "es": "Variable donde se almacena el resultado de OpenAI",
+                            "en": "Variable where to save the result of OpenAI",
+                            "pr": "Variável onde salvar o resultado do OpenAI"
+                        },
+                         "help": {
+                            "es": "Nombre de variable sin llaves {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result_var",
+                        "css": "col-md-6"
+                    }
+                ]
+            },
+            "video_youtube": "yWDUzNiWPJA",
+            "icon": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIGZpbGw9IiMwMDAwMDAiIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRpdGxlPk9wZW5BSSBpY29uPC90aXRsZT48cGF0aCBkPSJNMjIuMjgxOSA5LjgyMTFhNS45ODQ3IDUuOTg0NyAwIDAgMC0uNTE1Ny00LjkxMDggNi4wNDYyIDYuMDQ2MiAwIDAgMC02LjUwOTgtMi45QTYuMDY1MSA2LjA2NTEgMCAwIDAgNC45ODA3IDQuMTgxOGE1Ljk4NDcgNS45ODQ3IDAgMCAwLTMuOTk3NyAyLjkgNi4wNDYyIDYuMDQ2MiAwIDAgMCAuNzQyNyA3LjA5NjYgNS45OCA1Ljk4IDAgMCAwIC41MTEgNC45MTA3IDYuMDUxIDYuMDUxIDAgMCAwIDYuNTE0NiAyLjkwMDFBNS45ODQ3IDUuOTg0NyAwIDAgMCAxMy4yNTk5IDI0YTYuMDU1NyA2LjA1NTcgMCAwIDAgNS43NzE4LTQuMjA1OCA1Ljk4OTQgNS45ODk0IDAgMCAwIDMuOTk3Ny0yLjkwMDEgNi4wNTU3IDYuMDU1NyAwIDAgMC0uNzQ3NS03LjA3Mjl6bS05LjAyMiAxMi42MDgxYTQuNDc1NSA0LjQ3NTUgMCAwIDEtMi44NzY0LTEuMDQwOGwuMTQxOS0uMDgwNCA0Ljc3ODMtMi43NTgyYS43OTQ4Ljc5NDggMCAwIDAgLjM5MjctLjY4MTN2LTYuNzM2OWwyLjAyIDEuMTY4NmEuMDcxLjA3MSAwIDAgMSAuMDM4LjA1MnY1LjU4MjZhNC41MDQgNC41MDQgMCAwIDEtNC40OTQ1IDQuNDk0NHptLTkuNjYwNy00LjEyNTRhNC40NzA4IDQuNDcwOCAwIDAgMS0uNTM0Ni0zLjAxMzdsLjE0Mi4wODUyIDQuNzgzIDIuNzU4MmEuNzcxMi43NzEyIDAgMCAwIC43ODA2IDBsNS44NDI4LTMuMzY4NXYyLjMzMjRhLjA4MDQuMDgwNCAwIDAgMS0uMDMzMi4wNjE1TDkuNzQgMTkuOTUwMmE0LjQ5OTIgNC40OTkyIDAgMCAxLTYuMTQwOC0xLjY0NjR6TTIuMzQwOCA3Ljg5NTZhNC40ODUgNC40ODUgMCAwIDEgMi4zNjU1LTEuOTcyOFYxMS42YS43NjY0Ljc2NjQgMCAwIDAgLjM4NzkuNjc2NWw1LjgxNDQgMy4zNTQzLTIuMDIwMSAxLjE2ODVhLjA3NTcuMDc1NyAwIDAgMS0uMDcxIDBsLTQuODMwMy0yLjc4NjVBNC41MDQgNC41MDQgMCAwIDEgMi4zNDA4IDcuODcyem0xNi41OTYzIDMuODU1OEwxMy4xMDM4IDguMzY0IDE1LjExOTIgNy4yYS4wNzU3LjA3NTcgMCAwIDEgLjA3MSAwbDQuODMwMyAyLjc5MTNhNC40OTQ0IDQuNDk0NCAwIDAgMS0uNjc2NSA4LjEwNDJ2LTUuNjc3MmEuNzkuNzkgMCAwIDAtLjQwNy0uNjY3em0yLjAxMDctMy4wMjMxbC0uMTQyLS4wODUyLTQuNzczNS0yLjc4MThhLjc3NTkuNzc1OSAwIDAgMC0uNzg1NCAwTDkuNDA5IDkuMjI5N1Y2Ljg5NzRhLjA2NjIuMDY2MiAwIDAgMSAuMDI4NC0uMDYxNWw0LjgzMDMtMi43ODY2YTQuNDk5MiA0LjQ5OTIgMCAwIDEgNi42ODAyIDQuNjZ6TTguMzA2NSAxMi44NjNsLTIuMDItMS4xNjM4YS4wODA0LjA4MDQgMCAwIDEtLjAzOC0uMDU2N1Y2LjA3NDJhNC40OTkyIDQuNDk5MiAwIDAgMSA3LjM3NTctMy40NTM3bC0uMTQyLjA4MDVMOC43MDQgNS40NTlhLjc5NDguNzk0OCAwIDAgMC0uMzkyNy42ODEzem0xLjA5NzYtMi4zNjU0bDIuNjAyLTEuNDk5OCAyLjYwNjkgMS40OTk4djIuOTk5NGwtMi41OTc0IDEuNDk5Ny0yLjYwNjctMS40OTk3WiIvPjwvc3ZnPg==",
+            "module": "Completion",
+            "module_name": "OpenAI",
+            "visible": true,
+            "options": false,
+            "linux": true,
+            "windows":true,
+            "mac":true,
+            "docker":true,
+            "father": "module",
+            "group": "scripts"
+        },
+        {
+            "es":{
+                "title": "Transcribir audio",
+                "description": "Este comando transcribe un audio a texto. Debe ejecutarse el comando de conexión previamente."
+            },
+            "en":{
+                "title": "Transcribe audio",
+                "description": "This command transcribes an audio to text. The connection command must be executed previously."
+            },
+            "pr": {
+                "title": "Transcrever áudio",
+                "description": "Este comando transcreve um áudio para texto. O comando de conexão deve ser executado previamente."
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "file_select",
+                        "placeholder": {
+                            "es": "C:/Users/User/Desktop/audio.mp3",
+                            "en": "C:/Users/User/Desktop/audio.mp3",
+                            "pr": "C:/Users/User/Desktop/audio.mp3"
+                        },
+                        "title": {
+                            "es": "Archivo de audio",
+                            "en": "Audio file",
+                            "pr": "Arquivo de áudio"
+                        },
+                        "description": {
+                            "es": "Ruta al archivo de audio que se desea transcribir",
+                            "en": "Path to the audio file to be transcribed",
+                            "pr": "Caminho para o arquivo de áudio que será transcrito"
+                        },
+                        "id": "audio_file",
+                        "css": "col-md-6"
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "Variable",
+                            "en": "Variable",
+                            "pr": "Variável"
+                        },
+                        "title": {
+                            "es": "Variable donde se almacenará el resultado",
+                            "en": "Variable where the result will be stored",
+                            "pr": "Variável onde o resultado será armazenado"
+                        },
+                        "description": {
+                            "es": "Variable donde se almacenará el resultado de la transcripción",
+                            "en": "Variable where the result of the transcription will be stored",
+                            "pr": "Variável onde o resultado da transcrição será armazenado"
+                        },
+                         "help": {
+                            "es": "Nombre de variable sin llaves {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result_var",
+                        "css": "col-md-6"
+                    }
+                ]
+            },
+            "video_youtube": "yWDUzNiWPJA",
+            "icon": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIGZpbGw9IiMwMDAwMDAiIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRpdGxlPk9wZW5BSSBpY29uPC90aXRsZT48cGF0aCBkPSJNMjIuMjgxOSA5LjgyMTFhNS45ODQ3IDUuOTg0NyAwIDAgMC0uNTE1Ny00LjkxMDggNi4wNDYyIDYuMDQ2MiAwIDAgMC02LjUwOTgtMi45QTYuMDY1MSA2LjA2NTEgMCAwIDAgNC45ODA3IDQuMTgxOGE1Ljk4NDcgNS45ODQ3IDAgMCAwLTMuOTk3NyAyLjkgNi4wNDYyIDYuMDQ2MiAwIDAgMCAuNzQyNyA3LjA5NjYgNS45OCA1Ljk4IDAgMCAwIC41MTEgNC45MTA3IDYuMDUxIDYuMDUxIDAgMCAwIDYuNTE0NiAyLjkwMDFBNS45ODQ3IDUuOTg0NyAwIDAgMCAxMy4yNTk5IDI0YTYuMDU1NyA2LjA1NTcgMCAwIDAgNS43NzE4LTQuMjA1OCA1Ljk4OTQgNS45ODk0IDAgMCAwIDMuOTk3Ny0yLjkwMDEgNi4wNTU3IDYuMDU1NyAwIDAgMC0uNzQ3NS03LjA3Mjl6bS05LjAyMiAxMi42MDgxYTQuNDc1NSA0LjQ3NTUgMCAwIDEtMi44NzY0LTEuMDQwOGwuMTQxOS0uMDgwNCA0Ljc3ODMtMi43NTgyYS43OTQ4Ljc5NDggMCAwIDAgLjM5MjctLjY4MTN2LTYuNzM2OWwyLjAyIDEuMTY4NmEuMDcxLjA3MSAwIDAgMSAuMDM4LjA1MnY1LjU4MjZhNC41MDQgNC41MDQgMCAwIDEtNC40OTQ1IDQuNDk0NHptLTkuNjYwNy00LjEyNTRhNC40NzA4IDQuNDcwOCAwIDAgMS0uNTM0Ni0zLjAxMzdsLjE0Mi4wODUyIDQuNzgzIDIuNzU4MmEuNzcxMi43NzEyIDAgMCAwIC43ODA2IDBsNS44NDI4LTMuMzY4NXYyLjMzMjRhLjA4MDQuMDgwNCAwIDAgMS0uMDMzMi4wNjE1TDkuNzQgMTkuOTUwMmE0LjQ5OTIgNC40OTkyIDAgMCAxLTYuMTQwOC0xLjY0NjR6TTIuMzQwOCA3Ljg5NTZhNC40ODUgNC40ODUgMCAwIDEgMi4zNjU1LTEuOTcyOFYxMS42YS43NjY0Ljc2NjQgMCAwIDAgLjM4NzkuNjc2NWw1LjgxNDQgMy4zNTQzLTIuMDIwMSAxLjE2ODVhLjA3NTcuMDc1NyAwIDAgMS0uMDcxIDBsLTQuODMwMy0yLjc4NjVBNC41MDQgNC41MDQgMCAwIDEgMi4zNDA4IDcuODcyem0xNi41OTYzIDMuODU1OEwxMy4xMDM4IDguMzY0IDE1LjExOTIgNy4yYS4wNzU3LjA3NTcgMCAwIDEgLjA3MSAwbDQuODMwMyAyLjc5MTNhNC40OTQ0IDQuNDk0NCAwIDAgMS0uNjc2NSA4LjEwNDJ2LTUuNjc3MmEuNzkuNzkgMCAwIDAtLjQwNy0uNjY3em0yLjAxMDctMy4wMjMxbC0uMTQyLS4wODUyLTQuNzczNS0yLjc4MThhLjc3NTkuNzc1OSAwIDAgMC0uNzg1NCAwTDkuNDA5IDkuMjI5N1Y2Ljg5NzRhLjA2NjIuMDY2MiAwIDAgMSAuMDI4NC0uMDYxNWw0LjgzMDMtMi43ODY2YTQuNDk5MiA0LjQ5OTIgMCAwIDEgNi42ODAyIDQuNjZ6TTguMzA2NSAxMi44NjNsLTIuMDItMS4xNjM4YS4wODA0LjA4MDQgMCAwIDEtLjAzOC0uMDU2N1Y2LjA3NDJhNC40OTkyIDQuNDk5MiAwIDAgMSA3LjM3NTctMy40NTM3bC0uMTQyLjA4MDVMOC43MDQgNS40NTlhLjc5NDguNzk0OCAwIDAgMC0uMzkyNy42ODEzem0xLjA5NzYtMi4zNjU0bDIuNjAyLTEuNDk5OCAyLjYwNjkgMS40OTk4djIuOTk5NGwtMi41OTc0IDEuNDk5Ny0yLjYwNjctMS40OTk3WiIvPjwvc3ZnPg==",
+            "module": "whisper",
+            "module_name": "OpenAI",
+            "visible": true,
+            "options": false,
+            "linux": true,
+            "windows":true,
+            "mac":true,
+            "docker":true,
+            "father": "module",
+            "group": "scripts"
+        },
+        {
+            "es":{
+                "title": "Traducir audio",
+                "description": "Este comando traduce un audio a texto en inglés. El comando de conexión debe ser ejecutado previamente."
+            },
+            "en":{
+                "title": "Translate audio",
+                "description": "This command translates an audio to text in English. The connection command must be executed previously."
+            },
+            "pr": {
+                "title": "Traduzir áudio",
+                "description": "Este comando traduz um áudio para texto em inglês. O comando de conexão deve ser executado previamente."
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "file_select",
+                        "placeholder": {
+                            "es": "C:/Users/User/Desktop/audio.mp3",
+                            "en": "C:/Users/User/Desktop/audio.mp3",
+                            "pr": "C:/Users/User/Desktop/audio.mp3"
+                        },
+                        "title": {
+                            "es": "Archivo de audio",
+                            "en": "Audio file",
+                            "pr": "Arquivo de áudio"
+                        },
+                        "description": {
+                            "es": "Ruta al archivo de audio que se desea traducir al inglés",
+                            "en": "Path to the audio file to be translated to English",
+                            "pr": "Caminho para o arquivo de áudio que deseja traduzir para o inglês"
+                        },
+                        "id": "audio_file",
+                        "css": "col-md-6"
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "Variable",
+                            "en": "Variable",
+                            "pr": "Variável"
+                        },
+                        "title": {
+                            "es": "Variable donde se almacenará el resultado",
+                            "en": "Variable where the result will be stored",
+                            "pr": "Variável onde o resultado será armazenado"
+                        },
+                        "description": {
+                            "es": "Variable donde se almacenará el resultado de la traducción",
+                            "en": "Variable where the result of the translation will be stored",
+                            "pr": "Variável onde o resultado da tradução será armazenado"
+                        },
+                         "help": {
+                            "es": "Nombre de variable sin llaves {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result_var",
+                        "css": "col-md-6"
+                    }
+                ]
+            },
+            "video_youtube": "yWDUzNiWPJA",
+            "icon": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIGZpbGw9IiMwMDAwMDAiIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRpdGxlPk9wZW5BSSBpY29uPC90aXRsZT48cGF0aCBkPSJNMjIuMjgxOSA5LjgyMTFhNS45ODQ3IDUuOTg0NyAwIDAgMC0uNTE1Ny00LjkxMDggNi4wNDYyIDYuMDQ2MiAwIDAgMC02LjUwOTgtMi45QTYuMDY1MSA2LjA2NTEgMCAwIDAgNC45ODA3IDQuMTgxOGE1Ljk4NDcgNS45ODQ3IDAgMCAwLTMuOTk3NyAyLjkgNi4wNDYyIDYuMDQ2MiAwIDAgMCAuNzQyNyA3LjA5NjYgNS45OCA1Ljk4IDAgMCAwIC41MTEgNC45MTA3IDYuMDUxIDYuMDUxIDAgMCAwIDYuNTE0NiAyLjkwMDFBNS45ODQ3IDUuOTg0NyAwIDAgMCAxMy4yNTk5IDI0YTYuMDU1NyA2LjA1NTcgMCAwIDAgNS43NzE4LTQuMjA1OCA1Ljk4OTQgNS45ODk0IDAgMCAwIDMuOTk3Ny0yLjkwMDEgNi4wNTU3IDYuMDU1NyAwIDAgMC0uNzQ3NS03LjA3Mjl6bS05LjAyMiAxMi42MDgxYTQuNDc1NSA0LjQ3NTUgMCAwIDEtMi44NzY0LTEuMDQwOGwuMTQxOS0uMDgwNCA0Ljc3ODMtMi43NTgyYS43OTQ4Ljc5NDggMCAwIDAgLjM5MjctLjY4MTN2LTYuNzM2OWwyLjAyIDEuMTY4NmEuMDcxLjA3MSAwIDAgMSAuMDM4LjA1MnY1LjU4MjZhNC41MDQgNC41MDQgMCAwIDEtNC40OTQ1IDQuNDk0NHptLTkuNjYwNy00LjEyNTRhNC40NzA4IDQuNDcwOCAwIDAgMS0uNTM0Ni0zLjAxMzdsLjE0Mi4wODUyIDQuNzgzIDIuNzU4MmEuNzcxMi43NzEyIDAgMCAwIC43ODA2IDBsNS44NDI4LTMuMzY4NXYyLjMzMjRhLjA4MDQuMDgwNCAwIDAgMS0uMDMzMi4wNjE1TDkuNzQgMTkuOTUwMmE0LjQ5OTIgNC40OTkyIDAgMCAxLTYuMTQwOC0xLjY0NjR6TTIuMzQwOCA3Ljg5NTZhNC40ODUgNC40ODUgMCAwIDEgMi4zNjU1LTEuOTcyOFYxMS42YS43NjY0Ljc2NjQgMCAwIDAgLjM4NzkuNjc2NWw1LjgxNDQgMy4zNTQzLTIuMDIwMSAxLjE2ODVhLjA3NTcuMDc1NyAwIDAgMS0uMDcxIDBsLTQuODMwMy0yLjc4NjVBNC41MDQgNC41MDQgMCAwIDEgMi4zNDA4IDcuODcyem0xNi41OTYzIDMuODU1OEwxMy4xMDM4IDguMzY0IDE1LjExOTIgNy4yYS4wNzU3LjA3NTcgMCAwIDEgLjA3MSAwbDQuODMwMyAyLjc5MTNhNC40OTQ0IDQuNDk0NCAwIDAgMS0uNjc2NSA4LjEwNDJ2LTUuNjc3MmEuNzkuNzkgMCAwIDAtLjQwNy0uNjY3em0yLjAxMDctMy4wMjMxbC0uMTQyLS4wODUyLTQuNzczNS0yLjc4MThhLjc3NTkuNzc1OSAwIDAgMC0uNzg1NCAwTDkuNDA5IDkuMjI5N1Y2Ljg5NzRhLjA2NjIuMDY2MiAwIDAgMSAuMDI4NC0uMDYxNWw0LjgzMDMtMi43ODY2YTQuNDk5MiA0LjQ5OTIgMCAwIDEgNi42ODAyIDQuNjZ6TTguMzA2NSAxMi44NjNsLTIuMDItMS4xNjM4YS4wODA0LjA4MDQgMCAwIDEtLjAzOC0uMDU2N1Y2LjA3NDJhNC40OTkyIDQuNDk5MiAwIDAgMSA3LjM3NTctMy40NTM3bC0uMTQyLjA4MDVMOC43MDQgNS40NTlhLjc5NDguNzk0OCAwIDAgMC0uMzkyNy42ODEzem0xLjA5NzYtMi4zNjU0bDIuNjAyLTEuNDk5OCAyLjYwNjkgMS40OTk4djIuOTk5NGwtMi41OTc0IDEuNDk5Ny0yLjYwNjctMS40OTk3WiIvPjwvc3ZnPg==",
+            "module": "translate",
+            "module_name": "OpenAI",
+            "visible": true,
+            "options": false,
+            "linux": true,
+            "windows":true,
+            "mac":true,
+            "docker":true,
+            "father": "module",
+            "group": "scripts"
+        },
         {
             "es":{
                 "title": "Preguntar",
@@ -40,6 +462,10 @@
             "en":{
                 "title": "Ask",
                 "description": "This command asks OpenAI for an answer. You need to have an OpenAI key. Go to https://platform.openai.com/account/api-keys to get a key."
+            },
+            "pr": {
+                "title": "Perguntar",
+                "description": "Este comando pergunta à OpenAI para obter uma resposta. Você precisa ter uma chave OpenAI. Vá para https://platform.openai.com/account/api-keys para obter uma chave."
             },
             "form": {
                 "css": "modal-lg",
@@ -66,15 +492,18 @@
                         "type": "input",
                         "placeholder": {
                             "es": "000-000",
-                            "en": "000-000"
+                            "en": "000-000",
+                            "pr": "000-000"
                         },
                         "title": {
                             "es": "API key secreta",
-                            "en": "Secret API key"
+                            "en": "Secret API key",
+                            "pr": "Chave secreta da API"
                         },
                         "description": {
                             "es": "API key secreta necesaria para conectarse. Se obtiene de la pagina https://platform.openai.com/account/api-keys",
-                            "en": "Secret API key needed to connect. It is obtained from the page https://platform.openai.com/account/api-keys"
+                            "en": "Secret API key needed to connect. It is obtained from the page https://platform.openai.com/account/api-keys",
+                            "pr": "Chave secreta da API necessária para conectar. É obtido na página https://platform.openai.com/account/api-keys"
                         },
                         "id": "api_key",
                         "css": "col-md-6"
@@ -83,15 +512,18 @@
                         "type": "select",
                         "placeholder": {
                             "es": "Modelo",
-                            "en": "Model"
+                            "en": "Model",
+                            "pr": "Modelo"
                         },
                         "title": {
                             "es": "Modelo",
-                            "en": "Model"
+                            "en": "Model",
+                            "pr": "Modelo"
                         },
                         "description": {
                             "es": "Modelo de OpenAI a usar.",
-                            "en": "OpenAI model to use."
+                            "en": "OpenAI model to use.",
+                            "pr": "Modelo OpenAI para usar."
                         },
                         "options": [
                             {
@@ -110,19 +542,23 @@
                         "type": "input",
                         "placeholder": {
                             "es": "0",
-                            "en": "0"
+                            "en": "0",
+                            "pr": "0"
                         },
                         "title": {
                             "es": "Temperatura",
-                            "en": "Temperature"
+                            "en": "Temperature",
+                            "pr": "Temperatura"
                         },
                         "description": {
                             "es": "Por defecto 0. Valor entre 0 y 1. Cuanto mayor sea el valor, las respuestas serán más creativas, pero también pueden llegar a ser más incoherentes.",
-                            "en": "Default 0. Value between 0 and 1. The higher the value, the more creative the answers will be, but they can also be more incoherent."
+                            "en": "Default 0. Value between 0 and 1. The higher the value, the more creative the answers will be, but they can also be more incoherent.",
+                            "pr": "Padrão 0. Valor entre 0 e 1. Quanto maior o valor, mais criativas serão as respostas, mas também podem ser mais incoerentes."
                         },
                         "help": {
                             "es": "Valor entre 0 y 1",
-                            "en": "Value between 0 and 1"
+                            "en": "Value between 0 and 1",
+                            "pr": "Valor entre 0 e 1"
                         },
                         "default": "0",
                         "id": "temperature",
@@ -132,19 +568,23 @@
                         "type": "input",
                         "placeholder": {
                             "es": "256",
-                            "en": "256"
+                            "en": "256",
+                            "pr": "256"
                         },
                         "title": {
                             "es": "Longitud de la respuesta",
-                            "en": "Length of the response"
+                            "en": "Length of the response",
+                            "pr": "Comprimento da resposta"
                         },
                         "description": {
                             "es": "Longitud máxima de la respuesta. Por defecto 256.",
-                            "en": "Maximum length of the response. Default 256."
+                            "en": "Maximum length of the response. Default 256.",
+                            "pr": "Comprimento máximo da resposta. Padrão 256."
                         },
                         "help": {
                             "es": "Valor entre 1 y 2048",
-                            "en": "Value between 1 and 2048"
+                            "en": "Value between 1 and 2048",
+                            "pr": "Valor entre 1 e 2048"
                         },
                         "default": "256",
                         "id": "max_tokens",
@@ -155,15 +595,18 @@
                         "type": "input",
                         "placeholder": {
                             "es": " ",
-                            "en": " "
+                            "en": " ",
+                            "pr": " "
                         },
                         "title": {
                             "es": "Secuencia de fin",
-                            "en": "Stop sequence"
+                            "en": "Stop sequence",
+                            "pr": "Sequência de parada"
                         },
                         "description":{
                             "es": "Secuencia de texto opcional en la cual si aparece, la respuesta se detiene.",
-                            "en": "Optional text sequence in which if it appears, the response stops."
+                            "en": "Optional text sequence in which if it appears, the response stops.",
+                            "pr": "Sequência de texto opcional na qual, se aparecer, a resposta para."
                         },
                         "id": "stop_sequence",
                         "css": "col-md-4"
@@ -173,19 +616,22 @@
                         "placeholder": {
                             "es": "Variable",
                             "en": "Variable",
-                            "cn": "Variable"
+                            "pr": "Variável"
                         },
                         "title": {
                             "es": "Variable donde se almacena el resultado de OpenAI",
-                            "en": "Variable where to save the result of OpenAI"
+                            "en": "Variable where to save the result of OpenAI",
+                            "pr": "Variável onde salvar o resultado do OpenAI"
                         },
                         "description": {
                             "es": "Variable donde se almacena el resultado de OpenAI",
-                            "en": "Variable where to save the result of OpenAI"
+                            "en": "Variable where to save the result of OpenAI",
+                            "pr": "Variável onde salvar o resultado do OpenAI"
                         },
                          "help": {
                             "es": "Nombre de variable sin llaves {}",
-                            "en": "Variable name without {}"
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
                         },
                         "remove_vars": true,
                         "id": "result_var",
@@ -197,7 +643,7 @@
             "icon": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIGZpbGw9IiMwMDAwMDAiIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRpdGxlPk9wZW5BSSBpY29uPC90aXRsZT48cGF0aCBkPSJNMjIuMjgxOSA5LjgyMTFhNS45ODQ3IDUuOTg0NyAwIDAgMC0uNTE1Ny00LjkxMDggNi4wNDYyIDYuMDQ2MiAwIDAgMC02LjUwOTgtMi45QTYuMDY1MSA2LjA2NTEgMCAwIDAgNC45ODA3IDQuMTgxOGE1Ljk4NDcgNS45ODQ3IDAgMCAwLTMuOTk3NyAyLjkgNi4wNDYyIDYuMDQ2MiAwIDAgMCAuNzQyNyA3LjA5NjYgNS45OCA1Ljk4IDAgMCAwIC41MTEgNC45MTA3IDYuMDUxIDYuMDUxIDAgMCAwIDYuNTE0NiAyLjkwMDFBNS45ODQ3IDUuOTg0NyAwIDAgMCAxMy4yNTk5IDI0YTYuMDU1NyA2LjA1NTcgMCAwIDAgNS43NzE4LTQuMjA1OCA1Ljk4OTQgNS45ODk0IDAgMCAwIDMuOTk3Ny0yLjkwMDEgNi4wNTU3IDYuMDU1NyAwIDAgMC0uNzQ3NS03LjA3Mjl6bS05LjAyMiAxMi42MDgxYTQuNDc1NSA0LjQ3NTUgMCAwIDEtMi44NzY0LTEuMDQwOGwuMTQxOS0uMDgwNCA0Ljc3ODMtMi43NTgyYS43OTQ4Ljc5NDggMCAwIDAgLjM5MjctLjY4MTN2LTYuNzM2OWwyLjAyIDEuMTY4NmEuMDcxLjA3MSAwIDAgMSAuMDM4LjA1MnY1LjU4MjZhNC41MDQgNC41MDQgMCAwIDEtNC40OTQ1IDQuNDk0NHptLTkuNjYwNy00LjEyNTRhNC40NzA4IDQuNDcwOCAwIDAgMS0uNTM0Ni0zLjAxMzdsLjE0Mi4wODUyIDQuNzgzIDIuNzU4MmEuNzcxMi43NzEyIDAgMCAwIC43ODA2IDBsNS44NDI4LTMuMzY4NXYyLjMzMjRhLjA4MDQuMDgwNCAwIDAgMS0uMDMzMi4wNjE1TDkuNzQgMTkuOTUwMmE0LjQ5OTIgNC40OTkyIDAgMCAxLTYuMTQwOC0xLjY0NjR6TTIuMzQwOCA3Ljg5NTZhNC40ODUgNC40ODUgMCAwIDEgMi4zNjU1LTEuOTcyOFYxMS42YS43NjY0Ljc2NjQgMCAwIDAgLjM4NzkuNjc2NWw1LjgxNDQgMy4zNTQzLTIuMDIwMSAxLjE2ODVhLjA3NTcuMDc1NyAwIDAgMS0uMDcxIDBsLTQuODMwMy0yLjc4NjVBNC41MDQgNC41MDQgMCAwIDEgMi4zNDA4IDcuODcyem0xNi41OTYzIDMuODU1OEwxMy4xMDM4IDguMzY0IDE1LjExOTIgNy4yYS4wNzU3LjA3NTcgMCAwIDEgLjA3MSAwbDQuODMwMyAyLjc5MTNhNC40OTQ0IDQuNDk0NCAwIDAgMS0uNjc2NSA4LjEwNDJ2LTUuNjc3MmEuNzkuNzkgMCAwIDAtLjQwNy0uNjY3em0yLjAxMDctMy4wMjMxbC0uMTQyLS4wODUyLTQuNzczNS0yLjc4MThhLjc3NTkuNzc1OSAwIDAgMC0uNzg1NCAwTDkuNDA5IDkuMjI5N1Y2Ljg5NzRhLjA2NjIuMDY2MiAwIDAgMSAuMDI4NC0uMDYxNWw0LjgzMDMtMi43ODY2YTQuNDk5MiA0LjQ5OTIgMCAwIDEgNi42ODAyIDQuNjZ6TTguMzA2NSAxMi44NjNsLTIuMDItMS4xNjM4YS4wODA0LjA4MDQgMCAwIDEtLjAzOC0uMDU2N1Y2LjA3NDJhNC40OTkyIDQuNDk5MiAwIDAgMSA3LjM3NTctMy40NTM3bC0uMTQyLjA4MDVMOC43MDQgNS40NTlhLjc5NDguNzk0OCAwIDAgMC0uMzkyNy42ODEzem0xLjA5NzYtMi4zNjU0bDIuNjAyLTEuNDk5OCAyLjYwNjkgMS40OTk4djIuOTk5NGwtMi41OTc0IDEuNDk5Ny0yLjYwNjctMS40OTk3WiIvPjwvc3ZnPg==",
             "module": "OpenAI",
             "module_name": "OpenAI",
-            "visible": true,
+            "visible": false,
             "options": false,
             "linux": true,
             "windows":true,
@@ -205,6 +651,6 @@
             "docker":true,
             "father": "module",
             "group": "scripts"
-        }        
+        } 
     ]
 }
