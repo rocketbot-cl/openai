@@ -1,10 +1,10 @@
 import base64
 import time
 
-
 from r_openai import util
 from r_openai.api_resources.abstract.engine_api_resource import EngineAPIResource
-from r_openai.datalib import numpy as np, assert_has_numpy
+from r_openai.datalib.numpy_helper import assert_has_numpy
+from r_openai.datalib.numpy_helper import numpy as np
 from r_openai.error import TryAgain
 
 

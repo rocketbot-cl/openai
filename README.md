@@ -1,3 +1,7 @@
+
+
+
+
 # OpenAI
   
 This module connects to the OpenAI API. You can perform actions such as making a query to a natural language model, transcribing an audio or translating an audio to English.  
@@ -25,6 +29,9 @@ This command transcribes an audio to text. The connection command must be execut
 
 4. Translate audio  
 This command translates an audio to text in English. The connection command must be executed previously.
+
+5. Make a query in chat  
+This command allows you to make a chat query to OpenAI. The connection command must be executed previously.
 
 
 

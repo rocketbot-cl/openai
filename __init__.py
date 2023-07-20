@@ -27,177 +27,218 @@ Para instalar librerias se debe ingresar por terminal a la carpeta "libs"
 __author__ = "David Cuello <david@rocketbot.com>"
 __version__ = "1.0.1"
 
-import requests
-import os
-import sys
-import json
-import traceback
-
-base_path = tmp_global_obj["basepath"]
-cur_path = base_path + 'modules' + os.sep + 'OpenAI' + os.sep + 'libs' + os.sep
-
-cur_path_x64 = os.path.join(cur_path, 'Windows' + os.sep +  'x64' + os.sep)
-cur_path_x86 = os.path.join(cur_path, 'Windows' + os.sep +  'x86' + os.sep)
-
-if sys.maxsize > 2**32 and cur_path_x64 not in sys.path:
-    sys.path.insert(0, cur_path_x64)
-elif sys.maxsize <= 2**32 and cur_path_x86 not in sys.path:
-    sys.path.insert(0, cur_path_x86)
-    
-import r_openai as openai 
-global mod_openai
-
-"""
-    Obtengo el modulo que fueron invocados
-"""
-module = GetParams("module")
-
-class OpenAI_RB:
-    def __init__(self, api_key):
-        self.api_key = api_key
-        self.get_auth()
-        
-    def get_auth(self):
-        '''
-        Authenticate with OpenAI API
-        '''
-        import r_openai as openai
-        openai.api_key = self.api_key
-        openai.Model.list()
-        print("Authentication successful")
-
-    def get_completions(self, prompt, model, max_tokens, temperature, top_p, frequency_penalty, presence_penalty, stop):
-        '''
-        Get text completions from OpenAI API
-        '''
-        import r_openai as openai
-        response = openai.Completion.create(
-            model=model,
-            prompt=prompt,
-            max_tokens=int(max_tokens),
-            temperature=float(temperature),
-            top_p=top_p,
-            frequency_penalty=frequency_penalty,
-            presence_penalty=presence_penalty,
-            stop=stop,
-        )
-        
-        result = response.choices[0].text
-        
-        return result
-    
-    def get_transcript(self, audio_file):
-        '''
-        Get text transcript from OpenAI API
-        '''
-        import r_openai as openai
-        audio_ = open(audio_file, "rb")
-        transcript = openai.Audio.transcribe("whisper-1", audio_)
-        
-        result = transcript["text"].encode().decode('unicode_escape').encode('latin-1').decode('utf-8')
-        
-        return result
-    
-    def get_audio_translations(self, audio_file):
-        '''
-        Get audio translations from OpenAI API
-        '''
-        import r_openai as openai
-        audio_ = open(audio_file, "rb")
-        translation = openai.Audio.translate("whisper-1", audio_)
-
-        result = translation["text"]
-        
-        return result
-
-
 try:
-    if module == "Connect":
-        api_key = GetParams("api_key")
-        result = GetParams("result_var")
+    import requests
+    import os
+    import sys
+    import json
+    import traceback
 
-        try:
-            mod_openai = OpenAI_RB(api_key)
-            SetVar(result, True)
+    base_path = tmp_global_obj["basepath"]
+    cur_path = base_path + 'modules' + os.sep + 'OpenAI' + os.sep + 'libs' + os.sep
 
-        except Exception as e:
-            traceback.print_exc()
-            PrintException()
-            SetVar(result, False)
-            raise e
+    cur_path_x64 = os.path.join(cur_path, 'Windows' + os.sep +  'x64' + os.sep)
+    cur_path_x86 = os.path.join(cur_path, 'Windows' + os.sep +  'x86' + os.sep)
+
+    if sys.maxsize > 2**32 and cur_path_x64 not in sys.path:
+        sys.path.insert(0, cur_path_x64)
+    elif sys.maxsize <= 2**32 and cur_path_x86 not in sys.path:
+        sys.path.insert(0, cur_path_x86)
         
-    if module == "Completion":
-        prompt = GetParams("prompt")
-        model = GetParams("model")
-        temperature = float(GetParams("temperature")) if GetParams("temperature") else 0
-        max_tokens = int(GetParams("max_tokens")) if GetParams("max_tokens") else 256
-        stop = GetParams("stop_sequence") if GetParams("stop_sequence") else None
-        result = GetParams("result_var")
+    import r_openai as openai 
+    global mod_openai
 
-        response = mod_openai.get_completions(prompt, model, max_tokens, temperature, 1, 0, 0, stop)
+    """
+        Obtengo el modulo que fueron invocados
+    """
+    module = GetParams("module")
+
+    class OpenAI_RB:
+        def __init__(self, api_key):
+            self.api_key = api_key
+            self.get_auth()
+            
+        def get_auth(self):
+            '''
+            Authenticate with OpenAI API
+            '''
+            import r_openai as openai
+            openai.api_key = self.api_key
+            openai.Model.list()
+            print("Authentication successful")
+
+        def get_completions(self, prompt, model, max_tokens, temperature, top_p, frequency_penalty, presence_penalty, stop):
+            '''
+            Get text completions from OpenAI API
+            '''
+            import r_openai as openai
+            response = openai.Completion.create(
+                model=model,
+                prompt=prompt,
+                max_tokens=int(max_tokens),
+                temperature=float(temperature),
+                top_p=top_p,
+                frequency_penalty=frequency_penalty,
+                presence_penalty=presence_penalty,
+                stop=stop,
+            )
+            
+            result = response.choices[0].text
+            
+            return result
         
-        response = response.replace("\n", "")
+        def get_transcript(self, audio_file):
+            '''
+            Get text transcript from OpenAI API
+            '''
+            import r_openai as openai
+            audio_ = open(audio_file, "rb")
+            transcript = openai.Audio.transcribe("whisper-1", audio_)
+            
+            result = transcript["text"].encode().decode('unicode_escape').encode('latin-1').decode('utf-8')
+            
+            return result
         
-        SetVar(result, response)
+        def get_audio_translations(self, audio_file):
+            '''
+            Get audio translations from OpenAI API
+            '''
+            import r_openai as openai
+            audio_ = open(audio_file, "rb")
+            translation = openai.Audio.translate("whisper-1", audio_)
 
+            result = translation["text"]
+            
+            return result
 
-    if module == "whisper":
-        audio_file = GetParams("audio_file")
-        result = GetParams("result_var")
+        def get_chat_completions(self, model, messages, temperature, n, stop, max_tokens):
+            '''
+            Get chat completions from OpenAI API
+            '''
+            import r_openai as openai
+            import json
 
-        response = mod_openai.get_transcript(audio_file)
-
-        SetVar(result, response)
-        
-    if module == "translate":
-        audio_file = GetParams("audio_file")
-        result = GetParams("result_var")
-        
-        response = mod_openai.get_audio_translations(audio_file)
-        SetVar(result, response)
-        
-        
-    if module == "OpenAI":
-        # This is an old version of the command, it is not visible anymore in the package.json in Rocketbot v2023, 
-        # but it is still used by some users so it is kept here. Please do not delete it.
-        prompt = GetParams("prompt")
-        model = GetParams("model")
-        if not model:
-            model = "text-davinci-003"
-
-        max_tokens = GetParams("max_tokens")
-        if not max_tokens:
-            max_tokens = 256
-        temperature = GetParams("temperature")
-        if not temperature:
-            temperature = 0
-        top_p = GetParams("top_p")
-        if not top_p:
-            top_p = 1
-        frequency_penalty = GetParams("frequency_penalty")
-        if not frequency_penalty:
-            frequency_penalty = 0
-        presence_penalty = GetParams("presence_penalty")
-        if not presence_penalty:
-            presence_penalty = 0
-        stop = GetParams("stop_sequence")
-
-        var_ = GetParams("result_var")
-        openai.api_key = GetParams("api_key")
-        response = openai.Completion.create(
+            response = openai.ChatCompletion.create(
             model=model,
-            prompt=prompt,
-            max_tokens=int(max_tokens),
-            temperature=float(temperature),
-            top_p=top_p,
-            frequency_penalty=frequency_penalty,
-            presence_penalty=presence_penalty,
+            messages=messages,
+            temperature=temperature,
+            n=n,
             stop=stop,
-        )
-        print(response.choices[0].text)
-        SetVar(var_, json.loads(json.dumps(response)))
+            max_tokens=max_tokens
+            )
+            
+            response_dict = json.loads(json.dumps(response))
+            
+            return response_dict
 
+    try:
+        if module == "Connect":
+            api_key = GetParams("api_key")
+            result = GetParams("result_var")
+
+            try:
+                mod_openai = OpenAI_RB(api_key)
+                SetVar(result, True)
+
+            except Exception as e:
+                traceback.print_exc()
+                PrintException()
+                SetVar(result, False)
+                raise e
+            
+        if module == "Completion":
+            prompt = GetParams("prompt")
+            model = GetParams("model")
+            temperature = float(GetParams("temperature")) if GetParams("temperature") else 0
+            max_tokens = int(GetParams("max_tokens")) if GetParams("max_tokens") else 256
+            stop = GetParams("stop_sequence") if GetParams("stop_sequence") else None
+            result = GetParams("result_var")
+
+            response = mod_openai.get_completions(prompt, model, max_tokens, temperature, 1, 0, 0, stop)
+            
+            response = response.replace("\n", "")
+            
+            SetVar(result, response)
+
+
+        if module == "whisper":
+            audio_file = GetParams("audio_file")
+            result = GetParams("result_var")
+
+            response = mod_openai.get_transcript(audio_file)
+
+            SetVar(result, response)
+            
+        if module == "translate":
+            audio_file = GetParams("audio_file")
+            result = GetParams("result_var")
+            
+            response = mod_openai.get_audio_translations(audio_file)
+            SetVar(result, response)
+            
+        if module == "chat":
+            model = GetParams("model")
+            messages = eval(GetParams("messages")) if GetParams("messages") else None
+            temperature = float(GetParams("temperature")) if GetParams("temperature") else 1
+            n = int(GetParams("n")) if GetParams("n") else 1
+            stop = GetParams("stop_sequence") if GetParams("stop_sequence") else None
+            max_tokens = int(GetParams("max_tokens")) if GetParams("max_tokens") else 256
+            result = GetParams("result_var")
+
+            if not messages:
+                raise Exception("Messages parameter is required")
+            
+            response = mod_openai.get_chat_completions(model, messages, temperature, n, stop, max_tokens)
+
+            print(response)
+            
+            SetVar(result, response)
+
+        if module == "OpenAI":
+            # This is an old version of the command, it is not visible anymore in the package.json in Rocketbot v2023, 
+            # but it is still used by some users so it is kept here. Please do not delete it.
+            prompt = GetParams("prompt")
+            model = GetParams("model")
+            if not model:
+                model = "text-davinci-003"
+
+            max_tokens = GetParams("max_tokens")
+            if not max_tokens:
+                max_tokens = 256
+            temperature = GetParams("temperature")
+            if not temperature:
+                temperature = 0
+            top_p = GetParams("top_p")
+            if not top_p:
+                top_p = 1
+            frequency_penalty = GetParams("frequency_penalty")
+            if not frequency_penalty:
+                frequency_penalty = 0
+            presence_penalty = GetParams("presence_penalty")
+            if not presence_penalty:
+                presence_penalty = 0
+            stop = GetParams("stop_sequence")
+
+            var_ = GetParams("result_var")
+            openai.api_key = GetParams("api_key")
+            response = openai.Completion.create(
+                model=model,
+                prompt=prompt,
+                max_tokens=int(max_tokens),
+                temperature=float(temperature),
+                top_p=top_p,
+                frequency_penalty=frequency_penalty,
+                presence_penalty=presence_penalty,
+                stop=stop,
+            )
+            print(response.choices[0].text)
+            SetVar(var_, json.loads(json.dumps(response)))
+
+
+    except Exception as e:
+        PrintException()
+        raise e
 
 except Exception as e:
-    PrintException()
+    traceback.print_exc()
     raise e
