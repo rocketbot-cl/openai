@@ -49,3 +49,16 @@ Este comando traduce un audio a texto en inglés. El comando de conexión debe s
 | --- | --- | --- |
 |Archivo de audio|Ruta al archivo de audio que se desea traducir al inglés|C:/Users/User/Desktop/audio.mp3|
 |Variable donde se almacenará el resultado|Variable donde se almacenará el resultado de la traducción|Variable|
+
+### Realizar consulta en chat
+  
+Este comando permite realizar una consulta en formato de chat a OpenAI. Debe ejecutarse el comando de conexión previamente.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Mensajes|Mensajes de la conversación en formato JSON.|[{"role": "user", "content": "Explique la programación asíncrona al estilo del pirata Barbanegra."}]|
+|Modelo|Modelo de OpenAI a usar.|Modelo|
+|Temperatura|Por defecto 1. Valor entre 0 y 2. Cuanto mayor sea el valor, las respuestas serán más creativas, pero también pueden llegar a ser más incoherentes.|1|
+|Cantidad de respuestas|Cuántas opciones de finalización de chat se generan para cada mensaje de entrada.|1|
+|Longitud de la respuesta|Longitud máxima de la respuesta. Por defecto 256.|256|
+|Secuencia de fin|Secuencia de texto opcional en la cual si aparece, la respuesta se detiene.| |
+|Variable donde se almacena el resultado de OpenAI|Variable donde se almacena el resultado de OpenAI|Variable|

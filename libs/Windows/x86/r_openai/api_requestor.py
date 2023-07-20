@@ -9,6 +9,7 @@ from urllib.parse import urlencode, urlsplit, urlunsplit
 import requests
 from typing_extensions import Literal
 
+
 import r_openai as openai
 from r_openai import error, util, version
 from r_openai.openai_response import OpenAIResponse

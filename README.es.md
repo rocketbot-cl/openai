@@ -1,3 +1,7 @@
+
+
+
+
 # OpenAI
   
 Este módulo se conecta a la API de OpenAI. Puedes ejecutar acciones como realizar una consulta a un modelo de lenguaje natural, transcribir un audio o traducir un audio al inglés.  
@@ -25,6 +29,9 @@ Este comando transcribe un audio a texto. Debe ejecutarse el comando de conexió
 
 4. Traducir audio  
 Este comando traduce un audio a texto en inglés. El comando de conexión debe ser ejecutado previamente.
+
+5. Realizar consulta en chat  
+Este comando permite realizar una consulta en formato de chat a OpenAI. Debe ejecutarse el comando de conexión previamente.
 
 
 

@@ -49,3 +49,17 @@ This command translates an audio to text in English. The connection command must
 | --- | --- | --- |
 |Audio file|Path to the audio file to be translated to English|C:/Users/User/Desktop/audio.mp3|
 |Variable where the result will be stored|Variable where the result of the translation will be stored|Variable|
+
+### Make a query in chat
+  
+This command allows you to make a chat query to OpenAI. The connection command must be executed previously.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Messages|Conversation messages in JSON format.|[{"role": "system", "content": "You are a very helpful assistant."}, 
+{"role": "user", "content": "Explain asynchronous programming in the style of pirate Blackbeard."}]|
+|Model|OpenAI model to use.|Model|
+|Temperature|Default 0. Value between 0 and 2. The higher the value, the more creative the answers will be, but they can also be more incoherent.|1|
+|Number of responses|How many chat completion choices to generate for each input message.|1|
+|Length of the response|Maximum length of the response. Default 256.|256|
+|Stop sequence|Optional text sequence in which if it appears, the response stops.| |
+|Variable where to save the result of OpenAI|Variable where to save the result of OpenAI|Variable|
