@@ -14,8 +14,8 @@ if WANDB_AVAILABLE:
     from pathlib import Path
 
     from r_openai import File, FineTune
-    from r_openai.datalib import numpy as np
-    from r_openai.datalib import pandas as pd
+    from r_openai.datalib.numpy_helper import numpy as np
+    from r_openai.datalib.pandas_helper import pandas as pd
 
 
 class WandbLogger:
