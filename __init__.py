@@ -184,13 +184,15 @@ try:
             stop = GetParams("stop_sequence") if GetParams("stop_sequence") else None
             max_tokens = int(GetParams("max_tokens")) if GetParams("max_tokens") else 256
             result = GetParams("result_var")
+            only_text = GetParams("only_text") or False
 
             if not messages:
                 raise Exception("Messages parameter is required")
             
             response = mod_openai.get_chat_completions(model, messages, temperature, n, stop, max_tokens)
 
-            print(response)
+            if only_text:
+                response = response['choices'][0]['message']['content']
             
             SetVar(result, response)
 

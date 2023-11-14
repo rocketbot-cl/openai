@@ -7,7 +7,7 @@
         "pr": "Este módulo conecta-se à API da OpenAI. Pode executar ações como fazer uma consulta a um modelo de linguagem natural, transcrever um áudio ou traduzir um áudio para inglês."
     },
     "disclaimer":"THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.",
-    "version":"2.1.0",
+    "version":"2.1.1",
     "license": "MIT",
     "homepage":"http://rocketbot.com/",
     "linux": true,
@@ -496,11 +496,11 @@
                         "css": "col-md-12"
                     },
                     {
-                        "type": "select",
+                        "type": "input",
                         "placeholder": {
-                            "es": "Modelo",
-                            "en": "Model",
-                            "pr": "Modelo"
+                            "es": "gpt-3.5-turbo",
+                            "en": "gpt-3.5-turbo",
+                            "pr": "gpt-3.5-turbo"
                         },
                         "title": {
                             "es": "Modelo",
@@ -512,20 +512,10 @@
                             "en": "OpenAI model to use.",
                             "pr": "Modelo OpenAI a usar."
                         },
-                        "options": [
-                            {
-                              "title": "GPT-3.5 Turbo",
-                              "value": "gpt-3.5-turbo"
-                            },
-                            {
-                                "title": "GPT 4",
-                                "value": "gpt4"
-                            }
-                        ],
                         "help": {
-                            "en": "GPT-4 model is currently accessible to those who have made at least one successful payment through OpenAI's developer platform.",
-                            "es": "El modelo GPT-4 actualmente es accesible para aquellos que hayan realizado al menos un pago exitoso a través de la plataforma de desarrolladores de OpenAI.",
-                            "pr": "O modelo GPT-4 atualmente é acessível para aqueles que fizeram pelo menos um pagamento bem-sucedido por meio da plataforma de desenvolvedores da OpenAI."
+                            "en": "gpt-4 model is currently accessible to those who have made at least one successful payment through OpenAI's developer platform.",
+                            "es": "El modelo gpt-4 actualmente es accesible para aquellos que hayan realizado al menos un pago exitoso a través de la plataforma de desarrolladores de OpenAI.",
+                            "pr": "O modelo gpt-4 atualmente é acessível para aqueles que fizeram pelo menos um pagamento bem-sucedido por meio da plataforma de desenvolvedores da OpenAI."
                         },
                         "id": "model",
                         "css": "col-md-4"
@@ -647,6 +637,26 @@
                         },
                         "remove_vars": true,
                         "id": "result_var",
+                        "css": "col-md-6"
+                    },
+                    {
+                        "type": "checkbox",
+                        "placeholder": {
+                            "es": "False",
+                            "en": "False",
+                            "pr": "False"
+                        },
+                        "title": {
+                            "es": "Obtener solo texto de la respuesta",
+                            "en": "Get only text from the response",
+                            "pr": "Obter apenas texto da resposta"
+                        },
+                        "description": {
+                            "es": "Si se activa, solo se obtendrá el texto de la respuesta, sin el resto de información.",
+                            "en": "If activated, only the text of the response will be obtained, without the rest of the information.",
+                            "pr": "Se ativado, apenas o texto da resposta será obtido, sem o restante das informações."
+                        },
+                        "id": "only_text",
                         "css": "col-md-6"
                     }
                 ]
