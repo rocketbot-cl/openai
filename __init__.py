@@ -226,10 +226,14 @@ try:
 
                 response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
+                if response.json().get("error"):
+                    raise Exception(response.json().get("error").get("message"))
+                
                 if only_text:
                     response = response.json()["choices"][0]["message"]["content"]
                 else:
                     response = response.json()
+
 
             else:
                 response = mod_openai.get_chat_completions(model, messages, temperature, n, stop, max_tokens, only_text)

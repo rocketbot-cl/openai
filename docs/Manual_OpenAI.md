@@ -12,6 +12,24 @@ To install the module in Rocketbot Studio, it can be done in two ways:
 2. Automatic: When entering Rocketbot Studio on the right margin you will find the **Addons** section, select **Install Mods**, search for the desired module and press install.  
 
 
+## How to use this module
+
+Before using this module, you must obtain your apikey from the OpenAI API Platform.
+
+1. Go to [OpenAI API Platform](https://platform.openai.com/docs/overview) and log in or sign up.
+2. Go to Dashboard -> [API keys](https://platform.openai.com/api-keys) and create a new secret key with any name you want and All permisions.
+3. Copy the apikey and use it in the `Connect to OpenAI` command
+4. Run the command and if the result is True, you are ready to use the OpenAI commands.
+
+Note: If you get this error message: 
+
+`You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.`
+
+You need to upgrade your plan in the OpenAI API Platform, you can do it [here](https://platform.openai.com/settings/organization/billing/overview)
+
+For more information about the OpenAI API, you can check the [OpenAI API Documentation](https://platform.openai.com/docs/api-reference/introduction)
+
+
 ## Description of the commands
 
 ### Connect to OpenAI

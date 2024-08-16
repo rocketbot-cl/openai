@@ -11,6 +11,22 @@ Para instalar el módulo en Rocketbot Studio, se puede hacer de dos formas:
 1. Manual: __Descargar__ el archivo .zip y descomprimirlo en la carpeta modules. El nombre de la carpeta debe ser el mismo al del módulo y dentro debe tener los siguientes archivos y carpetas: \__init__.py, package.json, docs, example y libs. Si tiene abierta la aplicación, refresca el navegador para poder utilizar el nuevo modulo.
 2. Automática: Al ingresar a Rocketbot Studio sobre el margen derecho encontrara la sección de **Addons**, seleccionar **Install Mods**, buscar el modulo deseado y presionar install.  
 
+## Como usar este modulo
+
+Antes de usar este módulo, debes obtener tu apikey de la plataforma OpenAI API.
+
+1. Ve a [OpenAI API Platform](https://platform.openai.com/docs/overview) e inicia sesión o regístrate.
+2. Ve a Dashboard -> [API keys](https://platform.openai.com/api-keys) y crea una nueva clave secreta con el nombre que desees y todos los permisos.
+3. Copia la apikey y úsala en el comando `Conectar a OpenAI`
+4. Ejecuta el comando y si el resultado es True, estás listo para usar los comandos de OpenAI.
+
+Nota: Si obtienes este mensaje de error:
+
+`You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.`
+
+Necesitas actualizar tu plan en la plataforma OpenAI API, puedes hacerlo [aquí](https://platform.openai.com/settings/organization/billing/overview)
+
+Para obtener más información sobre la API de OpenAI, puedes consultar la [Documentación de la API de OpenAI](https://platform.openai.com/docs/api-reference/introduction)
 
 ## Descripción de los comandos
 
