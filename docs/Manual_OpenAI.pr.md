@@ -22,18 +22,6 @@ Este comando conecta a OpenAI con la API key secreta especificada.
 |Secret API key|Secret API key necessária para se conectar. Ela é obtida na página https//platform.openai.com/account/api-keys|000-000|
 |Variável onde o resultado da conexão será armazenado|Variável onde o resultado da conexão será armazenado. Ele retornará True se a conexão for bem-sucedida|Variável|
 
-### Fazer uma consulta
-  
-Este comando permite fazer uma consulta à OpenAI. O comando de conexão deve ser executado previamente.
-|Parâmetros|Descrição|exemplo|
-| --- | --- | --- |
-|Prompt|Prompt para OpenAI. Quanto mais informações e contexto você fornecer, melhor e mais completa será a resposta.|Prompt para OpenAI|
-|Modelo|Modelo OpenAI a usar.|Modelo|
-|Temperatura|Padrão 0. Valor entre 0 e 1. Quanto maior o valor, mais criativas serão as respostas, mas também podem ser mais incoerentes.|0|
-|Comprimento da resposta|Comprimento máximo da resposta. Padrão 256.|256|
-|Sequência de parada|Sequência de texto opcional na qual, se aparecer, a resposta para.| |
-|Variável onde salvar o resultado do OpenAI|Variável onde salvar o resultado do OpenAI|Variável|
-
 ### Transcrever áudio
   
 Este comando transcreve um áudio para texto. O comando de conexão deve ser executado previamente.
@@ -55,11 +43,12 @@ Este comando traduz um áudio para texto em inglês. O comando de conexão deve 
 Este comando permite fazer uma consulta em formato de chat para OpenAI. O comando de conexão deve ser executado previamente.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
-|Mensagens|Mensagens da conversa em formato JSON.|[{"role": "system", "content": "Você é um assistente muito útil."}, 
-{"role": "user", "content": "Explique a programação assíncrona no estilo do pirata Barba Negra."}]|
-|Modelo|Modelo OpenAI a usar.|Modelo|
+|Mensagens|Mensagens da conversa em formato JSON.|[{"role": "system", "content": "Você é um assistente muito útil."}, {"role": "user", "content": "Explique a programação assíncrona no estilo do pirata Barba Negra."}]|
+|Arquivo de imagem para enviar ao chat (opcional)|Se você anexar uma imagem, a IA a usará para responder à consulta.|C:/Desktop/image.jpg|
+|Modelo|Modelo OpenAI a usar.|gpt-3.5-turbo|
 |Temperatura|Padrão 0. Valor entre 0 e 2. Quanto maior o valor, mais criativas serão as respostas, mas também podem ser mais incoerentes.|1|
 |Quantidade de respostas|Quantas opções de conclusão de chat gerar para cada mensagem de entrada.|1|
 |Comprimento da resposta|Comprimento máximo da resposta. Padrão 256.|256|
 |Sequência de parada|Sequência de texto opcional na qual, se aparecer, a resposta para.| |
 |Variável onde salvar o resultado do OpenAI|Variável onde salvar o resultado do OpenAI|Variável|
+|Obter apenas texto da resposta|Se ativado, apenas o texto da resposta será obtido, sem o restante das informações.|False|

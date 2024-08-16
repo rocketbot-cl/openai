@@ -22,18 +22,6 @@ This command connects to OpenAI with the specified secret API key.
 |Secret API key|Secret API key needed to connect. It is obtained from the page https//platform.openai.com/account/api-keys|000-000|
 |Variable where the result of the connection will be stored|Variable where the result of the connection will be stored. It will return True if the connection was successful|Variable|
 
-### Make query
-  
-This command allows you to make a query to OpenAI. The connection command must be executed previously.
-|Parameters|Description|example|
-| --- | --- | --- |
-|Prompt|Prompt to OpenAI. The more information and context you provide, the better and more complete the answer will be.|Prompt to OpenAI|
-|Model|OpenAI model to use.|Model|
-|Temperature|Default 0. Value between 0 and 1. The higher the value, the more creative the answers will be, but they can also be more incoherent.|0|
-|Length of the response|Maximum length of the response. Default 256.|256|
-|Stop sequence|Optional text sequence in which if it appears, the response stops.| |
-|Variable where to save the result of OpenAI|Variable where to save the result of OpenAI|Variable|
-
 ### Transcribe audio
   
 This command transcribes an audio to text. The connection command must be executed previously.
@@ -55,11 +43,12 @@ This command translates an audio to text in English. The connection command must
 This command allows you to make a chat query to OpenAI. The connection command must be executed previously.
 |Parameters|Description|example|
 | --- | --- | --- |
-|Messages|Conversation messages in JSON format.|[{"role": "system", "content": "You are a very helpful assistant."}, 
-{"role": "user", "content": "Explain asynchronous programming in the style of pirate Blackbeard."}]|
-|Model|OpenAI model to use.|Model|
+|Messages|Conversation messages in JSON format.|[{"role": "system", "content": "You are a very helpful assistant."}, {"role": "user", "content": "Explain asynchronous programming in the style of pirate Blackbeard."}]|
+|Image file to send to chat (optional)|If you attach an image, the AI will use it to respond to the query.|C:/Desktop/image.jpg|
+|Model|OpenAI model to use.|gpt-3.5-turbo|
 |Temperature|Default 0. Value between 0 and 2. The higher the value, the more creative the answers will be, but they can also be more incoherent.|1|
 |Number of responses|How many chat completion choices to generate for each input message.|1|
 |Length of the response|Maximum length of the response. Default 256.|256|
 |Stop sequence|Optional text sequence in which if it appears, the response stops.| |
 |Variable where to save the result of OpenAI|Variable where to save the result of OpenAI|Variable|
+|Get only text from the response|If activated, only the text of the response will be obtained, without the rest of the information.|False|
