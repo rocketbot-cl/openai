@@ -1,5 +1,6 @@
-from r_openai import OpenAI
 import json
+import base64
+from r_openai import OpenAI
 
 class openaiObject():
     def __init__(self, api_key):
@@ -85,3 +86,12 @@ class openaiObject():
         Convert completion response to JSON
         '''
         return json.dumps(response, default=lambda o: o.__dict__)
+    
+    def encode_image(self, image_file):
+        '''
+        Encode image file to base64
+        '''
+        with open(image_file, "rb") as image:
+            image = base64.b64encode(image.read()).decode("utf-8")
+        
+        return image
