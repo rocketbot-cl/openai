@@ -496,6 +496,26 @@
                         "css": "col-md-12"
                     },
                     {
+                        "type": "file_select",
+                        "placeholder": {
+                            "es": "C:/Desktop/image.jpg",
+                            "en": "C:/Desktop/image.jpg",
+                            "pr": "C:/Desktop/image.jpg"
+                        },
+                        "title": {
+                            "es": "Archivo de imagen a enviar al chat (opcional)",
+                            "en": "Image file to send to chat (optional)",
+                            "pr": "Arquivo de imagem para enviar ao chat (opcional)"
+                        },
+                        "description": {
+                            "es": "Si adjuntas una imagen la IA la usará para responder a la consulta.",
+                            "en": "If you attach an image, the AI will use it to respond to the query.",
+                            "pr": "Se você anexar uma imagem, a IA a usará para responder à consulta."
+                        },
+                        "id": "image_path",
+                        "css": "col-md-12"
+                    },
+                    {
                         "type": "input",
                         "placeholder": {
                             "es": "gpt-3.5-turbo",

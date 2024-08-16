@@ -24,8 +24,8 @@ Para instalar librerias se debe ingresar por terminal a la carpeta "libs"
 
 """
 
-__author__ = "David Cuello <david@rocketbot.com>"
-__version__ = "1.0.1"
+__author__ = "David Cuello <david@rocketbot.com> | Nicolas Garcia <nicolas.garcia@rocketbot.com>"
+__version__ = "3.0.0"
 
 try:
     import requests
@@ -187,11 +187,53 @@ try:
             max_tokens = int(GetParams("max_tokens")) if GetParams("max_tokens") else 256
             result = GetParams("result_var")
             only_text = GetParams("only_text") or False
+            image_path = GetParams("image_path") or None
 
             if not messages:
                 raise Exception("Messages parameter is required")
             
-            response = mod_openai.get_chat_completions(model, messages, temperature, n, stop, max_tokens, only_text)
+            if image_path:
+                base64_image = mod_openai.encode_image(image_path)
+                extension = image_path.split(".")[-1]
+                
+                for message in reversed(messages):
+                    if message["role"] == "user":
+                        message["content"] = [
+                            {
+                                "type": "text",
+                                "text": message["content"]
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/jpeg;base64,{base64_image}",
+                                    "detail": "low"
+                                }
+                            }
+                        ]
+                        break
+
+                headers = {
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {mod_openai.api_key}"
+                }
+
+                payload = {
+                    "model": model,
+                    "messages": messages,
+                    "max_tokens": max_tokens,
+                }
+
+                response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+
+                if only_text:
+                    response = response.json()["choices"][0]["message"]["content"]
+                else:
+                    response = response.json()
+
+            else:
+                response = mod_openai.get_chat_completions(model, messages, temperature, n, stop, max_tokens, only_text)
+
             
             SetVar(result, response)
 
