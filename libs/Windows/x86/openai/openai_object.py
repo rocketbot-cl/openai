@@ -4,8 +4,8 @@ import datetime
 import json
 from copy import deepcopy
 
-import openai
-from openai import api_requestor, util
+import r_openai as openai
+from r_openai import api_requestor, util
 
 
 def _compute_diff(current, previous):

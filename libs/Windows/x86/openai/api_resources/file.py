@@ -1,8 +1,8 @@
 from __future__ import absolute_import, division, print_function
 
-import openai
-from openai import api_requestor, util
-from openai.api_resources.abstract import (
+import r_openai as openai
+from r_openai import api_requestor, util
+from r_openai.api_resources.abstract import (
     DeletableAPIResource,
     ListableAPIResource,
 )

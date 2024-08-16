@@ -9,7 +9,7 @@ from typing import Any, Optional, Type
 if sys.version_info >= (3, 8):
     from typing import final
 else:
-    from typing_extensions import final
+    from r_typing_extensions import final
 
 
 __version__ = "4.0.2"

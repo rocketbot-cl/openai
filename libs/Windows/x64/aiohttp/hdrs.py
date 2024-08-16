@@ -10,7 +10,7 @@ from multidict import istr
 if sys.version_info >= (3, 8):
     from typing import Final
 else:
-    from typing_extensions import Final
+    from r_typing_extensions import Final
 
 METH_ANY: Final[str] = "*"
 METH_CONNECT: Final[str] = "CONNECT"

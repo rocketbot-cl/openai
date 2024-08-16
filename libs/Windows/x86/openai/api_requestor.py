@@ -9,11 +9,11 @@ from io import BytesIO
 from collections import OrderedDict
 from urllib.parse import urlencode, urlsplit, urlunsplit
 
-import openai
-from openai import error, http_client, version, util
-from openai.multipart_data_generator import MultipartDataGenerator
-from openai.openai_response import OpenAIResponse
-from openai.upload_progress import BufferReader
+import r_openai as openai
+from r_openai import error, http_client, version, util
+from r_openai.multipart_data_generator import MultipartDataGenerator
+from r_openai.openai_response import OpenAIResponse
+from r_openai.upload_progress import BufferReader
 
 
 def _encode_datetime(dttime) -> int:
@@ -89,8 +89,8 @@ class APIRequestor:
 
         self._default_proxy = None
 
-        from openai import verify_ssl_certs as verify
-        from openai import proxy
+        from r_openai import verify_ssl_certs as verify
+        from r_openai import proxy
 
         if client:
             self._client = client
@@ -241,7 +241,7 @@ class APIRequestor:
         if self.api_key:
             my_api_key = self.api_key
         else:
-            from openai import api_key
+            from r_openai import api_key
 
             my_api_key = api_key
 
@@ -298,7 +298,7 @@ class APIRequestor:
                     post_data = BytesIO(post_data)
                 headers["Content-Encoding"] = "gzip"
 
-                from openai.gzip_stream import GZIPCompressedStream
+                from r_openai.gzip_stream import GZIPCompressedStream
 
                 post_data = GZIPCompressedStream(post_data, compression_level=9)
         else:

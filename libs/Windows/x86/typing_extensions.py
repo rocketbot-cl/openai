@@ -2255,7 +2255,7 @@ elif sys.version_info[:2] >= (3, 7):
 
         Example::
 
-          from typing_extensions import LiteralString
+          from r_typing_extensions import LiteralString
 
           def query(sql: LiteralString) -> ...:
               ...
@@ -2273,7 +2273,7 @@ else:
 
         Example::
 
-          from typing_extensions import LiteralString
+          from r_typing_extensions import LiteralString
 
           def query(sql: LiteralString) -> ...:
               ...
@@ -2351,7 +2351,7 @@ elif sys.version_info[:2] >= (3, 7):
         This can be used to define a function that should never be
         called, or a function that never returns::
 
-            from typing_extensions import Never
+            from r_typing_extensions import Never
 
             def never_call_me(arg: Never) -> None:
                 pass
@@ -2376,7 +2376,7 @@ else:
         This can be used to define a function that should never be
         called, or a function that never returns::
 
-            from typing_extensions import Never
+            from r_typing_extensions import Never
 
             def never_call_me(arg: Never) -> None:
                 pass
@@ -2831,7 +2831,7 @@ else:
 
         Example:
 
-            from typing_extensions import dataclass_transform
+            from r_typing_extensions import dataclass_transform
 
             _T = TypeVar("_T")
 

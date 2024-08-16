@@ -7,7 +7,7 @@ from typing import Dict, Iterator, Optional, Tuple, Union, overload
 from urllib.parse import urlencode, urlsplit, urlunsplit
 
 import requests
-from typing_extensions import Literal
+from r_typing_extensions import Literal
 
 
 import r_openai as openai

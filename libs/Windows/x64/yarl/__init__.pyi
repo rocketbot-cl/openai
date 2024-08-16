@@ -7,7 +7,7 @@ import multidict
 if sys.version_info >= (3, 8):
     from typing import Final, TypedDict, final
 else:
-    from typing_extensions import Final, TypedDict, final
+    from r_typing_extensions import Final, TypedDict, final
 
 _SimpleQuery = Union[str, int, float]
 _QueryVariable = Union[_SimpleQuery, Sequence[_SimpleQuery]]

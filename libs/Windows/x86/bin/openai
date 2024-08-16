@@ -5,9 +5,9 @@ import logging
 import os
 import sys
 
-import openai
-from openai.cli import display_error
-from openai.cli import register as api_register
+import r_openai as openai
+from r_openai.cli import display_error
+from r_openai.cli import register as api_register
 
 logger = logging.getLogger()
 formatter = logging.Formatter("[%(asctime)s] %(message)s")

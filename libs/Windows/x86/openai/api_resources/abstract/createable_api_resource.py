@@ -1,7 +1,7 @@
 from __future__ import absolute_import, division, print_function
 
-from openai.api_resources.abstract.api_resource import APIResource
-from openai import api_requestor, util
+from r_openai.api_resources.abstract.api_resource import APIResource
+from r_openai import api_requestor, util
 
 
 class CreateableAPIResource(APIResource):

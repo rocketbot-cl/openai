@@ -46,6 +46,7 @@ try:
         sys.path.insert(0, cur_path_x86)
         
     import r_openai as openai 
+    from openaiObject import openaiObject
     global mod_openai
 
     """
@@ -53,7 +54,7 @@ try:
     """
     module = GetParams("module")
 
-    class OpenAI_RB:
+    class OpenAI_RB_old:
         def __init__(self, api_key):
             self.api_key = api_key
             self.get_auth()
@@ -137,7 +138,8 @@ try:
             result = GetParams("result_var")
 
             try:
-                mod_openai = OpenAI_RB(api_key)
+                mod_openai = openaiObject(api_key)
+                auth = mod_openai.get_auth()
                 SetVar(result, True)
 
             except Exception as e:
@@ -189,10 +191,7 @@ try:
             if not messages:
                 raise Exception("Messages parameter is required")
             
-            response = mod_openai.get_chat_completions(model, messages, temperature, n, stop, max_tokens)
-
-            if only_text:
-                response = response['choices'][0]['message']['content']
+            response = mod_openai.get_chat_completions(model, messages, temperature, n, stop, max_tokens, only_text)
             
             SetVar(result, response)
 

@@ -1,7 +1,7 @@
 from urllib.parse import quote_plus
 
-from openai import util
-from openai.api_resources.abstract.api_resource import APIResource
+from r_openai import util
+from r_openai.api_resources.abstract.api_resource import APIResource
 
 
 class DeletableAPIResource(APIResource):

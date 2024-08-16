@@ -1,6 +1,6 @@
 from urllib.parse import quote_plus
 
-from openai import util
+from r_openai import util
 
 
 def custom_method(name, http_verb, http_path=None):
