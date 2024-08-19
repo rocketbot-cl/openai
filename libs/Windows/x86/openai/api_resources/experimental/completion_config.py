@@ -1,4 +1,4 @@
-from openai.api_resources.abstract import (
+from r_openai.api_resources.abstract import (
     CreateableAPIResource,
     DeletableAPIResource,
     ListableAPIResource,

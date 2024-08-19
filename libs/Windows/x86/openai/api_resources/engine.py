@@ -1,11 +1,11 @@
 import time
 
-from openai import util
-from openai.api_resources.abstract import (
+from r_openai import util
+from r_openai.api_resources.abstract import (
     ListableAPIResource,
     UpdateableAPIResource,
 )
-from openai.error import TryAgain
+from r_openai.error import TryAgain
 
 
 class Engine(ListableAPIResource, UpdateableAPIResource):

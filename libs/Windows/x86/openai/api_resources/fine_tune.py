@@ -1,11 +1,11 @@
 from urllib.parse import quote_plus
 
-from openai.api_resources.abstract import (
+from r_openai.api_resources.abstract import (
     ListableAPIResource,
     CreateableAPIResource,
     nested_resource_class_methods,
 )
-from openai import api_requestor, util
+from r_openai import api_requestor, util
 
 
 @nested_resource_class_methods("event", operations=["list"])

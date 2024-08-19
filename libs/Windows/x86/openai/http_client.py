@@ -9,9 +9,9 @@ from typing import Any, Dict
 import requests
 from urllib.parse import urlparse
 
-import openai
-from openai import error, util
-from openai.request_metrics import RequestMetrics
+import r_openai as openai
+from r_openai import error, util
+from r_openai.request_metrics import RequestMetrics
 
 
 def _now_ms():
@@ -127,7 +127,7 @@ class HTTPClient(abc.ABC):
         return False
 
     def _max_network_retries(self):
-        from openai import max_network_retries
+        from r_openai import max_network_retries
 
         # Configured retries, isolated here for tests
         return max_network_retries

@@ -1,7 +1,7 @@
 from __future__ import absolute_import, division, print_function
 
-from openai.util import merge_dicts
-from openai.openai_object import OpenAIObject
+from r_openai.util import merge_dicts
+from r_openai.openai_object import OpenAIObject
 
 
 class ErrorObject(OpenAIObject):

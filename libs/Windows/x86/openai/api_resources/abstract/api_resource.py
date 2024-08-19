@@ -1,7 +1,7 @@
 from urllib.parse import quote_plus
 
-from openai import api_requestor, error, util
-from openai.openai_object import OpenAIObject
+from r_openai import api_requestor, error, util
+from r_openai.openai_object import OpenAIObject
 
 
 class APIResource(OpenAIObject):

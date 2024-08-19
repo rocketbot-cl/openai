@@ -2,8 +2,8 @@ import time
 from typing import Optional
 from urllib.parse import quote_plus
 
-from openai import api_requestor, error, util
-from openai.api_resources.abstract.api_resource import APIResource
+from r_openai import api_requestor, error, util
+from r_openai.api_resources.abstract.api_resource import APIResource
 
 MAX_TIMEOUT = 20
 

@@ -5,7 +5,7 @@ import signal
 import sys
 import warnings
 
-import openai
+import r_openai as openai
 
 
 class bcolors:

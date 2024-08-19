@@ -7,7 +7,7 @@ import re
 import sys
 from urllib.parse import parse_qsl
 
-import openai
+import r_openai as openai
 
 
 OPENAI_LOG = os.environ.get("OPENAI_LOG")
@@ -99,7 +99,7 @@ def secure_compare(val1, val2):
 
 def get_object_classes():
     # This is here to avoid a circular dependency
-    from openai.object_classes import OBJECT_CLASSES
+    from r_openai.object_classes import OBJECT_CLASSES
 
     return OBJECT_CLASSES
 

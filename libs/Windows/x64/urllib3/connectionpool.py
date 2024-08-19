@@ -53,7 +53,7 @@ from .util.util import to_str
 if typing.TYPE_CHECKING:
     import ssl
 
-    from typing_extensions import Literal
+    from r_typing_extensions import Literal
 
     from ._base_connection import BaseHTTPConnection, BaseHTTPSConnection
 

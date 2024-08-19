@@ -19,7 +19,7 @@ from yarl import URL
 if sys.version_info >= (3, 8):
     from typing import Final as Final, Protocol as Protocol, TypedDict as TypedDict
 else:
-    from typing_extensions import (  # noqa: F401
+    from r_typing_extensions import (  # noqa: F401
         Final,
         Protocol as Protocol,
         TypedDict as TypedDict,
