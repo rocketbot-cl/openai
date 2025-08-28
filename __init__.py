@@ -36,14 +36,17 @@ try:
 
     base_path = tmp_global_obj["basepath"]
     cur_path = base_path + 'modules' + os.sep + 'OpenAI' + os.sep + 'libs' + os.sep
+    import platform
 
-    cur_path_x64 = os.path.join(cur_path, 'Windows' + os.sep +  'x64' + os.sep)
-    cur_path_x86 = os.path.join(cur_path, 'Windows' + os.sep +  'x86' + os.sep)
+    os_type = platform.system()
 
-    if sys.maxsize > 2**32 and cur_path_x64 not in sys.path:
-        sys.path.insert(0, cur_path_x64)
-    elif sys.maxsize <= 2**32 and cur_path_x86 not in sys.path:
-        sys.path.insert(0, cur_path_x86)
+    if os_type == "Windows":
+        cur_path_platform = os.path.join(cur_path, 'Windows', 'x64' if sys.maxsize > 2**32 else 'x86')
+    elif os_type == "Linux":
+        cur_path_platform = os.path.join(cur_path, 'Linux')
+#
+    if cur_path_platform not in sys.path:
+        sys.path.append(cur_path_platform)
         
     import r_openai as openai 
     from openaiObject import openaiObject
@@ -188,10 +191,12 @@ try:
             result = GetParams("result_var")
             only_text = GetParams("only_text") or False
             image_path = GetParams("image_path") or None
-
+            detail = GetParams("detail")
             if not messages:
                 raise Exception("Messages parameter is required")
             
+            if not detail:
+                detail = "low"
             if image_path:
                 base64_image = mod_openai.encode_image(image_path)
                 extension = image_path.split(".")[-1]
@@ -207,7 +212,7 @@ try:
                                 "type": "image_url",
                                 "image_url": {
                                     "url": f"data:image/jpeg;base64,{base64_image}",
-                                    "detail": "low"
+                                    "detail": detail
                                 }
                             }
                         ]

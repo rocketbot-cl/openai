@@ -1,3 +1,7 @@
+
+
+
+
 # OpenAI
   
 Este módulo se conecta a la API de OpenAI. Puedes ejecutar acciones como realizar una consulta a un modelo de lenguaje natural, transcribir un audio o traducir un audio al inglés.  
@@ -17,14 +21,21 @@ Para instalar el módulo en Rocketbot Studio, se puede hacer de dos formas:
 1. Conectar a OpenAI  
 Este comando conecta a OpenAI con la API key secreta especificada.
 
-2. Transcribir audio  
+2. Realizar consulta (deprecated)  
+Este comando permite realizar una consulta a OpenAI. Debe ejecutarse el comando de conexión previamente. Este comando está deprecado, se recomienda usar el comando 'Realizar consulta en chat'.
+
+3. Transcribir audio  
 Este comando transcribe un audio a texto. Debe ejecutarse el comando de conexión previamente.
 
-3. Traducir audio  
+4. Traducir audio  
 Este comando traduce un audio a texto en inglés. El comando de conexión debe ser ejecutado previamente.
 
-4. Realizar consulta en chat  
+5. Realizar consulta en chat  
 Este comando permite realizar una consulta en formato de chat a OpenAI. Debe ejecutarse el comando de conexión previamente.
+
+6. Preguntar  
+Este comando Consulta a OpenAI para obtener una respuesta. Necesitas tener una clave de OpenAI. Ve a https://platform.openai.com/account/api-keys para obtener una clave.  
+
 
 
 
@@ -40,5 +51,5 @@ Este comando permite realizar una consulta en formato de chat a OpenAI. Debe eje
 - [**openai**](https://pypi.org/project/openai/)
 ### License
   
-![MIT](https://img.shields.io/github/license/instaloader/instaloader.svg)  
-[MIT](https://opensource.org/license/mit)
+![MIT](https://camo.githubusercontent.com/107590fac8cbd65071396bb4d04040f76cde5bde/687474703a2f2f696d672e736869656c64732e696f2f3a6c6963656e73652d6d69742d626c75652e7376673f7374796c653d666c61742d737175617265)  
+[MIT](http://opensource.org/licenses/mit-license.ph)

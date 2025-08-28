@@ -7,7 +7,7 @@
         "pr": "Este módulo conecta-se à API da OpenAI. Pode executar ações como fazer uma consulta a um modelo de linguagem natural, transcrever um áudio ou traduzir um áudio para inglês."
     },
     "disclaimer":"THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.",
-    "version":"3.0.1",
+    "version":"3.1.2",
     "license": "MIT",
     "homepage":"http://rocketbot.com/",
     "linux": true,
@@ -516,6 +516,36 @@
                         "css": "col-md-12"
                     },
                     {
+                        "type": "select",
+                        "placeholder": {
+                        "es": "Low",
+                        "en": "Low",
+                        "pr": "Low"
+                        },
+                        "title": {
+                        "en": "Nivel de detalle:",
+                        "es": "Detail Level:",
+                        "pr": "Nível de detalhe"
+                        },
+                        "description": {
+                        "es": "Profundidad de procesamiento de imagen.",
+                        "en": "Image Analysis Depth.",
+                        "pr": "Profundidade de análise de imagem."
+                        },
+                        "options": [
+                        {
+                            "value": "low",
+                            "title": "Low"
+                        },
+                        {
+                            "value": "high",
+                            "title": "High"
+                        }          
+                        ],
+                        "id": "detail",
+                        "css": "col-md-6"
+                    },
+                    {
                         "type": "input",
                         "placeholder": {
                             "es": "gpt-3.5-turbo",
@@ -538,7 +568,7 @@
                             "pr": "O modelo gpt-4 atualmente é acessível para aqueles que fizeram pelo menos um pagamento bem-sucedido por meio da plataforma de desenvolvedores da OpenAI."
                         },
                         "id": "model",
-                        "css": "col-md-4"
+                        "css": "col-md-6"
                     },
                     {
                         "type": "input",
