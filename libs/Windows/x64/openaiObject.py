@@ -23,6 +23,7 @@ class openaiObject():
         '''
         Get text completions from OpenAI API
         '''
+        
         response = self.client.completions.create(
             model=model,
             prompt=prompt,
@@ -61,18 +62,39 @@ class openaiObject():
         
         return result
     
-    def get_chat_completions(self, model, messages, temperature, n, stop, max_tokens, only_text=False):
+    def get_chat_completions(self, model, messages, temperature, n, stop, max_tokens, only_text=False, schema_dict=None):
         '''
         Get chat completions from OpenAI API
         '''
-        response = self.client.chat.completions.create(
-            model=model,
-            messages=messages,
-            temperature=temperature,
-            n=n,
-            stop=stop,
-            max_tokens=max_tokens
-        )
+        import json
+
+        kwargs = {
+            "model": model,
+            "messages": messages,
+            "temperature": temperature,
+            "n":n,
+            "stop": stop,
+            "max_tokens": max_tokens
+        }
+
+
+        if schema_dict:
+            schema = self.__parse_to_openai_schema__(schema_dict)
+            kwargs["response_format"] = {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "response",
+                    "strict": True,
+                    "schema": {
+                        "type": "object",
+                        "properties": schema,
+                        "required": list(schema.keys()),
+                        "additionalProperties": False
+                    }
+                }
+            }
+            
+        response = self.client.chat.completions.create(**kwargs)
 
         if only_text:
             response = response.choices[0].message.content
@@ -95,3 +117,44 @@ class openaiObject():
             image = base64.b64encode(image.read()).decode("utf-8")
         
         return image
+    
+    def __parse_to_openai_schema__(self, schema_dict):
+
+        properties = {}
+        for key, value in schema_dict.items():
+            if isinstance(value, dict):
+                item_schema = self.__parse_to_openai_schema__(value)
+                properties[key] = {
+                    "type": "object",
+                    "properties": item_schema,
+                    "required": list(item_schema.keys()),
+                    "additionalProperties": False
+                }
+                
+            elif isinstance(value, list):
+                if len(value) > 0:
+                    first_item = value[0]
+                    if isinstance(first_item, dict):
+                        nested_props = self.__parse_to_openai_schema__(first_item)
+                        item_schema = {
+                            "type": "object",
+                            "properties": nested_props,
+                            "required": list(nested_props.keys()),
+                            "additionalProperties": False
+                        }
+                    else:
+                        item_schema = {"type": first_item.strip().lower()}
+                else:
+                    item_schema = {"type": "string"}
+                    
+                properties[key] = {
+                    "type": "array",
+                    "items": item_schema
+                }
+                
+            else:
+                mapped_type = value.strip().lower()
+                properties[key] = {
+                    "type": mapped_type
+                }
+        return properties

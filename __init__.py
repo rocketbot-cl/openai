@@ -44,7 +44,7 @@ try:
         cur_path_platform = os.path.join(cur_path, 'Windows', 'x64' if sys.maxsize > 2**32 else 'x86')
     elif os_type == "Linux":
         cur_path_platform = os.path.join(cur_path, 'Linux')
-#
+
     if cur_path_platform not in sys.path:
         sys.path.append(cur_path_platform)
         
@@ -134,7 +134,48 @@ try:
             response_dict = json.loads(json.dumps(response))
             
             return response_dict
+        
+    def parse_to_openai_schema(schema_dict):
 
+        properties = {}
+        for key, value in schema_dict.items():
+            if isinstance(value, dict):
+                item_schema = parse_to_openai_schema(value)
+                properties[key] = {
+                    "type": "object",
+                    "properties": item_schema,
+                    "required": list(item_schema.keys()),
+                    "additionalProperties": False
+                }
+                
+            elif isinstance(value, list):
+                if len(value) > 0:
+                    first_item = value[0]
+                    if isinstance(first_item, dict):
+                        nested_props = parse_to_openai_schema(first_item)
+                        item_schema = {
+                            "type": "object",
+                            "properties": nested_props,
+                            "required": list(nested_props.keys()),
+                            "additionalProperties": False
+                        }
+                    else:
+                        item_schema = {"type": first_item.strip().lower()}
+                else:
+                    item_schema = {"type": "string"}
+                    
+                properties[key] = {
+                    "type": "array",
+                    "items": item_schema
+                }
+                
+            else:
+                mapped_type = value.strip().lower()
+                properties[key] = {
+                    "type": mapped_type
+                }
+        return properties
+    
     try:
         if module == "Connect":
             api_key = GetParams("api_key")
@@ -182,6 +223,8 @@ try:
             SetVar(result, response)
             
         if module == "chat":
+            import ast
+
             model = GetParams("model")
             messages = eval(GetParams("messages")) if GetParams("messages") else None
             temperature = float(GetParams("temperature")) if GetParams("temperature") else 1
@@ -192,6 +235,8 @@ try:
             only_text = GetParams("only_text") or False
             image_path = GetParams("image_path") or None
             detail = GetParams("detail")
+            schema_dict = GetParams("schema")
+
             if not messages:
                 raise Exception("Messages parameter is required")
             
@@ -229,6 +274,23 @@ try:
                     "max_tokens": max_tokens,
                 }
 
+                if schema_dict:
+                    schema_dict = ast.literal_eval(schema_dict)
+                    schema = parse_to_openai_schema(schema_dict)
+                    payload["response_format"] = {
+                        "type": "json_schema",
+                        "json_schema": {
+                            "name": "response",
+                            "strict": True,
+                            "schema": {
+                                "type": "object",
+                                "properties": schema,
+                                "required": list(schema.keys()),
+                                "additionalProperties": False
+                            }
+                        }
+                    }
+
                 response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
                 if response.json().get("error"):
@@ -241,7 +303,9 @@ try:
 
 
             else:
-                response = mod_openai.get_chat_completions(model, messages, temperature, n, stop, max_tokens, only_text)
+                if schema_dict:
+                    schema_dict = ast.literal_eval(schema_dict)
+                response = mod_openai.get_chat_completions(model, messages, temperature, n, stop, max_tokens, only_text, schema_dict)
 
             
             SetVar(result, response)

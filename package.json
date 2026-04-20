@@ -7,7 +7,7 @@
         "pr": "Este módulo conecta-se à API da OpenAI. Pode executar ações como fazer uma consulta a um modelo de linguagem natural, transcrever um áudio ou traduzir um áudio para inglês."
     },
     "disclaimer":"THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.",
-    "version":"3.1.3",
+    "version":"3.1.4",
     "license": "MIT",
     "homepage":"http://rocketbot.com/",
     "linux": true,
@@ -571,6 +571,26 @@
                         "css": "col-md-6"
                     },
                     {
+                        "type": "textarea",
+                        "placeholder": {
+                            "es": "{ \"name\": \"string\", \"number\": \"number\", \"sub_object\": {...}}",
+                            "en": "{ \"name\": \"string\", \"number\": \"number\", \"sub_object\": {...}}",
+                            "pr": "{ \"name\": \"string\", \"number\": \"number\", \"sub_object\": {...}}"
+                        },
+                        "description": {
+                            "es": "Formato del contenido generado (opcional). \nLos posibles tipos son: \"string\", \"number\", \"integer\", \"boolean\" y \"array\". \nPara indicar un objeto anidado, se puede usar otro diccionario con la misma estructura.",
+                            "en": "Format of the generated content (optional). \nThe possible types are: \"string\", \"number\", \"integer\", \"boolean\" and \"array\". \nTo indicate a nested object, you can use another dictionary with the same structure.",
+                            "pr": "Formato do conteúdo gerado (opcional). \nOs tipos possíveis são: \"string\", \"number\", \"integer\", \"boolean\" e \"array\". \nPara indicar um objeto aninhado, você pode usar outro dicionário com a mesma estrutura."
+                        },
+                        "title": {
+                            "es": "Esquema de respuesta (opcional)",
+                            "en": "Response schema (optional)",
+                            "pr": "Esquema de resposta (opcional)"
+                        },
+                        "id": "schema",
+                        "css": "col-md-12"
+                    },
+                    {
                         "type": "input",
                         "placeholder": {
                             "es": "1",
@@ -661,6 +681,26 @@
                             "pr": "Sequência de texto opcional na qual, se aparecer, a resposta para."
                         },
                         "id": "stop_sequence",
+                        "css": "col-md-12"
+                    },
+                    {
+                        "type": "checkbox",
+                        "placeholder": {
+                            "es": "False",
+                            "en": "False",
+                            "pr": "False"
+                        },
+                        "title": {
+                            "es": "Obtener solo texto de la respuesta",
+                            "en": "Get only text from the response",
+                            "pr": "Obter apenas texto da resposta"
+                        },
+                        "description": {
+                            "es": "Si se activa, solo se obtendrá el texto de la respuesta, sin el resto de información.",
+                            "en": "If activated, only the text of the response will be obtained, without the rest of the information.",
+                            "pr": "Se ativado, apenas o texto da resposta será obtido, sem o restante das informações."
+                        },
+                        "id": "only_text",
                         "css": "col-md-6"
                     },
                     {
@@ -687,26 +727,6 @@
                         },
                         "remove_vars": true,
                         "id": "result_var",
-                        "css": "col-md-6"
-                    },
-                    {
-                        "type": "checkbox",
-                        "placeholder": {
-                            "es": "False",
-                            "en": "False",
-                            "pr": "False"
-                        },
-                        "title": {
-                            "es": "Obtener solo texto de la respuesta",
-                            "en": "Get only text from the response",
-                            "pr": "Obter apenas texto da resposta"
-                        },
-                        "description": {
-                            "es": "Si se activa, solo se obtendrá el texto de la respuesta, sin el resto de información.",
-                            "en": "If activated, only the text of the response will be obtained, without the rest of the information.",
-                            "pr": "Se ativado, apenas o texto da resposta será obtido, sem o restante das informações."
-                        },
-                        "id": "only_text",
                         "css": "col-md-6"
                     }
                 ]
