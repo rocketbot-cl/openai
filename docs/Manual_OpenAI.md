@@ -3,102 +3,104 @@
 
 
 # OpenAI
-  
-Este módulo se conecta a la API de OpenAI. Puedes ejecutar acciones como realizar una consulta a un modelo de lenguaje natural, transcribir un audio o traducir un audio al inglés.  
+
+This module connects to the OpenAI API. You can perform actions such as making a query to a natural language model, transcribing an audio or translating an audio to English.
 
 *Read this in other languages: [English](Manual_OpenAI.md), [Português](Manual_OpenAI.pr.md), [Español](Manual_OpenAI.es.md)*
-  
+
 ![banner](imgs/Banner_OpenAI.png)
-## Como instalar este módulo
-  
-Para instalar el módulo en Rocketbot Studio, se puede hacer de dos formas:
-1. Manual: __Descargar__ el archivo .zip y descomprimirlo en la carpeta modules. El nombre de la carpeta debe ser el mismo al del módulo y dentro debe tener los siguientes archivos y carpetas: \__init__.py, package.json, docs, example y libs. Si tiene abierta la aplicación, refresca el navegador para poder utilizar el nuevo modulo.
-2. Automática: Al ingresar a Rocketbot Studio sobre el margen derecho encontrara la sección de **Addons**, seleccionar **Install Mods**, buscar el modulo deseado y presionar install.  
+## How to install this module
+
+To install the module in Rocketbot Studio, it can be done in two ways:
+1. Manual: __Download__ the .zip file and unzip it in the modules folder. The folder name must be the same as the module and inside it must have the following files and folders: \__init__.py, package.json, docs, example and libs. If you have the application open, refresh your browser to be able to use the new module.
+2. Automatic: When entering Rocketbot Studio on the right margin you will find the **Addons** section, select **Install Mods**, search for the desired module and press install.
 
 
+## How to use this module
 
-## Como usar este modulo
+Before using this module, you must obtain your apikey from the OpenAI API Platform.
 
-Antes de usar este módulo, debes obtener tu apikey de la plataforma OpenAI API.
+1. Go to [OpenAI API Platform](https://platform.openai.com/docs/overview) and log in or sign up.
+2. Go to Dashboard -> [API keys](https://platform.openai.com/api-keys) and create a new secret key with any name you want and All permisions.
+3. Copy the apikey and use it in the `Connect to OpenAI` command
+4. Run the command and if the result is True, you are ready to use the OpenAI commands.
 
-1. Ve a [OpenAI API Platform](https://platform.openai.com/docs/overview) e inicia sesión o regístrate.
-2. Ve a Dashboard -> [API keys](https://platform.openai.com/api-keys) y crea una nueva clave secreta con el nombre que desees y todos los permisos.
-3. Copia la apikey y úsala en el comando `Conectar a OpenAI`
-4. Ejecuta el comando y si el resultado es True, estás listo para usar los comandos de OpenAI.
-
-Nota: Si obtienes este mensaje de error:
+Note: If you get this error message: 
 
 `You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.`
 
-Necesitas actualizar tu plan en la plataforma OpenAI API, puedes hacerlo [aquí](https://platform.openai.com/settings/organization/billing/overview)
+You need to upgrade your plan in the OpenAI API Platform, you can do it [here](https://platform.openai.com/settings/organization/billing/overview)
 
-Para obtener más información sobre la API de OpenAI, puedes consultar la [Documentación de la API
- de OpenAI](https://platform.openai.com/docs/api-reference/introduction)
+For more information about the OpenAI API, you can check the [OpenAI API 
+Documentation](https://platform.openai.com/docs/api-reference/introduction)
 
-## Descripción de los comandos
+## Description of the commands
 
-### Conectar a OpenAI
-  
-Este comando conecta a OpenAI con la API key secreta especificada.
-|Parámetros|Descripción|ejemplo|
+### Connect to OpenAI
+
+This command connects to OpenAI with the specified secret API key.
+|Parameters|Description|example|
 | --- | --- | --- |
-|API key secreta|API key secreta necesaria para conectarse. Se obtiene de la pagina https//platform.openai.com/account/api-keys|000-000|
-|Variable donde se almacenará el resultado de la conexión|Variable donde se almacenará el resultado de la conexión. Devolverá True si la conexión fue exitosa|Variable|
+|Secret API key|Secret API key needed to connect. It is obtained from the page https//platform.openai.com/account/api-keys|000-000|
+|Variable where the result of the connection will be stored|Variable where the result of the connection will be stored. It will return True if the connection was successful|Variable|
 
-### Realizar consulta (deprecated)
-  
-Este comando permite realizar una consulta a OpenAI. Debe ejecutarse el comando de conexión previamente. Este comando está deprecado, se recomienda usar el comando 'Realizar consulta en chat'.
-|Parámetros|Descripción|ejemplo|
-| --- | --- | --- |
-|Consulta|Consulta a OpenAI. Mientras mas informacion y contexto se proporcione, mejor y más completa será la respuesta.|Consulta a OpenAI|
-|Modelo|Modelo de OpenAI a usar.|Modelo|
-|Temperatura|Por defecto 0. Valor entre 0 y 1. Cuanto mayor sea el valor, las respuestas serán más creativas, pero también pueden llegar a ser más incoherentes.|0|
-|Longitud de la respuesta|Longitud máxima de la respuesta. Por defecto 256.|256|
-|Secuencia de fin|Secuencia de texto opcional en la cual si aparece, la respuesta se detiene.| |
-|Variable donde se almacena el resultado de OpenAI|Variable donde se almacena el resultado de OpenAI|Variable|
+### Make query (deprecated)
 
-### Transcribir audio
-  
-Este comando transcribe un audio a texto. Debe ejecutarse el comando de conexión previamente.
-|Parámetros|Descripción|ejemplo|
+This command allows you to make a query to OpenAI. The connection command must be executed previously. This command is deprecated, it is recommended to use the 'Make query in chat' command.
+|Parameters|Description|example|
 | --- | --- | --- |
-|Archivo de audio|Ruta al archivo de audio que se desea transcribir|C:/Users/User/Desktop/audio.mp3|
-|Variable donde se almacenará el resultado|Variable donde se almacenará el resultado de la transcripción|Variable|
+|Prompt|Prompt to OpenAI. The more information and context you provide, the better and more complete the answer will be.|Prompt to OpenAI|
+|Model|OpenAI model to use.|Model|
+|Temperature|Default 0. Value between 0 and 1. The higher the value, the more creative the answers will be, but they can also be more incoherent.|0|
+|Length of the response|Maximum length of the response. Default 256.|256|
+|Stop sequence|Optional text sequence in which if it appears, the response stops.| |
+|Variable where to save the result of OpenAI|Variable where to save the result of OpenAI|Variable|
 
-### Traducir audio
-  
-Este comando traduce un audio a texto en inglés. El comando de conexión debe ser ejecutado previamente.
-|Parámetros|Descripción|ejemplo|
-| --- | --- | --- |
-|Archivo de audio|Ruta al archivo de audio que se desea traducir al inglés|C:/Users/User/Desktop/audio.mp3|
-|Variable donde se almacenará el resultado|Variable donde se almacenará el resultado de la traducción|Variable|
+### Transcribe audio
 
-### Realizar consulta en chat
-  
-Este comando permite realizar una consulta en formato de chat a OpenAI. Debe ejecutarse el comando de conexión previamente.
-|Parámetros|Descripción|ejemplo|
+This command transcribes an audio to text. The connection command must be executed previously.
+|Parameters|Description|example|
 | --- | --- | --- |
-|Mensajes|Mensajes de la conversación en formato JSON.|[{"role": "system", "content": "Eres un ayudante muy útil."}, 
-{"role": "user", "content": "Explique la programación asíncrona al estilo del pirata Barbanegra."}]|
-|Archivo de imagen a enviar al chat (opcional)|Si adjuntas una imagen la IA la usará para responder a la consulta.|C:/Desktop/image.jpg|
-|Detail Level|Profundidad de procesamiento de imagen.|Low|
-|Modelo|Modelo de OpenAI a usar.|gpt-3.5-turbo|
-|Temperatura|Por defecto 1. Valor entre 0 y 2. Cuanto mayor sea el valor, las respuestas serán más creativas, pero también pueden llegar a ser más incoherentes.|1|
-|Cantidad de respuestas|Cuántas opciones de finalización de chat se generan para cada mensaje de entrada.|1|
-|Longitud de la respuesta|Longitud máxima de la respuesta. Por defecto 256.|256|
-|Secuencia de fin|Secuencia de texto opcional en la cual si aparece, la respuesta se detiene.| |
-|Variable donde se almacena el resultado de OpenAI|Variable donde se almacena el resultado de OpenAI|Variable|
-|Obtener solo texto de la respuesta|Si se activa, solo se obtendrá el texto de la respuesta, sin el resto de información.|False|
+|Audio file|Path to the audio file to be transcribed|C:/Users/User/Desktop/audio.mp3|
+|Variable where the result will be stored|Variable where the result of the transcription will be stored|Variable|
 
-### Preguntar
-  
-Este comando Consulta a OpenAI para obtener una respuesta. Necesitas tener una clave de OpenAI. Ve a https://platform.openai.com/account/api-keys para obtener una clave.
-|Parámetros|Descripción|ejemplo|
+### Translate audio
+
+This command translates an audio to text in English. The connection command must be executed previously.
+|Parameters|Description|example|
 | --- | --- | --- |
-|Consulta|Consulta a OpenAI. Mientras mas informacion y contexto se proporcione, mejor y más completa será la respuesta.|Consulta a OpenAI|
-|API key secreta|API key secreta necesaria para conectarse. Se obtiene de la pagina https//platform.openai.com/account/api-keys|000-000|
-|Modelo|Modelo de OpenAI a usar.|Modelo|
-|Temperatura|Por defecto 0. Valor entre 0 y 1. Cuanto mayor sea el valor, las respuestas serán más creativas, pero también pueden llegar a ser más incoherentes.|0|
-|Longitud de la respuesta|Longitud máxima de la respuesta. Por defecto 256.|256|
-|Secuencia de fin|Secuencia de texto opcional en la cual si aparece, la respuesta se detiene.| |
-|Variable donde se almacena el resultado de OpenAI|Variable donde se almacena el resultado de OpenAI|Variable|
+|Audio file|Path to the audio file to be translated to English|C:/Users/User/Desktop/audio.mp3|
+|Variable where the result will be stored|Variable where the result of the translation will be stored|Variable|
+
+### Make a query in chat
+
+This command allows you to make a chat query to OpenAI. The connection command must be executed previously.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Messages|Conversation messages in JSON format.|[{"role": "system", "content": "You are a very helpful assistant."}, 
+{"role": "user", "content": "Explain asynchronous programming in the style of pirate Blackbeard."}]|
+|Image file to send to chat (optional)|If you attach an image, the AI will use it to respond to the query.|C:/Desktop/image.jpg|
+|Nivel de detalle|Image Analysis Depth.|Low|
+|Model|OpenAI model to use.|gpt-3.5-turbo|
+|Response schema (optional)|Format of the generated content (optional). 
+The possible types are "string", "number", "integer", "boolean" and "array". 
+To indicate a nested object, you can use another dictionary with the same structure.|{ "name": "string", "number": "number", "sub_object": {...}}|
+|Temperature|Default 0. Value between 0 and 2. The higher the value, the more creative the answers will be, but they can also be more incoherent.|1|
+|Number of responses|How many chat completion choices to generate for each input message.|1|
+|Length of the response|Maximum length of the response. Default 256.|256|
+|Stop sequence|Optional text sequence in which if it appears, the response stops.| |
+|Get only text from the response|If activated, only the text of the response will be obtained, without the rest of the information.|False|
+|Variable where to save the result of OpenAI|Variable where to save the result of OpenAI|Variable|
+
+### Ask
+
+This command asks OpenAI for an answer. You need to have an OpenAI key. Go to https://platform.openai.com/account/api-keys to get a key.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Prompt|Prompt to OpenAI. The more information and context you provide, the better and more complete the answer will be.|Prompt to OpenAI|
+|Secret API key|Secret API key needed to connect. It is obtained from the page https//platform.openai.com/account/api-keys|000-000|
+|Model|OpenAI model to use.|Model|
+|Temperature|Default 0. Value between 0 and 1. The higher the value, the more creative the answers will be, but they can also be more incoherent.|0|
+|Length of the response|Maximum length of the response. Default 256.|256|
+|Stop sequence|Optional text sequence in which if it appears, the response stops.| |
+|Variable where to save the result of OpenAI|Variable where to save the result of OpenAI|Variable|
