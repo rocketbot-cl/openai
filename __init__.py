@@ -38,15 +38,29 @@ try:
     cur_path = base_path + 'modules' + os.sep + 'OpenAI' + os.sep + 'libs' + os.sep
     import platform
 
-    os_type = platform.system()
 
-    if os_type == "Windows":
+    os_type = platform.system().lower()
+    if os_type == "windows":
         cur_path_platform = os.path.join(cur_path, 'Windows', 'x64' if sys.maxsize > 2**32 else 'x86')
-    elif os_type == "Linux":
+        if cur_path_platform not in sys.path:
+            sys.path.append(cur_path_platform)
+    
+    elif os_type == "linux":
         cur_path_platform = os.path.join(cur_path, 'Linux')
-
-    if cur_path_platform not in sys.path:
-        sys.path.append(cur_path_platform)
+        if cur_path_platform not in sys.path:
+            sys.path.append(cur_path_platform)
+    
+    elif os_type == "darwin":
+        cur_path_platform = os.path.join(cur_path, 'macos')
+        if cur_path_platform not in sys.path:
+            sys.path.append(cur_path_platform)
+        try:
+            from macos_mock_classes import load_mock_classes
+            load_mock_classes()
+        except Exception as e:
+            PrintException()
+            raise e
+        
         
     import r_openai as openai 
     from openaiObject import openaiObject
@@ -275,8 +289,13 @@ try:
                 }
 
                 if schema_dict:
-                    schema_dict = ast.literal_eval(schema_dict)
-                    schema = parse_to_openai_schema(schema_dict)
+                    try:
+                        schema_dict = ast.literal_eval(schema_dict)
+                        schema = parse_to_openai_schema(schema_dict)
+                    except Exception as e:
+                        print("An error has ocurred while trying to parse the schema")
+                        raise e
+                    
                     payload["response_format"] = {
                         "type": "json_schema",
                         "json_schema": {
@@ -300,7 +319,6 @@ try:
                     response = response.json()["choices"][0]["message"]["content"]
                 else:
                     response = response.json()
-
 
             else:
                 if schema_dict:
