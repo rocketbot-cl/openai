@@ -44,7 +44,7 @@ _CLASSVAR_PREFIXES = (
     "typing.ClassVar",
     "t.ClassVar",
     "ClassVar",
-    "r_typing_extensions.ClassVar",
+    "typing_extensions.ClassVar",
 )
 # we don't use a double-underscore prefix because that triggers
 # name mangling when trying to create a slot for the field

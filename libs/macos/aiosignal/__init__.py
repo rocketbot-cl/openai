@@ -6,12 +6,12 @@ from frozenlist import FrozenList
 if sys.version_info >= (3, 11):
     from typing import Unpack
 else:
-    from r_typing_extensions import Unpack
+    from typing_extensions import Unpack
 
 if sys.version_info >= (3, 13):
     from typing import TypeVarTuple
 else:
-    from r_typing_extensions import TypeVarTuple
+    from typing_extensions import TypeVarTuple
 
 _T = TypeVar("_T")
 _Ts = TypeVarTuple("_Ts", default=Unpack[tuple[()]])

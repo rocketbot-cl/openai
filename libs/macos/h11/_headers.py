@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 try:
     from typing import Literal
 except ImportError:
-    from r_typing_extensions import Literal  # type: ignore
+    from typing_extensions import Literal  # type: ignore
 
 CONTENT_LENGTH_MAX_DIGITS = 20  # allow up to 1 billion TB - 1
 

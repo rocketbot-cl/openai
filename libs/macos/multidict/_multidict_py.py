@@ -30,7 +30,7 @@ from ._abc import MDArg, MultiMapping, MutableMultiMapping, SupportsKeys
 if sys.version_info >= (3, 11):
     from typing import Self
 else:
-    from r_typing_extensions import Self
+    from typing_extensions import Self
 
 
 class istr(str):
