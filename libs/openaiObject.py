@@ -77,7 +77,6 @@ class openaiObject():
             "max_tokens": max_tokens
         }
 
-
         if schema_dict:
             schema = self.__parse_to_openai_schema__(schema_dict)
             kwargs["response_format"] = {
@@ -94,7 +93,15 @@ class openaiObject():
                 }
             }
             
-        response = self.client.chat.completions.create(**kwargs)
+        try:
+            response = self.client.chat.completions.create(**kwargs)
+        except Exception as e:
+            if "'max_tokens' is not supported with this model" in str(e):
+                kwargs.pop("max_tokens", None)
+                kwargs["extra_body"] = {"max_completion_tokens": max_tokens}
+                response = self.client.chat.completions.create(**kwargs)
+            else:
+                raise e
 
         if only_text:
             response = response.choices[0].message.content
@@ -107,7 +114,7 @@ class openaiObject():
         '''
         Convert completion response to JSON
         '''
-        return json.dumps(response, default=lambda o: o.__dict__)
+        return json.dumps(response, default=lambda o: o.__dict__, ensure_ascii=False)
     
     def encode_image(self, image_file):
         '''

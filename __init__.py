@@ -33,11 +33,12 @@ try:
     import sys
     import json
     import traceback
+    import platform
 
     base_path = tmp_global_obj["basepath"]
     cur_path = base_path + 'modules' + os.sep + 'OpenAI' + os.sep + 'libs' + os.sep
-    import platform
-
+    if cur_path not in sys.path:
+        sys.path.append(cur_path)
 
     os_type = platform.system().lower()
     if os_type == "windows":
@@ -288,6 +289,7 @@ try:
                     "max_tokens": max_tokens,
                 }
 
+
                 if schema_dict:
                     try:
                         schema_dict = ast.literal_eval(schema_dict)
@@ -312,8 +314,18 @@ try:
 
                 response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
-                if response.json().get("error"):
-                    raise Exception(response.json().get("error").get("message"))
+                error_msg = response.json().get("error", {}).get("message", "")
+                if error_msg:
+                    if "'max_tokens' is not supported with this model" in error_msg:
+                        payload.pop("max_tokens", None)
+                        payload["max_completion_tokens"] = max_tokens
+                        response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+                        
+                        error_msg = response.json().get("error", {}).get("message", "")
+                        if error_msg:
+                            raise Exception(error_msg)
+                    else:       
+                        raise Exception(error_msg)
                 
                 if only_text:
                     response = response.json()["choices"][0]["message"]["content"]
