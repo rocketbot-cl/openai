@@ -1,1 +1,3 @@
-VERSION = "0.8.0"
+from ._version import __version__
+
+VERSION: str = __version__

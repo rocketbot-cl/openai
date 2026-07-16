@@ -191,6 +191,12 @@ try:
                 }
         return properties
     
+    def as_boolean(item) -> bool:
+        if isinstance(item, str):
+            return item.strip().lower() in ["true", "1", "yes"]
+        else:
+            return bool(item)
+    
     try:
         if module == "Connect":
             api_key = GetParams("api_key")
@@ -340,6 +346,123 @@ try:
             
             SetVar(result, response)
 
+
+        if module == "chat_with_history":
+            import ast
+
+            model = GetParams("model")
+            prompt = GetParams("messages")
+            conversation_id = GetParams("conversation_id")
+            image_files = GetParams("image_file_ids")
+            file_ids = GetParams("file_ids")
+            vector_store_ids = GetParams("vector_store_ids")
+            system_instructions = GetParams("system_instructions")
+            max_tokens = int(GetParams("max_tokens")) if GetParams("max_tokens") else 1024
+            temperature = float(GetParams("temperature")) if GetParams("temperature") else 1.0
+            schema_dict = GetParams("schema")
+            result = GetParams("result_var")
+
+            if not model:
+                raise Exception("Model parameter is required")
+            
+            if not prompt:
+                raise Exception("The Propmpt cannot be left empty")
+            
+            if image_files:
+                try:
+                    image_files = ast.literal_eval(image_files)
+                except Exception as e:
+                    raise Exception(f"An error has ocurred while parsing the images. Error: {e}")
+            else:
+                image_files = []
+            
+            if file_ids:
+                files = file_ids.strip("[]").replace(", ", ",").split(",")
+                file_ids = []
+                for file in files:
+                    if os.path.isfile(file):
+                        file_id = mod_openai.load_file(file)
+                        file_ids.append(file_id)
+                    else:
+                        file_ids.append(file)
+            else:
+                file_ids = []
+
+            if vector_store_ids:
+                vector_store_ids=vector_store_ids.strip("[]").replace(", ", ",").split(",")
+
+            if schema_dict:
+                try:
+                    schema_dict = ast.literal_eval(schema_dict)
+                except Exception as e:
+                    raise Exception(f"An error has ocurred while parsing the Schema. Error: {e}")
+
+            response = mod_openai.run_robot_with_historial(
+                model = model,
+                max_tokens = max_tokens,
+                temperature = temperature,
+                schema_dict = schema_dict,
+                image_files = image_files,
+                conversation_id = conversation_id,
+                system_instructions = system_instructions,
+                prompt = prompt,
+                file_ids=file_ids,
+                vector_store_ids=vector_store_ids,
+            )
+            
+            SetVar(result, response)
+
+        if module == "upload_file":
+            file_path = GetParams("file_path")
+            result = GetParams("result_var")
+
+            if not file_path:
+                raise Exception("File field cannot be left empty")
+            
+            response = mod_openai.upload_file(file_path)
+            SetVar(result, response)
+
+        if module == "update_vector_store":
+            vector_store_id = GetParams("vector_store_id")
+            name = GetParams("name")
+            file_ids = GetParams("file_ids")
+
+            if file_ids:
+                files = file_ids.strip("[]").replace(", ", ",").split(",")
+                file_ids = []
+                for file in files:
+                    if os.path.isfile(file):
+                        file_id = mod_openai.load_file(file)
+                        file_ids.append(file_id)
+                    else:
+                        file_ids.append(file)
+
+            response = mod_openai.update_vector_store(
+                vector_store_id=vector_store_id,
+                name=name,
+                file_ids = file_ids)
+            
+            SetVar(result, response)
+
+        if module == "get_files":
+            file_type = GetParams("file_type") or "file_id"
+            result = GetParams("result_var")
+
+
+            response = mod_openai.list_openai_files(file_type)
+            SetVar(result, response)
+ 
+        if module == "delete_file":
+            file_type = GetParams("file_type") or "file_id"
+            file_id = GetParams("file_id")
+            result = GetParams("result_var")
+
+            if not file_id:
+                raise Exception("File Id parameter is required")
+            
+            response = mod_openai.delete_openai_file(file_id=file_id, file_type=file_type)
+            SetVar(result, response)
+    
         if module == "OpenAI":
             # This is an old version of the command, it is not visible anymore in the package.json in Rocketbot v2023, 
             # but it is still used by some users so it is kept here. Please do not delete it.

@@ -6,18 +6,15 @@ Usage:
 >>> for i in trange(10, token='{token}', chat_id='{chat_id}'):
 ...     ...
 
-![screenshot](https://img.tqdm.ml/screenshot-telegram.gif)
+![screenshot](https://tqdm.github.io/img/screenshot-telegram.gif)
 """
-from __future__ import absolute_import
-
-from os import getenv
 from warnings import warn
 
 from requests import Session
 
 from ..auto import tqdm as tqdm_auto
 from ..std import TqdmWarning
-from ..utils import _range
+from ..utils import envwrap
 from .utils_worker import MonoWorker
 
 __author__ = {"github.com/": ["casperdcl"]}
@@ -30,31 +27,33 @@ class TelegramIO(MonoWorker):
 
     def __init__(self, token, chat_id):
         """Creates a new message in the given `chat_id`."""
-        super(TelegramIO, self).__init__()
+        super().__init__()
         self.token = token
         self.chat_id = chat_id
         self.session = Session()
         self.text = self.__class__.__name__
-        self.message_id
+        self.message_id  # pylint: disable=pointless-statement
 
     @property
     def message_id(self):
         if hasattr(self, '_message_id'):
-            return self._message_id
+            return self._message_id  # pylint: disable=access-member-before-definition
         try:
-            res = self.session.post(
-                self.API + '%s/sendMessage' % self.token,
-                data={'text': '`' + self.text + '`', 'chat_id': self.chat_id,
-                      'parse_mode': 'MarkdownV2'}).json()
+            req = self.session.post(
+                f'{self.API}{self.token}/sendMessage',
+                data={'text': f"`{self.text}`", 'chat_id': self.chat_id,
+                      'parse_mode': 'MarkdownV2'})
+            res = req.json()
+            req.raise_for_status()
         except Exception as e:
-            tqdm_auto.write(str(e))
-        else:
-            if res.get('error_code') == 429:
+            if req.status_code == 429:
                 warn("Creation rate limit: try increasing `mininterval`.",
                      TqdmWarning, stacklevel=2)
             else:
-                self._message_id = res['result']['message_id']
-                return self._message_id
+                tqdm_auto.write(str(e))
+        else:
+            self._message_id = res['result']['message_id']
+            return self._message_id
 
     def write(self, s):
         """Replaces internal `message_id`'s text with `s`."""
@@ -69,8 +68,8 @@ class TelegramIO(MonoWorker):
         self.text = s
         try:
             future = self.submit(
-                self.session.post, self.API + '%s/editMessageText' % self.token,
-                data={'text': '`' + s + '`', 'chat_id': self.chat_id,
+                self.session.post, f'{self.API}{self.token}/editMessageText',
+                data={'text': f"`{s}`", 'chat_id': self.chat_id,
                       'message_id': message_id, 'parse_mode': 'MarkdownV2'})
         except Exception as e:
             tqdm_auto.write(str(e))
@@ -81,7 +80,7 @@ class TelegramIO(MonoWorker):
         """Deletes internal `message_id`."""
         try:
             future = self.submit(
-                self.session.post, self.API + '%s/deleteMessage' % self.token,
+                self.session.post, '{self.API}{self.token}/deleteMessage',
                 data={'chat_id': self.chat_id, 'message_id': self.message_id})
         except Exception as e:
             tqdm_auto.write(str(e))
@@ -89,7 +88,7 @@ class TelegramIO(MonoWorker):
             return future
 
 
-class tqdm_telegram(tqdm_auto):
+class tqdm_telegram(tqdm_auto):  # pylint: disable=inconsistent-mro
     """
     Standard `tqdm.auto.tqdm` but also sends updates to a Telegram Bot.
     May take a few seconds to create (`__init__`).
@@ -105,7 +104,8 @@ class tqdm_telegram(tqdm_auto):
     >>> for i in tqdm(iterable, token='{token}', chat_id='{chat_id}'):
     ...     ...
     """
-    def __init__(self, *args, **kwargs):
+    @envwrap("tqdm", "telegram", is_method=True)
+    def __init__(self, *args, token=None, chat_id=None, **kwargs):
         """
         Parameters
         ----------
@@ -118,40 +118,33 @@ class tqdm_telegram(tqdm_auto):
         """
         if not kwargs.get('disable'):
             kwargs = kwargs.copy()
-            self.tgio = TelegramIO(
-                kwargs.pop('token', getenv('TQDM_TELEGRAM_TOKEN')),
-                kwargs.pop('chat_id', getenv('TQDM_TELEGRAM_CHAT_ID')))
-        super(tqdm_telegram, self).__init__(*args, **kwargs)
+            self.tgio = TelegramIO(token, chat_id)
+        super().__init__(*args, **kwargs)
 
-    def display(self, **kwargs):
-        super(tqdm_telegram, self).display(**kwargs)
+    def display(self, **kwargs):  # pylint: disable=arguments-differ
+        super().display(**kwargs)
         fmt = self.format_dict
         if fmt.get('bar_format', None):
             fmt['bar_format'] = fmt['bar_format'].replace(
                 '<bar/>', '{bar:10u}').replace('{bar}', '{bar:10u}')
-        else:
-            fmt['bar_format'] = '{l_bar}{bar:10u}{r_bar}'
         self.tgio.write(self.format_meter(**fmt))
 
     def clear(self, *args, **kwargs):
-        super(tqdm_telegram, self).clear(*args, **kwargs)
+        super().clear(*args, **kwargs)
         if not self.disable:
             self.tgio.write("")
 
     def close(self):
         if self.disable:
             return
-        super(tqdm_telegram, self).close()
+        super().close()
         if not (self.leave or (self.leave is None and self.pos == 0)):
             self.tgio.delete()
 
 
 def ttgrange(*args, **kwargs):
-    """
-    A shortcut for `tqdm.contrib.telegram.tqdm(xrange(*args), **kwargs)`.
-    On Python3+, `range` is used instead of `xrange`.
-    """
-    return tqdm_telegram(_range(*args), **kwargs)
+    """Shortcut for `tqdm.contrib.telegram.tqdm(range(*args), **kwargs)`."""
+    return tqdm_telegram(range(*args), **kwargs)
 
 
 # Aliases

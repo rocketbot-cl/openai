@@ -4,34 +4,17 @@ General helpers required for `tqdm.std`.
 import os
 import re
 import sys
-from functools import wraps
+from functools import partial, partialmethod, wraps
+from inspect import signature
+# TODO consider using wcswidth third-party package for 0-width characters
+from unicodedata import east_asian_width
 from warnings import warn
 from weakref import proxy
 
-# py2/3 compat
-try:
-    _range = xrange
-except NameError:
-    _range = range
-
-try:
-    _unich = unichr
-except NameError:
-    _unich = chr
-
-try:
-    _unicode = unicode
-except NameError:
-    _unicode = str
-
-try:
-    _basestring = basestring
-except NameError:
-    _basestring = str
-
+_range, _unich, _unicode, _basestring = range, chr, str, str
 CUR_OS = sys.platform
 IS_WIN = any(CUR_OS.startswith(i) for i in ['win32', 'cygwin'])
-IS_NIX = any(CUR_OS.startswith(i) for i in ['aix', 'linux', 'darwin'])
+IS_NIX = any(CUR_OS.startswith(i) for i in ['aix', 'linux', 'darwin', 'freebsd'])
 RE_ANSI = re.compile(r"\x1b\[[;\d]*[A-Za-z]")
 
 try:
@@ -48,10 +31,61 @@ else:
         colorama.init()
 
 
-class FormatReplace(object):
+def envwrap(name, app="", types=None, is_method=False):
+    """
+    Basic (env-only) version of [envwrap](https://github.com/tqdm/envwrap).
+    Install `envwrap` for config file support.
+    """
+    if types is None:
+        types = {}
+    if name[-1] == "_":
+        name = name[:-1]
+        warn("Trailing underscore in `name` is automatic", DeprecationWarning, stacklevel=2)
+    prefixes = (name, f"{name}_{app}") if app else (name,)
+    env_overrides = {}
+    for prefix in prefixes:
+        prefix = prefix.upper() + "_"
+        i = len(prefix)
+        env_overrides.update(
+            (k[i:].lower(), v) for k, v in os.environ.items() if k.startswith(prefix))
+    part = partialmethod if is_method else partial
+
+    def wrap(func):
+        params = signature(func).parameters
+        # ignore unknown env vars
+        overrides = {k: v for k, v in env_overrides.items() if k in params}
+        # infer overrides' `type`s
+        for k in overrides:
+            param = params[k]
+            if param.annotation is not param.empty:  # typehints
+                for typ in getattr(param.annotation, '__args__', (param.annotation,)):
+                    try:
+                        overrides[k] = typ(overrides[k])
+                    except Exception:  # nosec B110
+                        pass
+                    else:
+                        break
+            elif param.default is not None:  # type of default value
+                overrides[k] = type(param.default)(overrides[k])
+            else:
+                try:  # `types` fallback
+                    overrides[k] = types[k](overrides[k])
+                except KeyError:  # keep unconverted (`str`)
+                    pass
+        return part(func, **overrides)
+    return wrap
+
+
+try:
+    from envwrap import envwrap  # noqa: F401, F811, pylint: disable=unused-import
+except ModuleNotFoundError:
+    pass
+
+
+class FormatReplace:
     """
     >>> a = FormatReplace('something')
-    >>> "{:5d}".format(a)
+    >>> f"{a:5d}"
     'something'
     """  # NOQA: P102
     def __init__(self, replace=''):
@@ -63,7 +97,7 @@ class FormatReplace(object):
         return self.replace
 
 
-class Comparable(object):
+class Comparable:
     """Assumes child has self._comparable attr/@property"""
     def __lt__(self, other):
         return self._comparable < other._comparable
@@ -84,7 +118,7 @@ class Comparable(object):
         return not self < other
 
 
-class ObjectWrapper(object):
+class ObjectWrapper:
     def __getattr__(self, name):
         return getattr(self._wrapped, name)
 
@@ -116,7 +150,7 @@ class SimpleTextIOWrapper(ObjectWrapper):
     """
     # pylint: disable=too-few-public-methods
     def __init__(self, wrapped, encoding):
-        super(SimpleTextIOWrapper, self).__init__(wrapped)
+        super().__init__(wrapped)
         self.wrapper_setattr('encoding', encoding)
 
     def write(self, s):
@@ -159,8 +193,8 @@ class DisableOnWriteError(ObjectWrapper):
                     pass
         return inner
 
-    def __init__(self, wrapped, tqdm_instance):
-        super(DisableOnWriteError, self).__init__(wrapped)
+    def __init__(self, wrapped, tqdm_instance):  # noqa: B042
+        super().__init__(wrapped)
         if hasattr(wrapped, 'write'):
             self.wrapper_setattr(
                 'write', self.disable_on_exception(tqdm_instance, wrapped.write))
@@ -178,7 +212,7 @@ class CallbackIOWrapper(ObjectWrapper):
         Wrap a given `file`-like object's `read()` or `write()` to report
         lengths to the given `callback`
         """
-        super(CallbackIOWrapper, self).__init__(stream)
+        super().__init__(stream)
         func = getattr(stream, method)
         if method == "write":
             @wraps(func)
@@ -200,7 +234,7 @@ class CallbackIOWrapper(ObjectWrapper):
 
 def _is_utf(encoding):
     try:
-        u'\u2588\u2589'.encode(encoding)
+        '\u2588\u2589'.encode(encoding)
     except UnicodeEncodeError:
         return False
     except Exception:
@@ -233,69 +267,15 @@ def _screen_shape_wrapper():  # pragma: no cover
     Return a function which returns console dimensions (width, height).
     Supported: linux, osx, windows, cygwin.
     """
-    _screen_shape = None
-    if IS_WIN:
-        _screen_shape = _screen_shape_windows
-        if _screen_shape is None:
-            _screen_shape = _screen_shape_tput
-    if IS_NIX:
-        _screen_shape = _screen_shape_linux
-    return _screen_shape
-
-
-def _screen_shape_windows(fp):  # pragma: no cover
-    try:
-        import struct
-        from ctypes import create_string_buffer, windll
-        from sys import stdin, stdout
-
-        io_handle = -12  # assume stderr
-        if fp == stdin:
-            io_handle = -10
-        elif fp == stdout:
-            io_handle = -11
-
-        h = windll.kernel32.GetStdHandle(io_handle)
-        csbi = create_string_buffer(22)
-        res = windll.kernel32.GetConsoleScreenBufferInfo(h, csbi)
-        if res:
-            (_bufx, _bufy, _curx, _cury, _wattr, left, top, right, bottom,
-             _maxx, _maxy) = struct.unpack("hhhhHhhhhhh", csbi.raw)
-            return right - left, bottom - top  # +1
-    except Exception:  # nosec
-        pass
-    return None, None
-
-
-def _screen_shape_tput(*_):  # pragma: no cover
-    """cygwin xterm (windows)"""
-    try:
-        import shlex
-        from subprocess import check_call  # nosec
-        return [int(check_call(shlex.split('tput ' + i))) - 1
-                for i in ('cols', 'lines')]
-    except Exception:  # nosec
-        pass
-    return None, None
-
-
-def _screen_shape_linux(fp):  # pragma: no cover
-
-    try:
-        from array import array
-        from fcntl import ioctl
-        from termios import TIOCGWINSZ
-    except ImportError:
-        return None, None
-    else:
+    def inner(fp):
         try:
-            rows, cols = array('h', ioctl(fp, TIOCGWINSZ, '\0' * 8))[:2]
-            return cols, rows
+            from os import get_terminal_size
+            cols, lines = get_terminal_size(getattr(fp, 'fileno', lambda: None)())
+            return cols - 1, lines - 1
         except Exception:
-            try:
-                return [int(os.environ[i]) - 1 for i in ("COLUMNS", "LINES")]
-            except (KeyError, ValueError):
-                return None, None
+            return None, None
+
+    return inner
 
 
 def _environ_cols_wrapper():  # pragma: no cover
@@ -320,14 +300,8 @@ def _term_move_up():  # pragma: no cover
     return '' if (os.name == 'nt') and (colorama is None) else '\x1b[A'
 
 
-try:
-    # TODO consider using wcswidth third-party package for 0-width characters
-    from unicodedata import east_asian_width
-except ImportError:
-    _text_width = len
-else:
-    def _text_width(s):
-        return sum(2 if east_asian_width(ch) in 'FW' else 1 for ch in _unicode(s))
+def _text_width(s):
+    return sum(2 if east_asian_width(ch) in 'FW' else 1 for ch in str(s))
 
 
 def disp_len(data):
