@@ -3,38 +3,53 @@
 
 
 # OpenAI
-
-Este módulo se conecta a la API de OpenAI. Puedes ejecutar acciones como realizar una consulta a un modelo de lenguaje natural, transcribir un audio o traducir un audio al inglés.
+  
+Este módulo se conecta a la API de OpenAI. Puedes ejecutar acciones como realizar una consulta a un modelo de lenguaje natural, transcribir un audio o traducir un audio al inglés.  
 
 *Read this in other languages: [English](README.md), [Português](README.pr.md), [Español](README.es.md)*
 
 ## Como instalar este módulo
-
+  
 Para instalar el módulo en Rocketbot Studio, se puede hacer de dos formas:
 1. Manual: __Descargar__ el archivo .zip y descomprimirlo en la carpeta modules. El nombre de la carpeta debe ser el mismo al del módulo y dentro debe tener los siguientes archivos y carpetas: \__init__.py, package.json, docs, example y libs. Si tiene abierta la aplicación, refresca el navegador para poder utilizar el nuevo modulo.
-2. Automática: Al ingresar a Rocketbot Studio sobre el margen derecho encontrara la sección de **Addons**, seleccionar **Install Mods**, buscar el modulo deseado y presionar install.
+2. Automática: Al ingresar a Rocketbot Studio sobre el margen derecho encontrara la sección de **Addons**, seleccionar **Install Mods**, buscar el modulo deseado y presionar install.  
 
 
 ## Overview
 
 
-1. Conectar a OpenAI
+1. Conectar a OpenAI  
 Este comando conecta a OpenAI con la API key secreta especificada.
 
-2. Realizar consulta (deprecated)
+2. Realizar consulta (deprecated)  
 Este comando permite realizar una consulta a OpenAI. Debe ejecutarse el comando de conexión previamente. Este comando está deprecado, se recomienda usar el comando 'Realizar consulta en chat'.
 
-3. Transcribir audio
+3. Transcribir audio  
 Este comando transcribe un audio a texto. Debe ejecutarse el comando de conexión previamente.
 
-4. Traducir audio
+4. Traducir audio  
 Este comando traduce un audio a texto en inglés. El comando de conexión debe ser ejecutado previamente.
 
-5. Realizar consulta en chat
+5. Realizar consulta en chat  
 Este comando permite realizar una consulta en formato de chat a OpenAI. Debe ejecutarse el comando de conexión previamente.
 
-6. Preguntar
-Este comando Consulta a OpenAI para obtener una respuesta. Necesitas tener una clave de OpenAI. Ve a https://platform.openai.com/account/api-keys para obtener una clave.
+6. Realizar consulta con historial  
+Realiza una consulta a OpenAI manteniendo el hilo de una conversación mediante su ID.
+
+7. Subir archivo  
+Carga un archivo local en OpenAI y devuelve su identificador File Id.
+
+8. Actualizar o Crear Vector Store  
+Crea o actualiza un Vector Store para permitir que OpenAI pueda leerlos y extraer informacion de los archivos dentro de este
+
+9. Listar Archivos / Vector Stores  
+Consulta a la API de OpenAI y devuelve una lista de todos los archivos subidos o los Vector Stores creados en la cuenta.
+
+10. Eliminar Archivo / Vector Store  
+Llama al endpoint correspondiente de la API de OpenAI para borrar un recurso por su ID, ayudando a limpiar almacenamiento y evitar costos innecesarios.
+
+11. Preguntar  
+Este comando Consulta a OpenAI para obtener una respuesta. Necesitas tener una clave de OpenAI. Ve a https://platform.openai.com/account/api-keys para obtener una clave.  
 
 
 
@@ -50,6 +65,6 @@ Este comando Consulta a OpenAI para obtener una respuesta. Necesitas tener una c
 ### Dependencies
 - [**openai**](https://pypi.org/project/openai/)
 ### License
-
-![MIT](https://img.shields.io/github/license/instaloader/instaloader.svg)
+  
+![MIT](https://img.shields.io/github/license/instaloader/instaloader.svg)  
 [MIT](https://opensource.org/license/mit)

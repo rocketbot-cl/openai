@@ -3,17 +3,17 @@
 
 
 # OpenAI
-
-Este módulo se conecta a la API de OpenAI. Puedes ejecutar acciones como realizar una consulta a un modelo de lenguaje natural, transcribir un audio o traducir un audio al inglés.
+  
+Este módulo se conecta a la API de OpenAI. Puedes ejecutar acciones como realizar una consulta a un modelo de lenguaje natural, transcribir un audio o traducir un audio al inglés.  
 
 *Read this in other languages: [English](Manual_OpenAI.md), [Português](Manual_OpenAI.pr.md), [Español](Manual_OpenAI.es.md)*
-
+  
 ![banner](imgs/Banner_OpenAI.png)
 ## Como instalar este módulo
-
+  
 Para instalar el módulo en Rocketbot Studio, se puede hacer de dos formas:
 1. Manual: __Descargar__ el archivo .zip y descomprimirlo en la carpeta modules. El nombre de la carpeta debe ser el mismo al del módulo y dentro debe tener los siguientes archivos y carpetas: \__init__.py, package.json, docs, example y libs. Si tiene abierta la aplicación, refresca el navegador para poder utilizar el nuevo modulo.
-2. Automática: Al ingresar a Rocketbot Studio sobre el margen derecho encontrara la sección de **Addons**, seleccionar **Install Mods**, buscar el modulo deseado y presionar install.
+2. Automática: Al ingresar a Rocketbot Studio sobre el margen derecho encontrara la sección de **Addons**, seleccionar **Install Mods**, buscar el modulo deseado y presionar install.  
 
 
 
@@ -38,7 +38,7 @@ Para obtener más información sobre la API de OpenAI, puedes consultar la [Docu
 ## Descripción de los comandos
 
 ### Conectar a OpenAI
-
+  
 Este comando conecta a OpenAI con la API key secreta especificada.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
@@ -46,7 +46,7 @@ Este comando conecta a OpenAI con la API key secreta especificada.
 |Variable donde se almacenará el resultado de la conexión|Variable donde se almacenará el resultado de la conexión. Devolverá True si la conexión fue exitosa|Variable|
 
 ### Realizar consulta (deprecated)
-
+  
 Este comando permite realizar una consulta a OpenAI. Debe ejecutarse el comando de conexión previamente. Este comando está deprecado, se recomienda usar el comando 'Realizar consulta en chat'.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
@@ -58,7 +58,7 @@ Este comando permite realizar una consulta a OpenAI. Debe ejecutarse el comando 
 |Variable donde se almacena el resultado de OpenAI|Variable donde se almacena el resultado de OpenAI|Variable|
 
 ### Transcribir audio
-
+  
 Este comando transcribe un audio a texto. Debe ejecutarse el comando de conexión previamente.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
@@ -66,7 +66,7 @@ Este comando transcribe un audio a texto. Debe ejecutarse el comando de conexió
 |Variable donde se almacenará el resultado|Variable donde se almacenará el resultado de la transcripción|Variable|
 
 ### Traducir audio
-
+  
 Este comando traduce un audio a texto en inglés. El comando de conexión debe ser ejecutado previamente.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
@@ -74,7 +74,7 @@ Este comando traduce un audio a texto en inglés. El comando de conexión debe s
 |Variable donde se almacenará el resultado|Variable donde se almacenará el resultado de la traducción|Variable|
 
 ### Realizar consulta en chat
-
+  
 Este comando permite realizar una consulta en formato de chat a OpenAI. Debe ejecutarse el comando de conexión previamente.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
@@ -93,8 +93,62 @@ Para indicar un objeto anidado, se puede usar otro diccionario con la misma estr
 |Obtener solo texto de la respuesta|Si se activa, solo se obtendrá el texto de la respuesta, sin el resto de información.|False|
 |Variable donde se almacena el resultado de OpenAI|Variable donde se almacena el resultado de OpenAI|Variable|
 
-### Preguntar
+### Realizar consulta con historial
+  
+Realiza una consulta a OpenAI manteniendo el hilo de una conversación mediante su ID.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Mensaje / Prompt|El texto principal de tu consulta. Obligatorio. Este mensaje se envía bajo el rol 'user'. Si hay archivos o imágenes vinculadas, se asociarán a este texto.|Tarea a realizar o pregunta principal|
+|Instrucciones del sistema (opcional)|Comportamiento base o contexto del sistema que guiará las respuestas del modelo en esta ejecución.|Eres un asistente técnico experto...|
+|Modelo|Modelo de OpenAI a usar. Se requiere un modelo compatible con la API de Responses y las herramientas adjuntas (ej. gpt-4o, gpt-4o-mini).|gpt-4o|
+|ID de conversación (opcional)|ID de una conversación existente. Permite mantener el contexto de la conversación, creando una conversación hilada. Si no se proporciona, se generará una nueva conversación.|conv_abc123|
+|File IDs (opcional)|Lista de File IDs de archivos que se buscan analizar, modificar o ejecutar utilizando la herramienta 'code_interpreter' de OpenAI. Si no se desea reutilizar un archivo, se puede poner el path del mismo, lo cual hara que el modulo la suba y baje automaticamente al terminar el comando.|[file-abc123, C:/ruta/archivo.pdf]|
+|IDs de Vector Store (opcional)|Lista de IDs de Vector Stores con los archivos que se buscan leer o utilizar de contexto utilizando la herramienta 'file_search'.|["vs-123", "vs-456"]|
+|File IDs de Imágenes (opcional)|Lista de diccionarios con File IDs de imagen y profundidad de procesamiento de imagen. Los tipos disponibles en el campo detail son 'low', 'high', 'auto' y 'original'.|["{"file_id": file-img123, "detail": "auto"}", {...}]|
+|Esquema de respuesta (opcional)|Formato del contenido generado (opcional). 
+Los posibles tipos son "string", "number", "integer", "boolean" y "array". 
+Para indicar un objeto anidado, se puede usar otro diccionario con la misma estructura.|{ "name": "string", "number": "number", "sub_object": {...}}|
+|Longitud de la respuesta|Longitud máxima de la respuesta. Por defecto 1024.|1024|
+|Temperatura|Por defecto 0. Valor entre 0 y 1. Cuanto mayor sea el valor, las respuestas serán más creativas, pero también pueden llegar a ser más incoherentes.|0|
+|Asignar resultado a variable|Variable donde se almacenará el resultado del comando|Variable|
 
+### Subir archivo
+  
+Carga un archivo local en OpenAI y devuelve su identificador File Id.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Ruta del archivo local|Seleccionar los archivos a subir|C:/ruta/documento.pdf|
+|Asignar resultado a variable|Variable donde se guardará el File Id devuelto por OpenAI.|Variable|
+
+### Actualizar o Crear Vector Store
+  
+Crea o actualiza un Vector Store para permitir que OpenAI pueda leerlos y extraer informacion de los archivos dentro de este
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|ID de Vector Store (opcional)|Si indicas el ID de un Vector Store existente, se agregarán los archivos a este. Si lo dejas vacío, se creará uno nuevo automáticamente.|vs-abc123|
+|Nombre (opcional)|Asigna un nombre al Vector Store.|nombre_vector_store|
+|File IDs para agregar al vector store.|Lista de File IDs para agregar al Vector Store.|[file-12344, file-12345]|
+|Asignar resultado a variable|Variable donde se almacenará el resultado del comando|Variable|
+
+### Listar Archivos / Vector Stores
+  
+Consulta a la API de OpenAI y devuelve una lista de todos los archivos subidos o los Vector Stores creados en la cuenta.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Recurso a listar|Selecciona si deseas ver los File Ids de los Archivos subidos o los ids de los Vector Stores.|Archivos (File ID)|
+|Asignar resultado a variable|Variable donde se almacenará el resultado del comando|Variable|
+
+### Eliminar Archivo / Vector Store
+  
+Llama al endpoint correspondiente de la API de OpenAI para borrar un recurso por su ID, ayudando a limpiar almacenamiento y evitar costos innecesarios.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Recurso a eliminar|Selecciona si desea eliminar un Archivo o un Vector Store.|Archivos (File ID)|
+|Identificador|El File ID o ID del Vector Store que deseas eliminar.|file-123 / vs-123|
+|Asignar resultado a variable|Variable donde se almacenará el resultado del comando|Variable|
+
+### Preguntar
+  
 Este comando Consulta a OpenAI para obtener una respuesta. Necesitas tener una clave de OpenAI. Ve a https://platform.openai.com/account/api-keys para obtener una clave.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
@@ -104,4 +158,4 @@ Este comando Consulta a OpenAI para obtener una respuesta. Necesitas tener una c
 |Temperatura|Por defecto 0. Valor entre 0 y 1. Cuanto mayor sea el valor, las respuestas serán más creativas, pero también pueden llegar a ser más incoherentes.|0|
 |Longitud de la respuesta|Longitud máxima de la respuesta. Por defecto 256.|256|
 |Secuencia de fin|Secuencia de texto opcional en la cual si aparece, la respuesta se detiene.| |
-|Variable donde se almacena el resultado de OpenAI|Variable donde se almacena el resultado de OpenAI|Variable|
+|Asignar resultado a variable|Variable donde se almacenará el resultado del comando|Variable|
