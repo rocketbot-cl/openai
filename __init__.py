@@ -33,17 +33,35 @@ try:
     import sys
     import json
     import traceback
+    import platform
 
     base_path = tmp_global_obj["basepath"]
     cur_path = base_path + 'modules' + os.sep + 'OpenAI' + os.sep + 'libs' + os.sep
+    if cur_path not in sys.path:
+        sys.path.append(cur_path)
 
-    cur_path_x64 = os.path.join(cur_path, 'Windows' + os.sep +  'x64' + os.sep)
-    cur_path_x86 = os.path.join(cur_path, 'Windows' + os.sep +  'x86' + os.sep)
-
-    if sys.maxsize > 2**32 and cur_path_x64 not in sys.path:
-        sys.path.insert(0, cur_path_x64)
-    elif sys.maxsize <= 2**32 and cur_path_x86 not in sys.path:
-        sys.path.insert(0, cur_path_x86)
+    os_type = platform.system().lower()
+    if os_type == "windows":
+        cur_path_platform = os.path.join(cur_path, 'Windows', 'x64' if sys.maxsize > 2**32 else 'x86')
+        if cur_path_platform not in sys.path:
+            sys.path.append(cur_path_platform)
+    
+    elif os_type == "linux":
+        cur_path_platform = os.path.join(cur_path, 'Linux')
+        if cur_path_platform not in sys.path:
+            sys.path.append(cur_path_platform)
+    
+    elif os_type == "darwin":
+        cur_path_platform = os.path.join(cur_path, 'macos')
+        if cur_path_platform not in sys.path:
+            sys.path.append(cur_path_platform)
+        try:
+            from macos_mock_classes import load_mock_classes
+            load_mock_classes()
+        except Exception as e:
+            PrintException()
+            raise e
+        
         
     import r_openai as openai 
     from openaiObject import openaiObject
@@ -131,7 +149,48 @@ try:
             response_dict = json.loads(json.dumps(response))
             
             return response_dict
+        
+    def parse_to_openai_schema(schema_dict):
 
+        properties = {}
+        for key, value in schema_dict.items():
+            if isinstance(value, dict):
+                item_schema = parse_to_openai_schema(value)
+                properties[key] = {
+                    "type": "object",
+                    "properties": item_schema,
+                    "required": list(item_schema.keys()),
+                    "additionalProperties": False
+                }
+                
+            elif isinstance(value, list):
+                if len(value) > 0:
+                    first_item = value[0]
+                    if isinstance(first_item, dict):
+                        nested_props = parse_to_openai_schema(first_item)
+                        item_schema = {
+                            "type": "object",
+                            "properties": nested_props,
+                            "required": list(nested_props.keys()),
+                            "additionalProperties": False
+                        }
+                    else:
+                        item_schema = {"type": first_item.strip().lower()}
+                else:
+                    item_schema = {"type": "string"}
+                    
+                properties[key] = {
+                    "type": "array",
+                    "items": item_schema
+                }
+                
+            else:
+                mapped_type = value.strip().lower()
+                properties[key] = {
+                    "type": mapped_type
+                }
+        return properties
+    
     try:
         if module == "Connect":
             api_key = GetParams("api_key")
@@ -179,6 +238,8 @@ try:
             SetVar(result, response)
             
         if module == "chat":
+            import ast
+
             model = GetParams("model")
             messages = eval(GetParams("messages")) if GetParams("messages") else None
             temperature = float(GetParams("temperature")) if GetParams("temperature") else 1
@@ -188,10 +249,14 @@ try:
             result = GetParams("result_var")
             only_text = GetParams("only_text") or False
             image_path = GetParams("image_path") or None
+            detail = GetParams("detail")
+            schema_dict = GetParams("schema")
 
             if not messages:
                 raise Exception("Messages parameter is required")
             
+            if not detail:
+                detail = "low"
             if image_path:
                 base64_image = mod_openai.encode_image(image_path)
                 extension = image_path.split(".")[-1]
@@ -207,7 +272,7 @@ try:
                                 "type": "image_url",
                                 "image_url": {
                                     "url": f"data:image/jpeg;base64,{base64_image}",
-                                    "detail": "low"
+                                    "detail": detail
                                 }
                             }
                         ]
@@ -224,19 +289,53 @@ try:
                     "max_tokens": max_tokens,
                 }
 
+
+                if schema_dict:
+                    try:
+                        schema_dict = ast.literal_eval(schema_dict)
+                        schema = parse_to_openai_schema(schema_dict)
+                    except Exception as e:
+                        print("An error has ocurred while trying to parse the schema")
+                        raise e
+                    
+                    payload["response_format"] = {
+                        "type": "json_schema",
+                        "json_schema": {
+                            "name": "response",
+                            "strict": True,
+                            "schema": {
+                                "type": "object",
+                                "properties": schema,
+                                "required": list(schema.keys()),
+                                "additionalProperties": False
+                            }
+                        }
+                    }
+
                 response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
-                if response.json().get("error"):
-                    raise Exception(response.json().get("error").get("message"))
+                error_msg = response.json().get("error", {}).get("message", "")
+                if error_msg:
+                    if "'max_tokens' is not supported with this model" in error_msg:
+                        payload.pop("max_tokens", None)
+                        payload["max_completion_tokens"] = max_tokens
+                        response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+                        
+                        error_msg = response.json().get("error", {}).get("message", "")
+                        if error_msg:
+                            raise Exception(error_msg)
+                    else:       
+                        raise Exception(error_msg)
                 
                 if only_text:
                     response = response.json()["choices"][0]["message"]["content"]
                 else:
                     response = response.json()
 
-
             else:
-                response = mod_openai.get_chat_completions(model, messages, temperature, n, stop, max_tokens, only_text)
+                if schema_dict:
+                    schema_dict = ast.literal_eval(schema_dict)
+                response = mod_openai.get_chat_completions(model, messages, temperature, n, stop, max_tokens, only_text, schema_dict)
 
             
             SetVar(result, response)

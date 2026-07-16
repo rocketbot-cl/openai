@@ -739,7 +739,11 @@ class _DefaultHttpxClient(httpx.Client):
         kwargs.setdefault("timeout", DEFAULT_TIMEOUT)
         kwargs.setdefault("limits", DEFAULT_CONNECTION_LIMITS)
         kwargs.setdefault("follow_redirects", True)
+        from packaging import version
+        if version.parse(httpx.__version__) >= version.parse("0.28.0"):
+            kwargs.pop("proxies", None)
         super().__init__(**kwargs)
+
 
 
 if TYPE_CHECKING:

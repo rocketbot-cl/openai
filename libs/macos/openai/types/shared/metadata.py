@@ -1,0 +1,8 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from typing import Dict
+from r_typing_extensions import TypeAlias
+
+__all__ = ["Metadata"]
+
+Metadata: TypeAlias = Dict[str, str]
