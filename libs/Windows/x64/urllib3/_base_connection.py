@@ -29,7 +29,7 @@ class _ResponseOptions(typing.NamedTuple):
 if typing.TYPE_CHECKING:
     import ssl
 
-    from r_typing_extensions import Literal, Protocol
+    from libs.Windows.x64._r_typing_extensions import Literal, Protocol
 
     from .response import BaseHTTPResponse
 

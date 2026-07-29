@@ -27,7 +27,7 @@ from .util.url import Url, parse_url
 if typing.TYPE_CHECKING:
     import ssl
 
-    from r_typing_extensions import Literal
+    from libs.Windows.x64._r_typing_extensions import Literal
 
 __all__ = ["PoolManager", "ProxyManager", "proxy_from_url"]
 
