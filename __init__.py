@@ -376,6 +376,7 @@ try:
             else:
                 image_files = []
             
+            files_to_delete = []
             if file_ids:
                 files = file_ids.strip("[]").replace(", ", ",").split(",")
                 file_ids = []
@@ -383,6 +384,7 @@ try:
                     if os.path.isfile(file):
                         file_id = mod_openai.load_file(file)
                         file_ids.append(file_id)
+                        files_to_delete.append(file_id)
                     else:
                         file_ids.append(file)
             else:
@@ -409,6 +411,9 @@ try:
                 file_ids=file_ids,
                 vector_store_ids=vector_store_ids,
             )
+
+            for file_id in files_to_delete:
+                mod_openai.delete_openai_file(file_id=file_id, file_type="file_id")
             
             SetVar(result, response)
 
