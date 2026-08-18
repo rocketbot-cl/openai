@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, Required, TypedDict
+from r_typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["ChatCompletionNamedToolChoiceParam", "Function"]
 
@@ -13,12 +13,7 @@ class Function(TypedDict, total=False):
 
 
 class ChatCompletionNamedToolChoiceParam(TypedDict, total=False):
-    """Specifies a tool the model should use.
-
-    Use to force the model to call a specific function.
-    """
-
     function: Required[Function]
 
     type: Required[Literal["function"]]
-    """For function calling, the type is always `function`."""
+    """The type of the tool. Currently, only `function` is supported."""

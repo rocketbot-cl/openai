@@ -4,7 +4,7 @@ Module version for monitoring CLI pipes (`... | python -m tqdm | ...`).
 import logging
 import re
 import sys
-from ast import literal_eval
+from ast import literal_eval as numeric
 from textwrap import indent
 
 from .std import TqdmKeyError, TqdmTypeError, tqdm
@@ -35,7 +35,7 @@ def cast(val, typ):
         if len(val) == 1:
             return val.encode()
         if re.match(r"^\\\w+$", val):
-            return literal_eval(f'"{val}"').encode()
+            return eval(f'"{val}"').encode()
         raise TqdmTypeError(f"{val} : {typ}")
     if typ == 'str':
         return val
@@ -249,7 +249,7 @@ Options:
         manpath = tqdm_args.pop('manpath', None)
         comppath = tqdm_args.pop('comppath', None)
         if tqdm_args.pop('null', False):
-            class stdout:
+            class stdout(object):
                 @staticmethod
                 def write(_):
                     pass
@@ -258,27 +258,28 @@ Options:
             stdout = getattr(stdout, 'buffer', stdout)
         stdin = getattr(sys.stdin, 'buffer', sys.stdin)
         if manpath or comppath:
-            try:  # py<3.9
-                import importlib_resources as resources
-            except ImportError:
-                from importlib import resources
-            from pathlib import Path
+            from importlib import resources
+            from os import path
+            from shutil import copyfile
 
             def cp(name, dst):
                 """copy resource `name` to `dst`"""
-                fi = resources.files('tqdm') / name
-                dst.write_bytes(fi.read_bytes())
+                if hasattr(resources, 'files'):
+                    copyfile(str(resources.files('tqdm') / name), dst)
+                else:  # py<3.9
+                    with resources.path('tqdm', name) as src:
+                        copyfile(str(src), dst)
                 log.info("written:%s", dst)
             if manpath is not None:
-                cp('tqdm.1', Path(manpath) / 'tqdm.1')
+                cp('tqdm.1', path.join(manpath, 'tqdm.1'))
             if comppath is not None:
-                cp('completion.sh', Path(comppath) / 'tqdm_completion.sh')
+                cp('completion.sh', path.join(comppath, 'tqdm_completion.sh'))
             sys.exit(0)
         if tee:
             stdout_write = stdout.write
             fp_write = getattr(fp, 'buffer', fp).write
 
-            class stdout:  # pylint: disable=function-redefined
+            class stdout(object):  # pylint: disable=function-redefined
                 @staticmethod
                 def write(x):
                     with tqdm.external_write_mode(file=fp):
@@ -298,10 +299,10 @@ Options:
                 with tqdm(**tqdm_args) as t:
                     if update:
                         def callback(i):
-                            t.update(literal_eval(i.decode()))
+                            t.update(numeric(i.decode()))
                     else:  # update_to
                         def callback(i):
-                            t.update(literal_eval(i.decode()) - t.n)
+                            t.update(numeric(i.decode()) - t.n)
                     for i in stdin:
                         write(i)
                         callback(i)
@@ -314,10 +315,10 @@ Options:
                 callback_len = False
                 if update:
                     def callback(i):
-                        t.update(literal_eval(i.decode()))
+                        t.update(numeric(i.decode()))
                 elif update_to:
                     def callback(i):
-                        t.update(literal_eval(i.decode()) - t.n)
+                        t.update(numeric(i.decode()) - t.n)
                 else:
                     callback = t.update
                     callback_len = True

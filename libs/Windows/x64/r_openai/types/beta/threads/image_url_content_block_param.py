@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, Required, TypedDict
+from r_typing_extensions import Literal, Required, TypedDict
 
 from .image_url_param import ImageURLParam
 
@@ -10,8 +10,6 @@ __all__ = ["ImageURLContentBlockParam"]
 
 
 class ImageURLContentBlockParam(TypedDict, total=False):
-    """References an image URL in the content of a message."""
-
     image_url: Required[ImageURLParam]
 
     type: Required[Literal["image_url"]]

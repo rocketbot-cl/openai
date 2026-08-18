@@ -1,3 +1,5 @@
+from __future__ import absolute_import, division
+
 from copy import copy
 from functools import partial
 
@@ -23,8 +25,7 @@ class TqdmCallback(keras.callbacks.Callback):
             if logs:
                 if pop:
                     logs = copy(logs)
-                    for i in pop:
-                        logs.pop(i, 0)
+                    [logs.pop(i, 0) for i in pop]
                 bar.set_postfix(logs, refresh=False)
             bar.update(n)
 
@@ -95,7 +96,7 @@ class TqdmCallback(keras.callbacks.Callback):
                 raise KeyError('Unknown verbosity')
 
     def on_train_end(self, *_, **__):
-        if hasattr(self, 'batch_bar'):
+        if self.verbose:
             self.batch_bar.close()
         self.epoch_bar.close()
 

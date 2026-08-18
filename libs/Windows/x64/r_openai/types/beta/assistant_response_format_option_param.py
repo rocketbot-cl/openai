@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Union
-from typing_extensions import Literal, TypeAlias
+from r_typing_extensions import Literal, TypeAlias
 
 from ..shared_params.response_format_text import ResponseFormatText
 from ..shared_params.response_format_json_object import ResponseFormatJSONObject

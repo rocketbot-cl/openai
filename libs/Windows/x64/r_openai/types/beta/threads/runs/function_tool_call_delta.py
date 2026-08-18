@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Optional
-from typing_extensions import Literal
+from r_typing_extensions import Literal
 
 from ....._models import BaseModel
 
@@ -9,8 +9,6 @@ __all__ = ["FunctionToolCallDelta", "Function"]
 
 
 class Function(BaseModel):
-    """The definition of the function that was called."""
-
     arguments: Optional[str] = None
     """The arguments passed to the function."""
 

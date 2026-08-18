@@ -6,12 +6,12 @@ from datetime import tzinfo
 from typing import TYPE_CHECKING, Any, Callable, Iterator, Optional, SupportsFloat, SupportsIndex, TypeVar, Union
 
 if sys.version_info < (3, 8):
-    from typing_extensions import Protocol, runtime_checkable
+    from r_typing_extensions import Protocol, runtime_checkable
 else:
     from typing import Protocol, runtime_checkable
 
 if sys.version_info < (3, 9):
-    from typing_extensions import Annotated, Literal
+    from r_typing_extensions import Annotated, Literal
 else:
     from typing import Annotated, Literal
 
@@ -406,7 +406,7 @@ IsNotInfinite = Annotated[_NumericType, Predicate(Not(math.isinf))]
 """Return True if x is neither a positive or negative infinity, and False otherwise."""
 
 try:
-    from typing_extensions import DocInfo, doc  # type: ignore [attr-defined]
+    from r_typing_extensions import DocInfo, doc  # type: ignore [attr-defined]
 except ImportError:
 
     @dataclass(frozen=True, **SLOTS)

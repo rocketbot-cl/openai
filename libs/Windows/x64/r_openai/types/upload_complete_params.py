@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
-
-from .._types import SequenceNotStr
+from typing import List
+from r_typing_extensions import Required, TypedDict
 
 __all__ = ["UploadCompleteParams"]
 
 
 class UploadCompleteParams(TypedDict, total=False):
-    part_ids: Required[SequenceNotStr[str]]
+    part_ids: Required[List[str]]
     """The ordered list of Part IDs."""
 
     md5: str

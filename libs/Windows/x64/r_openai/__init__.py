@@ -3,11 +3,10 @@
 from __future__ import annotations
 
 import os as _os
-import typing as _t
-from typing_extensions import override
+from r_typing_extensions import override
 
 from . import types
-from ._types import NOT_GIVEN, Omit, NoneType, NotGiven, Transport, ProxiesTypes, omit, not_given
+from ._types import NOT_GIVEN, NoneType, NotGiven, Transport, ProxiesTypes
 from ._utils import file_from_path
 from ._client import Client, OpenAI, Stream, Timeout, Transport, AsyncClient, AsyncOpenAI, AsyncStream, RequestOptions
 from ._models import BaseModel
@@ -16,7 +15,6 @@ from ._response import APIResponse as APIResponse, AsyncAPIResponse as AsyncAPIR
 from ._constants import DEFAULT_TIMEOUT, DEFAULT_MAX_RETRIES, DEFAULT_CONNECTION_LIMITS
 from ._exceptions import (
     APIError,
-    OAuthError,
     OpenAIError,
     ConflictError,
     NotFoundError,
@@ -29,17 +27,12 @@ from ._exceptions import (
     InternalServerError,
     PermissionDeniedError,
     LengthFinishReasonError,
-    WebSocketQueueFullError,
     UnprocessableEntityError,
     APIResponseValidationError,
-    InvalidWebhookSignatureError,
     ContentFilterFinishReasonError,
-    WebSocketConnectionClosedError,
 )
-from ._base_client import DefaultHttpxClient, DefaultAioHttpClient, DefaultAsyncHttpxClient
+from ._base_client import DefaultHttpxClient, DefaultAsyncHttpxClient
 from ._utils._logs import setup_logging as _setup_logging
-from ._legacy_response import HttpxBinaryResponseContent as HttpxBinaryResponseContent
-from .types.websocket_reconnection import ReconnectingEvent, ReconnectingOverrides
 
 __all__ = [
     "types",
@@ -50,9 +43,6 @@ __all__ = [
     "ProxiesTypes",
     "NotGiven",
     "NOT_GIVEN",
-    "not_given",
-    "Omit",
-    "omit",
     "OpenAIError",
     "APIError",
     "APIStatusError",
@@ -61,7 +51,6 @@ __all__ = [
     "APIResponseValidationError",
     "BadRequestError",
     "AuthenticationError",
-    "OAuthError",
     "PermissionDeniedError",
     "NotFoundError",
     "ConflictError",
@@ -70,7 +59,6 @@ __all__ = [
     "InternalServerError",
     "LengthFinishReasonError",
     "ContentFilterFinishReasonError",
-    "InvalidWebhookSignatureError",
     "Timeout",
     "RequestOptions",
     "Client",
@@ -79,8 +67,6 @@ __all__ = [
     "AsyncStream",
     "OpenAI",
     "AsyncOpenAI",
-    "BedrockOpenAI",
-    "AsyncBedrockOpenAI",
     "file_from_path",
     "BaseModel",
     "DEFAULT_TIMEOUT",
@@ -88,20 +74,11 @@ __all__ = [
     "DEFAULT_CONNECTION_LIMITS",
     "DefaultHttpxClient",
     "DefaultAsyncHttpxClient",
-    "DefaultAioHttpClient",
-    "ReconnectingEvent",
-    "ReconnectingOverrides",
-    "WebSocketQueueFullError",
-    "WebSocketConnectionClosedError",
 ]
 
-if not _t.TYPE_CHECKING:
-    from ._utils._resources_proxy import resources as resources
-
-from .lib import azure as _azure, bedrock as _bedrock, pydantic_function_tool as pydantic_function_tool
+from .lib import azure as _azure, pydantic_function_tool as pydantic_function_tool
 from .version import VERSION as VERSION
 from .lib.azure import AzureOpenAI as AzureOpenAI, AsyncAzureOpenAI as AsyncAzureOpenAI
-from .lib.bedrock import BedrockOpenAI as BedrockOpenAI, AsyncBedrockOpenAI as AsyncBedrockOpenAI
 from .lib._old_api import *
 from .lib.streaming import (
     AssistantEventHandler as AssistantEventHandler,
@@ -125,7 +102,7 @@ for __name in __all__:
 
 # ------ Module level client ------
 import typing as _t
-import typing_extensions as _te
+import r_typing_extensions as _te
 
 import httpx as _httpx
 
@@ -133,13 +110,9 @@ from ._base_client import DEFAULT_TIMEOUT, DEFAULT_MAX_RETRIES
 
 api_key: str | None = None
 
-admin_api_key: str | None = None
-
 organization: str | None = None
 
 project: str | None = None
-
-webhook_secret: str | None = None
 
 base_url: str | _httpx.URL | None = None
 
@@ -153,7 +126,7 @@ default_query: _t.Mapping[str, object] | None = None
 
 http_client: _httpx.Client | None = None
 
-_ApiType = _te.Literal["openai", "azure", "amazon-bedrock"]
+_ApiType = _te.Literal["openai", "azure"]
 
 api_type: _ApiType | None = _t.cast(_ApiType, _os.environ.get("OPENAI_API_TYPE"))
 
@@ -164,10 +137,6 @@ azure_endpoint: str | None = _os.environ.get("AZURE_OPENAI_ENDPOINT")
 azure_ad_token: str | None = _os.environ.get("AZURE_OPENAI_AD_TOKEN")
 
 azure_ad_token_provider: _azure.AzureADTokenProvider | None = None
-
-_bedrock_api_key: str | None = None
-
-bedrock_token_provider: _bedrock.BedrockTokenProvider | None = None
 
 
 class _ModuleClient(OpenAI):
@@ -184,17 +153,6 @@ class _ModuleClient(OpenAI):
         global api_key
 
         api_key = value
-
-    @property  # type: ignore
-    @override
-    def admin_api_key(self) -> str | None:
-        return admin_api_key
-
-    @admin_api_key.setter  # type: ignore
-    def admin_api_key(self, value: str | None) -> None:  # type: ignore
-        global admin_api_key
-
-        admin_api_key = value
 
     @property  # type: ignore
     @override
@@ -217,17 +175,6 @@ class _ModuleClient(OpenAI):
         global project
 
         project = value
-
-    @property  # type: ignore
-    @override
-    def webhook_secret(self) -> str | None:
-        return webhook_secret
-
-    @webhook_secret.setter  # type: ignore
-    def webhook_secret(self, value: str | None) -> None:  # type: ignore
-        global webhook_secret
-
-        webhook_secret = value
 
     @property
     @override
@@ -301,36 +248,10 @@ class _AzureModuleClient(_ModuleClient, AzureOpenAI):  # type: ignore
     ...
 
 
-class _BedrockModuleClient(_ModuleClient, BedrockOpenAI):  # type: ignore
-    @property  # type: ignore
-    @override
-    def api_key(self) -> str | None:
-        return api_key if api_key is not None else _bedrock_api_key
-
-    @api_key.setter  # type: ignore
-    def api_key(self, value: str | None) -> None:  # type: ignore
-        global _bedrock_api_key
-
-        _bedrock_api_key = value
-
-    @override
-    def _refresh_api_key(self) -> str:
-        if api_key is not None:
-            return api_key
-
-        return super()._refresh_api_key()
-
-    @override
-    def _legacy_auth_configuration(self) -> _bedrock._LegacyAuthConfiguration:
-        if api_key is not None:
-            return ("bearer", api_key)
-        return super()._legacy_auth_configuration()
-
-
 class _AmbiguousModuleClientUsageError(OpenAIError):
     def __init__(self) -> None:
         super().__init__(
-            "Ambiguous use of module client; please set `openai.api_type` or the `OPENAI_API_TYPE` environment variable to `openai`, `azure`, or `amazon-bedrock`"
+            "Ambiguous use of module client; please set `openai.api_type` or the `OPENAI_API_TYPE` environment variable to `openai` or `azure`"
         )
 
 
@@ -403,35 +324,16 @@ def _load_client() -> OpenAI:  # type: ignore[reportUnusedFunction]
             )
             return _client
 
-        if api_type == "amazon-bedrock":
-            _client = _BedrockModuleClient(  # type: ignore
-                api_key=api_key,
-                bedrock_token_provider=bedrock_token_provider,
-                organization=organization,
-                project=project,
-                webhook_secret=webhook_secret,
-                base_url=base_url,
-                timeout=timeout,
-                max_retries=max_retries,
-                default_headers=default_headers,
-                default_query=default_query,
-                http_client=http_client,
-            )
-            return _client
-
         _client = _ModuleClient(
             api_key=api_key,
-            admin_api_key=admin_api_key,
             organization=organization,
             project=project,
-            webhook_secret=webhook_secret,
             base_url=base_url,
             timeout=timeout,
             max_retries=max_retries,
             default_headers=default_headers,
             default_query=default_query,
             http_client=http_client,
-            _enforce_credentials=False,
         )
         return _client
 
@@ -447,24 +349,13 @@ def _reset_client() -> None:  # type: ignore[reportUnusedFunction]
 from ._module_client import (
     beta as beta,
     chat as chat,
-    admin as admin,
     audio as audio,
-    evals as evals,
     files as files,
     images as images,
     models as models,
-    skills as skills,
-    videos as videos,
     batches as batches,
-    uploads as uploads,
-    realtime as realtime,
-    webhooks as webhooks,
-    responses as responses,
-    containers as containers,
     embeddings as embeddings,
     completions as completions,
     fine_tuning as fine_tuning,
     moderations as moderations,
-    conversations as conversations,
-    vector_stores as vector_stores,
 )

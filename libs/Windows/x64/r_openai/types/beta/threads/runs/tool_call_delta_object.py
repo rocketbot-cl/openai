@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Optional
-from typing_extensions import Literal
+from r_typing_extensions import Literal
 
 from ....._models import BaseModel
 from .tool_call_delta import ToolCallDelta
@@ -10,8 +10,6 @@ __all__ = ["ToolCallDeltaObject"]
 
 
 class ToolCallDeltaObject(BaseModel):
-    """Details of the tool call."""
-
     type: Literal["tool_calls"]
     """Always `tool_calls`."""
 

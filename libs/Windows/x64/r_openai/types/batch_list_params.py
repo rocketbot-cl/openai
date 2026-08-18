@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import TypedDict
+from r_typing_extensions import TypedDict
 
 __all__ = ["BatchListParams"]
 

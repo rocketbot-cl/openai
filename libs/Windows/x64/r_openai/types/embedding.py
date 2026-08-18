@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List
-from typing_extensions import Literal
+from r_typing_extensions import Literal
 
 from .._models import BaseModel
 
@@ -9,8 +9,6 @@ __all__ = ["Embedding"]
 
 
 class Embedding(BaseModel):
-    """Represents an embedding vector returned by embedding endpoint."""
-
     embedding: List[float]
     """The embedding vector, which is a list of floats.
 

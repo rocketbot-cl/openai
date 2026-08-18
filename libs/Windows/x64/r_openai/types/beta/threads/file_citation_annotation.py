@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing_extensions import Literal
+from r_typing_extensions import Literal
 
 from ...._models import BaseModel
 
@@ -13,10 +13,6 @@ class FileCitation(BaseModel):
 
 
 class FileCitationAnnotation(BaseModel):
-    """
-    A citation within the message that points to a specific quote from a specific File associated with the assistant or the message. Generated when the assistant uses the "file_search" tool to search files.
-    """
-
     end_index: int
 
     file_citation: FileCitation

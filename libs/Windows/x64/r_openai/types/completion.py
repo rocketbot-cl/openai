@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Optional
-from typing_extensions import Literal
+from r_typing_extensions import Literal
 
 from .._models import BaseModel
 from .completion_usage import CompletionUsage
@@ -11,11 +11,6 @@ __all__ = ["Completion"]
 
 
 class Completion(BaseModel):
-    """Represents a completion response from the API.
-
-    Note: both the streamed and non-streamed response objects share the same shape (unlike the chat endpoint).
-    """
-
     id: str
     """A unique identifier for the completion."""
 

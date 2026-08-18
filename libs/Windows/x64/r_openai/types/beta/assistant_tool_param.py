@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Union
-from typing_extensions import TypeAlias
+from r_typing_extensions import TypeAlias
 
 from .function_tool_param import FunctionToolParam
 from .file_search_tool_param import FileSearchToolParam

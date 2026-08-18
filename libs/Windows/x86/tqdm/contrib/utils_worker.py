@@ -1,6 +1,8 @@
 """
 IO/concurrency helpers for `tqdm.contrib`.
 """
+from __future__ import absolute_import
+
 from collections import deque
 from concurrent.futures import ThreadPoolExecutor
 
@@ -10,7 +12,7 @@ __author__ = {"github.com/": ["casperdcl"]}
 __all__ = ['MonoWorker']
 
 
-class MonoWorker:
+class MonoWorker(object):
     """
     Supports one running task and one waiting task.
     The waiting task is the most recent submitted (others are discarded).

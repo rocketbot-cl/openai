@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar, Iterable, cast
-from typing_extensions import override
+from r_typing_extensions import override
 
 T = TypeVar("T")
 
@@ -46,10 +46,7 @@ class LazyProxy(Generic[T], ABC):
     @property  # type: ignore
     @override
     def __class__(self) -> type:  # pyright: ignore
-        try:
-            proxied = self.__get_proxied__()
-        except Exception:
-            return type(self)
+        proxied = self.__get_proxied__()
         if issubclass(type(proxied), LazyProxy):
             return type(proxied)
         return proxied.__class__

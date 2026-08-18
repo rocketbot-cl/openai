@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, Required, TypedDict
+from r_typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["ImageURLParam"]
 

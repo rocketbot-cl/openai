@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing_extensions import Literal
+from r_typing_extensions import Literal
 
 from ..._models import BaseModel
 
@@ -8,7 +8,5 @@ __all__ = ["ResponseFormatText"]
 
 
 class ResponseFormatText(BaseModel):
-    """Default response format. Used to generate text responses."""
-
     type: Literal["text"]
-    """The type of response format being defined. Always `text`."""
+    """The type of response format being defined: `text`"""

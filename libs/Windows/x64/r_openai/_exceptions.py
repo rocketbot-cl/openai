@@ -2,22 +2,17 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Optional, cast
-from typing_extensions import Literal
+from typing import Any, Optional, cast
+from r_typing_extensions import Literal
 
 import httpx
 
 from ._utils import is_dict
 from ._models import construct_type
-from .types.shared.oauth_error_code import OAuthErrorCode
-
-if TYPE_CHECKING:
-    from .types.chat import ChatCompletion
 
 __all__ = [
     "BadRequestError",
     "AuthenticationError",
-    "OAuthError",
     "PermissionDeniedError",
     "NotFoundError",
     "ConflictError",
@@ -26,23 +21,11 @@ __all__ = [
     "InternalServerError",
     "LengthFinishReasonError",
     "ContentFilterFinishReasonError",
-    "InvalidWebhookSignatureError",
-    "SubjectTokenProviderError",
-    "WebSocketConnectionClosedError",
-    "WebSocketQueueFullError",
 ]
 
 
 class OpenAIError(Exception):
     pass
-
-
-class SubjectTokenProviderError(OpenAIError):
-    response: httpx.Response | None
-
-    def __init__(self, message: str, *, response: httpx.Response | None = None) -> None:
-        super().__init__(message)
-        self.response = response
 
 
 class APIError(OpenAIError):
@@ -122,23 +105,6 @@ class AuthenticationError(APIStatusError):
     status_code: Literal[401] = 401  # pyright: ignore[reportIncompatibleVariableOverride]
 
 
-class OAuthError(AuthenticationError):
-    error: Optional[OAuthErrorCode]
-
-    def __init__(self, *, response: httpx.Response, body: object | None) -> None:
-        message = "OAuth authentication error."
-        error = None
-
-        if is_dict(body):
-            error = body.get("error")
-            description = body.get("error_description")
-            if description and isinstance(description, str):
-                message = description
-
-        super().__init__(message, response=response, body=body)
-        self.error = cast(Optional[OAuthErrorCode], error)
-
-
 class PermissionDeniedError(APIStatusError):
     status_code: Literal[403] = 403  # pyright: ignore[reportIncompatibleVariableOverride]
 
@@ -164,20 +130,10 @@ class InternalServerError(APIStatusError):
 
 
 class LengthFinishReasonError(OpenAIError):
-    completion: ChatCompletion
-    """The completion that caused this error.
-
-    Note: this will *not* be a complete `ChatCompletion` object when streaming as `usage`
-          will not be included.
-    """
-
-    def __init__(self, *, completion: ChatCompletion) -> None:
-        msg = "Could not parse response content as the length limit was reached"
-        if completion.usage:
-            msg += f" - {completion.usage}"
-
-        super().__init__(msg)
-        self.completion = completion
+    def __init__(self) -> None:
+        super().__init__(
+            f"Could not parse response content as the length limit was reached",
+        )
 
 
 class ContentFilterFinishReasonError(OpenAIError):
@@ -185,23 +141,3 @@ class ContentFilterFinishReasonError(OpenAIError):
         super().__init__(
             f"Could not parse response content as the request was rejected by the content filter",
         )
-
-
-class InvalidWebhookSignatureError(ValueError):
-    """Raised when a webhook signature is invalid, meaning the computed signature does not match the expected signature."""
-
-
-class WebSocketConnectionClosedError(OpenAIError):
-    """Raised when a WebSocket connection closes with unsent messages."""
-
-    unsent_messages: list[str]
-
-    def __init__(self, message: str, *, unsent_messages: list[str]) -> None:
-        super().__init__(message)
-        self.unsent_messages = unsent_messages
-
-
-class WebSocketQueueFullError(OpenAIError):
-    """Raised when the outgoing WebSocket message queue exceeds its byte-size limit."""
-
-    pass

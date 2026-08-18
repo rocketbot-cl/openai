@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List
-from typing_extensions import Literal
+from r_typing_extensions import Literal
 
 from .tool_call import ToolCall
 from ....._models import BaseModel
@@ -10,8 +10,6 @@ __all__ = ["ToolCallsStepDetails"]
 
 
 class ToolCallsStepDetails(BaseModel):
-    """Details of the tool call."""
-
     tool_calls: List[ToolCall]
     """An array of tool calls the run step was involved in.
 

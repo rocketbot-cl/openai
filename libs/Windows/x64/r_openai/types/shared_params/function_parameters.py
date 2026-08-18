@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict
-from typing_extensions import TypeAlias
+from r_typing_extensions import TypeAlias
 
 __all__ = ["FunctionParameters"]
 

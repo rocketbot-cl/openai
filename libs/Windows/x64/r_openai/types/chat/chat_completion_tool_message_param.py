@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Union, Iterable
-from typing_extensions import Literal, Required, TypedDict
+from r_typing_extensions import Literal, Required, TypedDict
 
 from .chat_completion_content_part_text_param import ChatCompletionContentPartTextParam
 

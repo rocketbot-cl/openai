@@ -18,15 +18,15 @@ from typing import (
     cast,
     overload,
 )
-from typing_extensions import Awaitable, ParamSpec, override, get_origin
+from r_typing_extensions import Awaitable, ParamSpec, override, get_origin
 
 import anyio
 import httpx
 import pydantic
 
 from ._types import NoneType
-from ._utils import is_given, extract_type_arg, is_annotated_type, is_type_alias_type, extract_type_var_from_base
-from ._models import BaseModel, is_basemodel, add_request_id
+from ._utils import is_given, extract_type_arg, is_annotated_type, extract_type_var_from_base
+from ._models import BaseModel, is_basemodel
 from ._constants import RAW_RESPONSE_HEADER, OVERRIDE_CAST_TO_HEADER
 from ._streaming import Stream, AsyncStream, is_stream_class_type, extract_stream_chunk_type
 from ._exceptions import OpenAIError, APIResponseValidationError
@@ -126,17 +126,9 @@ class BaseAPIResponse(Generic[R]):
         )
 
     def _parse(self, *, to: type[_T] | None = None) -> R | _T:
-        cast_to = to if to is not None else self._cast_to
-
-        # unwrap `TypeAlias('Name', T)` -> `T`
-        if is_type_alias_type(cast_to):
-            cast_to = cast_to.__value__  # type: ignore[unreachable]
-
         # unwrap `Annotated[T, ...]` -> `T`
-        if cast_to and is_annotated_type(cast_to):
-            cast_to = extract_type_arg(cast_to, 0)
-
-        origin = get_origin(cast_to) or cast_to
+        if to and is_annotated_type(to):
+            to = extract_type_arg(to, 0)
 
         if self._is_sse_stream:
             if to:
@@ -152,7 +144,6 @@ class BaseAPIResponse(Generic[R]):
                         ),
                         response=self.http_response,
                         client=cast(Any, self._client),
-                        options=self._options,
                     ),
                 )
 
@@ -163,7 +154,6 @@ class BaseAPIResponse(Generic[R]):
                         cast_to=extract_stream_chunk_type(self._stream_cls),
                         response=self.http_response,
                         client=cast(Any, self._client),
-                        options=self._options,
                     ),
                 )
 
@@ -174,12 +164,17 @@ class BaseAPIResponse(Generic[R]):
             return cast(
                 R,
                 stream_cls(
-                    cast_to=cast_to,
+                    cast_to=self._cast_to,
                     response=self.http_response,
                     client=cast(Any, self._client),
-                    options=self._options,
                 ),
             )
+
+        cast_to = to if to is not None else self._cast_to
+
+        # unwrap `Annotated[T, ...]` -> `T`
+        if is_annotated_type(cast_to):
+            cast_to = extract_type_arg(cast_to, 0)
 
         if cast_to is NoneType:
             return cast(R, None)
@@ -197,8 +192,7 @@ class BaseAPIResponse(Generic[R]):
         if cast_to == float:
             return cast(R, float(response.text))
 
-        if cast_to == bool:
-            return cast(R, response.text.lower() == "true")
+        origin = get_origin(cast_to) or cast_to
 
         # handle the legacy binary response case
         if inspect.isclass(cast_to) and cast_to.__name__ == "HttpxBinaryResponseContent":
@@ -217,14 +211,8 @@ class BaseAPIResponse(Generic[R]):
                 raise ValueError(f"Subclasses of httpx.Response cannot be passed to `cast_to`")
             return cast(R, response)
 
-        if (
-            inspect.isclass(
-                origin  # pyright: ignore[reportUnknownArgumentType]
-            )
-            and not issubclass(origin, BaseModel)
-            and issubclass(origin, pydantic.BaseModel)
-        ):
-            raise TypeError("Pydantic models must subclass our base model type, e.g. `from openai import BaseModel`")
+        if inspect.isclass(origin) and not issubclass(origin, BaseModel) and issubclass(origin, pydantic.BaseModel):
+            raise TypeError("Pydantic models must subclass our base model type, e.g. `from r_openai import BaseModel`")
 
         if (
             cast_to is not object
@@ -240,7 +228,7 @@ class BaseAPIResponse(Generic[R]):
         # split is required to handle cases where additional information is included
         # in the response, e.g. application/json; charset=utf-8
         content_type, *_ = response.headers.get("content-type", "*").split(";")
-        if not content_type.endswith("json"):
+        if content_type != "application/json":
             if is_basemodel(cast_to):
                 try:
                     data = response.json()
@@ -294,7 +282,7 @@ class APIResponse(BaseAPIResponse[R]):
         the `to` argument, e.g.
 
         ```py
-        from openai import BaseModel
+        from r_openai import BaseModel
 
 
         class MyModel(BaseModel):
@@ -327,11 +315,8 @@ class APIResponse(BaseAPIResponse[R]):
         if is_given(self._options.post_parser):
             parsed = self._options.post_parser(parsed)
 
-        if isinstance(parsed, BaseModel):
-            add_request_id(parsed, self.request_id)
-
         self._parsed_by_type[cache_key] = parsed
-        return cast(R, parsed)
+        return parsed
 
     def read(self) -> bytes:
         """Read and return the binary response content."""
@@ -403,7 +388,7 @@ class AsyncAPIResponse(BaseAPIResponse[R]):
         the `to` argument, e.g.
 
         ```py
-        from openai import BaseModel
+        from r_openai import BaseModel
 
 
         class MyModel(BaseModel):
@@ -434,11 +419,8 @@ class AsyncAPIResponse(BaseAPIResponse[R]):
         if is_given(self._options.post_parser):
             parsed = self._options.post_parser(parsed)
 
-        if isinstance(parsed, BaseModel):
-            add_request_id(parsed, self.request_id)
-
         self._parsed_by_type[cache_key] = parsed
-        return cast(R, parsed)
+        return parsed
 
     async def read(self) -> bytes:
         """Read and return the binary response content."""

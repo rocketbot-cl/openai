@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Union, Iterable, Optional
-from typing_extensions import Literal, Required, TypedDict
+from r_typing_extensions import Literal, Required, TypedDict
 
 __all__ = [
     "RunSubmitToolOutputsParamsBase",
@@ -31,7 +31,7 @@ class ToolOutput(TypedDict, total=False):
     """
 
 
-class RunSubmitToolOutputsParamsNonStreaming(RunSubmitToolOutputsParamsBase, total=False):
+class RunSubmitToolOutputsParamsNonStreaming(RunSubmitToolOutputsParamsBase):
     stream: Optional[Literal[False]]
     """
     If `true`, returns a stream of events that happen during the Run as server-sent

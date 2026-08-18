@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Union
-from typing_extensions import Literal, TypeAlias
+from r_typing_extensions import Literal, TypeAlias
 
 from ..shared.response_format_text import ResponseFormatText
 from ..shared.response_format_json_object import ResponseFormatJSONObject

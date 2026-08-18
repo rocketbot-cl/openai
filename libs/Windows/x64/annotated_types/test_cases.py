@@ -5,7 +5,7 @@ from decimal import Decimal
 from typing import Any, Dict, Iterable, Iterator, List, NamedTuple, Set, Tuple
 
 if sys.version_info < (3, 9):
-    from typing_extensions import Annotated
+    from r_typing_extensions import Annotated
 else:
     from typing import Annotated
 

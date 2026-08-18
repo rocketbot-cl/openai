@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing_extensions import TypeAlias
+from r_typing_extensions import TypeAlias
 
 from ....types.chat import ParsedChoice, ParsedChatCompletion, ParsedChatCompletionMessage
 

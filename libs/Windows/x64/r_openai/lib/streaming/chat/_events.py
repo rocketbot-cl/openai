@@ -1,5 +1,5 @@
 from typing import List, Union, Generic, Optional
-from typing_extensions import Literal
+from r_typing_extensions import Literal
 
 from ._types import ParsedChatCompletionSnapshot
 from ...._models import BaseModel, GenericModel

@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing_extensions import Literal
+from r_typing_extensions import Literal
 
 from ..._models import BaseModel
 
@@ -8,8 +8,6 @@ __all__ = ["UploadPart"]
 
 
 class UploadPart(BaseModel):
-    """The upload Part represents a chunk of bytes we can add to an Upload object."""
-
     id: str
     """The upload Part unique identifier, which can be referenced in API endpoints."""
 

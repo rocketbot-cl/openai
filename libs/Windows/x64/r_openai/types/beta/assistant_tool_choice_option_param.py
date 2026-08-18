@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Union
-from typing_extensions import Literal, TypeAlias
+from r_typing_extensions import Literal, TypeAlias
 
 from .assistant_tool_choice_param import AssistantToolChoiceParam
 
