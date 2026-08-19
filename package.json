@@ -603,9 +603,9 @@
                             "pr": "Temperatura"
                         },
                         "description": {
-                            "es": "Por defecto 0. Valor entre 0 y 2. Cuanto mayor sea el valor, las respuestas serán más creativas, pero también pueden llegar a ser más incoherentes. Modelos de razonamiento (o1, o3, gpt-5, etc.) solamente admiten 1 como valor de temperatura.",
-                            "en": "Default 0. Value between 0 and 2. The higher the value, the more creative the answers will be, but they can also be more incoherent. Reasoning models (o1, o3, gpt-5, etc.) only support a value of 1 for the temperature.",
-                            "pr": "Padrão 0. Valor entre 0 e 2. Quanto maior o valor, mais criativas serão as respostas, mas também podem ser mais incoerentes. Modelos de raciocínio (o1, o3, gpt-5, etc.) só aceitam o valor 1 como temperatura."
+                            "es": "Por defecto 0. Valor entre 0 y 2. Cuanto mayor sea el valor, las respuestas serán más creativas, pero también pueden llegar a ser más incoherentes. Dejar vacio al usar modelos de razonamiento (o1, o3, gpt-5, etc.) al estos usar automaticamente 1 de temperatura.",
+                            "en": "Default 0. Value between 0 and 2. The higher the value, the more creative the answers will be, but they can also be more incoherent. Leave empty when using Reasoning models (o1, o3, gpt-5, etc.) as they automatically use 1 for temperature.",
+                            "pr": "Padrão 0. Valor entre 0 e 2. Quanto maior o valor, mais criativas serão as respostas, mas também podem ser mais incoerentes. Deixar vazio ao usar modelos de raciocínio (o1, o3, gpt-5, etc.) ao estes usarem automaticamente 1 de temperatura."
                         },
                         "help": {
                             "es": "Valor entre 0 y 2",
