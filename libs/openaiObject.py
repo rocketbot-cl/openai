@@ -123,12 +123,17 @@ class openaiObject():
             return response
         
         except Exception as e:
-            if "'max_tokens' is not supported with this model" in str(e):
+            string_error = str(e)
+
+            if "'max_tokens' is not supported with this model" in string_error:
                 max_tokens =  kwargs.pop("max_tokens", None)
                 kwargs["extra_body"] = {"max_completion_tokens": max_tokens}
 
-            elif "Unsupported value: 'temperature' does not support" in str(e):
-                kwargs["temperature"] = 1
+            elif "Unsupported value: 'temperature' does not support" in string_error:
+                if 'temperature' not in kwargs:
+                    raise e
+                
+                kwargs.pop("temperature", None)
 
             else:
                 raise e
