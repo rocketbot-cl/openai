@@ -124,7 +124,16 @@ class openaiObject():
             image = base64.b64encode(image.read()).decode("utf-8")
         
         return image
-    
+
+    def get_models(self):
+        '''
+        Returns the list of openai models
+        '''
+        models = self.client.models.list()
+        result = sorted([model.id for model in models.data])
+
+        return result
+        
     def __parse_to_openai_schema__(self, schema_dict):
 
         properties = {}

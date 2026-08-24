@@ -3,17 +3,17 @@
 
 
 # OpenAI
-
-Este módulo conecta-se à API da OpenAI. Pode executar ações como fazer uma consulta a um modelo de linguagem natural, transcrever um áudio ou traduzir um áudio para inglês.
+  
+Este módulo conecta-se à API da OpenAI. Pode executar ações como fazer uma consulta a um modelo de linguagem natural, transcrever um áudio ou traduzir um áudio para inglês.  
 
 *Read this in other languages: [English](Manual_OpenAI.md), [Português](Manual_OpenAI.pr.md), [Español](Manual_OpenAI.es.md)*
-
+  
 ![banner](imgs/Banner_OpenAI.png)
 ## Como instalar este módulo
-
+  
 Para instalar o módulo no Rocketbot Studio, pode ser feito de duas formas:
 1. Manual: __Baixe__ o arquivo .zip e descompacte-o na pasta módulos. O nome da pasta deve ser o mesmo do módulo e dentro dela devem ter os seguintes arquivos e pastas: \__init__.py, package.json, docs, example e libs. Se você tiver o aplicativo aberto, atualize seu navegador para poder usar o novo módulo.
-2. Automático: Ao entrar no Rocketbot Studio na margem direita você encontrará a seção **Addons**, selecione **Install Mods**, procure o módulo desejado e aperte instalar.
+2. Automático: Ao entrar no Rocketbot Studio na margem direita você encontrará a seção **Addons**, selecione **Install Mods**, procure o módulo desejado e aperte instalar.  
 
 
 
@@ -37,7 +37,7 @@ Para obter mais informações sobre a API da OpenAI, você pode consultar a
 ## Descrição do comando
 
 ### Conectar-se ao OpenAI
-
+  
 Este comando conecta a OpenAI con la API key secreta especificada.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
@@ -45,7 +45,7 @@ Este comando conecta a OpenAI con la API key secreta especificada.
 |Variável onde o resultado da conexão será armazenado|Variável onde o resultado da conexão será armazenado. Ele retornará True se a conexão for bem-sucedida|Variável|
 
 ### Fazer uma consulta (obsoleto)
-
+  
 Este comando permite fazer uma consulta à OpenAI. O comando de conexão deve ser executado previamente. Este comando está obsoleto, é recomendável usar o comando 'Fazer consulta no chat'.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
@@ -57,7 +57,7 @@ Este comando permite fazer uma consulta à OpenAI. O comando de conexão deve se
 |Variável onde salvar o resultado do OpenAI|Variável onde salvar o resultado do OpenAI|Variável|
 
 ### Transcrever áudio
-
+  
 Este comando transcreve um áudio para texto. O comando de conexão deve ser executado previamente.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
@@ -65,7 +65,7 @@ Este comando transcreve um áudio para texto. O comando de conexão deve ser exe
 |Variável onde o resultado será armazenado|Variável onde o resultado da transcrição será armazenado|Variável|
 
 ### Traduzir áudio
-
+  
 Este comando traduz um áudio para texto em inglês. O comando de conexão deve ser executado previamente.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
@@ -73,7 +73,7 @@ Este comando traduz um áudio para texto em inglês. O comando de conexão deve 
 |Variável onde o resultado será armazenado|Variável onde o resultado da tradução será armazenado|Variável|
 
 ### Fazer uma consulta em chat
-
+  
 Este comando permite fazer uma consulta em formato de chat para OpenAI. O comando de conexão deve ser executado previamente.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
@@ -92,8 +92,15 @@ Para indicar um objeto aninhado, você pode usar outro dicionário com a mesma e
 |Obter apenas texto da resposta|Se ativado, apenas o texto da resposta será obtido, sem o restante das informações.|False|
 |Variável onde salvar o resultado do OpenAI|Variável onde salvar o resultado do OpenAI|Variável|
 
-### Perguntar
+### Obter modelos
+  
+Este comando recupera os modelos disponíveis. O comando de conexão deve ser executado previamente.
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Variável onde o resultado será armazenado|Variável onde o resultado dos modelos será armazenado|Variável|
 
+### Perguntar
+  
 Este comando pergunta à OpenAI para obter uma resposta. Você precisa ter uma chave OpenAI. Vá para https://platform.openai.com/account/api-keys para obter uma chave.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
