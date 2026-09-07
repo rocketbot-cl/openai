@@ -92,16 +92,8 @@ class openaiObject():
                     }
                 }
             }
-            
-        try:
-            response = self.client.chat.completions.create(**kwargs)
-        except Exception as e:
-            if "'max_tokens' is not supported with this model" in str(e):
-                kwargs.pop("max_tokens", None)
-                kwargs["extra_body"] = {"max_completion_tokens": max_tokens}
-                response = self.client.chat.completions.create(**kwargs)
-            else:
-                raise e
+
+        response = self.__make_request__(kwargs)
 
         if only_text:
             response = response.choices[0].message.content
@@ -109,7 +101,7 @@ class openaiObject():
             response = self.completion_response_to_json(response)
         
         return response
-    
+
     def completion_response_to_json(self, response):
         '''
         Convert completion response to JSON
@@ -124,6 +116,30 @@ class openaiObject():
             image = base64.b64encode(image.read()).decode("utf-8")
         
         return image
+
+    def __make_request__(self, kwargs):
+        try:
+            response = self.client.chat.completions.create(**kwargs)
+            return response
+        
+        except Exception as e:
+            string_error = str(e)
+
+            if "'max_tokens' is not supported with this model" in string_error:
+                max_tokens =  kwargs.pop("max_tokens", None)
+                kwargs["extra_body"] = {"max_completion_tokens": max_tokens}
+
+            elif "Unsupported value: 'temperature' does not support" in string_error:
+                if 'temperature' not in kwargs:
+                    raise e
+                
+                kwargs.pop("temperature", None)
+
+            else:
+                raise e
+            
+            return self.__make_request__(kwargs)
+            
     
     def __parse_to_openai_schema__(self, schema_dict):
 
