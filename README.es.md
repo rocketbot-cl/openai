@@ -33,7 +33,10 @@ Este comando traduce un audio a texto en inglés. El comando de conexión debe s
 5. Realizar consulta en chat  
 Este comando permite realizar una consulta en formato de chat a OpenAI. Debe ejecutarse el comando de conexión previamente.
 
-6. Preguntar  
+6. Obtener modelos  
+Este comando devuelve los modelos disponibles. Debe ejecutarse el comando de conexión previamente.
+
+7. Preguntar  
 Este comando Consulta a OpenAI para obtener una respuesta. Necesitas tener una clave de OpenAI. Ve a https://platform.openai.com/account/api-keys para obtener una clave.  
 
 

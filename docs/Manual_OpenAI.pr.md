@@ -92,6 +92,13 @@ Para indicar um objeto aninhado, você pode usar outro dicionário com a mesma e
 |Obter apenas texto da resposta|Se ativado, apenas o texto da resposta será obtido, sem o restante das informações.|False|
 |Variável onde salvar o resultado do OpenAI|Variável onde salvar o resultado do OpenAI|Variável|
 
+### Obter modelos
+  
+Este comando recupera os modelos disponíveis. O comando de conexão deve ser executado previamente.
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Variável onde o resultado será armazenado|Variável onde o resultado dos modelos será armazenado|Variável|
+
 ### Perguntar
   
 Este comando pergunta à OpenAI para obter uma resposta. Você precisa ter uma chave OpenAI. Vá para https://platform.openai.com/account/api-keys para obter uma chave.

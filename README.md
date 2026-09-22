@@ -33,7 +33,10 @@ This command translates an audio to text in English. The connection command must
 5. Make a query in chat  
 This command allows you to make a chat query to OpenAI. The connection command must be executed previously.
 
-6. Ask  
+6. Get models  
+This command returns the available models. The connection command must be executed previously.
+
+7. Ask  
 This command asks OpenAI for an answer. You need to have an OpenAI key. Go to https://platform.openai.com/account/api-keys to get a key.  
 
 

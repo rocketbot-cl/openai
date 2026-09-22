@@ -92,6 +92,13 @@ To indicate a nested object, you can use another dictionary with the same struct
 |Get only text from the response|If activated, only the text of the response will be obtained, without the rest of the information.|False|
 |Variable where to save the result of OpenAI|Variable where to save the result of OpenAI|Variable|
 
+### Get models
+  
+This command returns the available models. The connection command must be executed previously.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Variable where the result will be stored|Variable where the result of the models will be stored|Variable|
+
 ### Ask
   
 This command asks OpenAI for an answer. You need to have an OpenAI key. Go to https://platform.openai.com/account/api-keys to get a key.

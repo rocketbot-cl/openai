@@ -93,6 +93,13 @@ Para indicar un objeto anidado, se puede usar otro diccionario con la misma estr
 |Obtener solo texto de la respuesta|Si se activa, solo se obtendrá el texto de la respuesta, sin el resto de información.|False|
 |Variable donde se almacena el resultado de OpenAI|Variable donde se almacena el resultado de OpenAI|Variable|
 
+### Obtener modelos
+  
+Este comando devuelve los modelos disponibles. Debe ejecutarse el comando de conexión previamente.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Variable donde se almacenará el resultado|Variable donde se almacenará el resultado de los modelos|Variable|
+
 ### Preguntar
   
 Este comando Consulta a OpenAI para obtener una respuesta. Necesitas tener una clave de OpenAI. Ve a https://platform.openai.com/account/api-keys para obtener una clave.

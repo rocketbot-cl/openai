@@ -340,6 +340,11 @@ try:
             
             SetVar(result, response)
 
+        if module == "getmodels":
+            result = GetParams("result_var")
+            response = mod_openai.get_models()
+            SetVar(result, response)
+
         if module == "OpenAI":
             # This is an old version of the command, it is not visible anymore in the package.json in Rocketbot v2023, 
             # but it is still used by some users so it is kept here. Please do not delete it.
